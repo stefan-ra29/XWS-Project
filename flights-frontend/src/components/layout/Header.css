@@ -1,0 +1,27 @@
+:root {
+    --primary: #b13b36;
+    --secondary: #47578c;
+}
+
+header nav {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 1em;
+}
+header nav h1 {
+    margin-right: auto;
+    border-bottom: 3px solid var(--primary);
+    font-size: 2em;
+}
+header nav a{
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 4px;
+    height: fit-content;
+}
+header nav a.active {
+    background: var(--primary); 
+}
