@@ -1,0 +1,32 @@
+.info-section {
+    display: flex;
+    flex-direction: row;
+    color: blueviolet;
+    padding-top: 0.3em;
+}
+
+.info-section p {
+    margin-right: 0.5em;
+    font-size: 1.1em;
+    letter-spacing: 0.3px;
+}
+
+.info-section :last-child {
+    font-weight: bold;
+}
+
+.flight-wrapper :first-child {
+    padding-top: 0;
+}
+
+.flight-wrapper {
+    margin: 0 auto;
+    background-color: rgb(10, 43, 71);
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    padding: 1em 2em 1em 2em;
+    justify-content: center;
+    margin-top: 3em;
+}
+

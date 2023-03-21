@@ -1,7 +1,7 @@
 package com.xwsProject.FlightsBackend.flight;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-
-//public interface FlightRepository extends MongoRepository<String, Flight>
-
-public interface FlightRepository{
+@Repository
+public interface FlightRepository extends MongoRepository<Flight, String> {
 }
