@@ -4,5 +4,8 @@ import java.util.List;
 
 public interface FlightService {
 
-    public List<Flight> getAll();
+    List<Flight> getAll();
+    List<Flight> search(FlightSearchQueryDTO searchQuery);
+
+    AvailablePlacesDTO getAvailablePlaces();
 }

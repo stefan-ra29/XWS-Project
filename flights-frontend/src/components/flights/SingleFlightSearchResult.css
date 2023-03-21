@@ -8,6 +8,11 @@
 .info-section p {
     margin-right: 0.5em;
     font-size: 1.1em;
+    letter-spacing: 0.3px;
+}
+
+.info-section :last-child {
+    font-weight: bold;
 }
 
 .flight-wrapper :first-child {

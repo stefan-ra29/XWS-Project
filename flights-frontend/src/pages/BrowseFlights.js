@@ -1,16 +1,42 @@
 import SingleFlightSearchResult from '../components/flights/SingleFlightSearchResult'
 import {useEffect, useState} from 'react'
-import { getAllFlights } from '../services/FlightService'
+import { searchFlights, getAvailablePlaces } from '../services/FlightService'
 import './styles/BrowseFlights.css'
+import FlightsSearchForm from '../components/flights/FLightsSearchForm'
 
 
 export default function BrowseFlights() {
 
     const [flights, setFlights] = useState([])
+    const [numberOfTickets, setNumberOfTickets] = useState(0)
+    const [departures, setDepartures] = useState([]);
+    const [destinations, setDestinations] = useState([]);
 
     useEffect(() => {
-        getAllFlights(setFlights);
+        getAvailablePlaces(setDepartures, setDestinations);
     }, [])
+
+    const [searchQuery, setSearchQuery] = useState({
+        departureDate: "",
+        arrivalDate: "",
+        departurePlace: "",
+        destination: "",
+        numberOfTickets: 0
+    });
+
+    function handleInputChange(event) {
+        const { name, value } = event.target;
+        setSearchQuery(prevState => ({
+          ...prevState,
+          [name]: value
+        }));
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        searchFlights(searchQuery, setFlights, setNumberOfTickets);
+    }
+
 
   return (
     <>
@@ -19,60 +45,30 @@ export default function BrowseFlights() {
         <div>
             <p className='searchDescription'>What kind of flight are you looking for?</p>
 
-            <form className='searchForm'>
-                <div className='departureSection'>
-                    <label htmlFor='departure'>Depart from</label>
-                    <select name='departure' id='departure'>
-                        <option value="Belgrade">Belgrade</option>
-                        <option value="Zagreb">Zagreb</option>
-                        <option value="London">London</option>
-                    </select>
+            <FlightsSearchForm handleSubmit={handleSubmit} searchQuery={searchQuery} handleInputChange={handleInputChange} departures={departures} destinations={destinations} />
 
-                    <label htmlFor='deartureDate'>On</label>
-                    <input type="date" id='departureDate'/>
+            {flights.length !== 0 &&
+                <div className='flights-wrapper'>
+                    {flights.map(flight => {
+                        return <SingleFlightSearchResult
+                            key={flight.id}
+                            departureDate={flight.departureDateTime} 
+                            arrivalDate={flight.arrivalDateTime}
+                            pricePerTicket={flight.pricePerTicket}
+                            numberOfTickets={numberOfTickets}
+                            departurePlace={flight.departure}
+                            destination={flight.destination}
+                        />
+                    })}
                 </div>
+            }
 
-                <div className='destinationSection'>
-                    <label htmlFor='destination'>Destination</label>
-                    <select name='destination' id='destination'>
-                        <option value="Belgrade">Belgrade</option>
-                        <option value="Zagreb">Zagreb</option>
-                        <option value="London">London</option>
-                    </select>
-
-                    <label htmlFor='destinationDate'>On</label>
-                    <input type="date" id='destinationDate'/>
+            {flights.length === 0 &&
+                <div className='flights-wrapper'>
+                    <p className='no-result-text'>No flights match your search criteria :( Try something else</p>
                 </div>
-
-                <div className='ticketsSection'>
-                    <label>Number of tickets</label>
-                    <input className='ticketsInput' type='number' min='1' step='1' />
-
-                    <button className='searchButton' type='submit'>Search!</button>
-                </div>
-
-                <div className='buttonWrapper'>
-                    
-                </div>
-
-                
-            </form>
-
-            <div className='flights-wrapper'>
-                {flights.map(flight => {
-                    return <SingleFlightSearchResult
-                        key={flight.id}
-                        departureDate={flight.departureDateTime} 
-                        arrivalDate={flight.arrivalDateTime}
-                        pricePerTicket={flight.pricePerTicket}
-                        numberOfTickets={3}
-                        departurePlace={flight.departure}
-                        destination={flight.destination}
-                    />
-                })}
-            </div>
-            
-            
+            }
+             
         </div>
     </>
   )
