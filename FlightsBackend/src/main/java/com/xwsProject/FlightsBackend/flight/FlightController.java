@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("api/flight")
 public class FlightController {
 
-    private final FlightService flightService;
+    private final IFlightService flightService;
 
     @GetMapping("/getAll")
     public List<FlightSearchResultDTO> getAll() {
@@ -49,19 +49,4 @@ public class FlightController {
 
         return dtos;
     }
-
-    @PostMapping("/buy")
-    public ResponseEntity<String> buy(@RequestBody FlightSearchQueryDTO searchQuery) {
-        List<Flight> flightsMatchingQuery = flightService.search(searchQuery);
-        List<FlightSearchResultDTO> dtos = new ArrayList<>();
-
-        for (Flight flight : flightsMatchingQuery) {
-            FlightSearchResultDTO dto = new FlightSearchResultDTO(flight);
-
-            dtos.add(dto);
-        }
-
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
 }

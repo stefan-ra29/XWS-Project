@@ -1,8 +1,5 @@
 package com.xwsProject.FlightsBackend;
 
-import com.xwsProject.FlightsBackend.flight.Flight;
-import com.xwsProject.FlightsBackend.flight.FlightRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +7,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -38,7 +34,7 @@ public class FlightsBackendApplication {
 	}
 
 //	@Bean
-//	CommandLineRunner runner(FlightRepository flightRepository) {
+//	CommandLineRunner runner(IFlightRepository flightRepository) {
 //		return args -> {
 //			Flight flight = new Flight();
 //			flight.setDestination("Madrid");
