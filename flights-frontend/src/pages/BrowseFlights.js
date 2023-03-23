@@ -2,7 +2,7 @@ import SingleFlightSearchResult from "../components/flights/SingleFlightSearchRe
 import { useEffect, useState } from "react";
 import { searchFlights, getAvailablePlaces } from "../services/FlightService";
 import "./styles/BrowseFlights.css";
-import FlightsSearchForm from "../components/flights/FlightsSearchForm";
+import FlightsSearchForm from "../components/flights/FlightSearchForm";
 
 export default function BrowseFlights() {
   const [flights, setFlights] = useState([]);
