@@ -1,8 +1,8 @@
 import "./SingleFlightSearchResult.css";
-import { buyTickets } from "../../services/FlightService";
+import { buyTickets } from "../../services/FlightTicketService";
 
 export default function SingleFlightSearchResult({
-  key,
+  flightId,
   departureDate,
   arrivalDate,
   pricePerTicket,
@@ -43,7 +43,7 @@ export default function SingleFlightSearchResult({
       <div>
         <button
           className="buyButton"
-          onClick={buyTickets.bind(this, key, numberOfTickets)}
+          onClick={buyTickets.bind(this, flightId, numberOfTickets, totalPrice)}
         >
           Buy {numberOfTickets} tickets!
         </button>

@@ -58,6 +58,7 @@ export default function BrowseFlights() {
               return (
                 <SingleFlightSearchResult
                   key={flight.id}
+                  flightId={flight.id}
                   departureDate={flight.departureDateTime}
                   arrivalDate={flight.arrivalDateTime}
                   pricePerTicket={flight.pricePerTicket}

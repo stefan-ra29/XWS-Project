@@ -21,4 +21,5 @@ public class FlightTicketPurchase {
     private String customerId;
     private int numberOfTickets;
     private LocalDateTime purchaseDate;
+    private int totalPrice;
 }

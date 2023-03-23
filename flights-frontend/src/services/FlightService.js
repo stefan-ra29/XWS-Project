@@ -36,15 +36,3 @@ export function getAvailablePlaces(setDepartures, setDestinations) {
       console.log(error);
     });
 }
-
-export function buyTickets(key, numberOfTickets) {
-  axios
-    .post(apiURL + "buy", { flightId: key, numberOfTickets: numberOfTickets })
-    .then((response) => {
-      // setDepartures(response.data.departures);
-      // setDestinations(response.data.destinations);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
