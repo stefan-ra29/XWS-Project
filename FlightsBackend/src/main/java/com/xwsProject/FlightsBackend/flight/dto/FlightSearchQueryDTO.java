@@ -1,4 +1,4 @@
-package com.xwsProject.FlightsBackend.flight;
+package com.xwsProject.FlightsBackend.flight.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

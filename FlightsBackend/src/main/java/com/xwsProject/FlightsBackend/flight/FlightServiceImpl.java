@@ -1,5 +1,7 @@
 package com.xwsProject.FlightsBackend.flight;
 
+import com.xwsProject.FlightsBackend.flight.dto.AvailablePlacesDTO;
+import com.xwsProject.FlightsBackend.flight.dto.FlightSearchQueryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

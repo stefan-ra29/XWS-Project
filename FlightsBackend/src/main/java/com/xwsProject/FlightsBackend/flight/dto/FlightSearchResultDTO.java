@@ -1,5 +1,6 @@
-package com.xwsProject.FlightsBackend.flight;
+package com.xwsProject.FlightsBackend.flight.dto;
 
+import com.xwsProject.FlightsBackend.flight.Flight;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

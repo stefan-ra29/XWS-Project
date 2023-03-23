@@ -1,6 +1,11 @@
 package com.xwsProject.FlightsBackend.flight;
 
+import com.xwsProject.FlightsBackend.flight.dto.AvailablePlacesDTO;
+import com.xwsProject.FlightsBackend.flight.dto.FlightSearchQueryDTO;
+import com.xwsProject.FlightsBackend.flight.dto.FlightSearchResultDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -43,6 +48,20 @@ public class FlightController {
         }
 
         return dtos;
+    }
+
+    @PostMapping("/buy")
+    public ResponseEntity<String> buy(@RequestBody FlightSearchQueryDTO searchQuery) {
+        List<Flight> flightsMatchingQuery = flightService.search(searchQuery);
+        List<FlightSearchResultDTO> dtos = new ArrayList<>();
+
+        for (Flight flight : flightsMatchingQuery) {
+            FlightSearchResultDTO dto = new FlightSearchResultDTO(flight);
+
+            dtos.add(dto);
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }
