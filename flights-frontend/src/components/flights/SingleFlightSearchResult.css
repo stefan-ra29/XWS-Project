@@ -3,6 +3,10 @@
   --secondary: #47578c;
 }
 
+p {
+  color: aliceblue;
+}
+
 .info-section {
   display: flex;
   flex-direction: row;
@@ -35,11 +39,22 @@
   margin-top: 3em;
 }
 
+.buyButtonWrapper {
+  background-color: var(--primary);
+  display: flex;
+  height: fit-content;
+  margin-top: 15%;
+  margin-left: 2%;
+  padding: 5px;
+}
+
 .buyButton {
   background-color: var(--primary);
   border: none;
   font-size: 16px;
-  padding: 5px;
-  margin-left: 20px;
+  text-align: center;
+  vertical-align: middle;
   cursor: pointer;
+  letter-spacing: 0.7px;
+  color: aliceblue;
 }

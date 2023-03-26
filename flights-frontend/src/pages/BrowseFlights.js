@@ -14,6 +14,14 @@ export default function BrowseFlights() {
     getAvailablePlaces(setDepartures, setDestinations);
   }, []);
 
+  useEffect(() => {
+    setSearchQuery((prevState) => ({
+      ...prevState,
+      departurePlace: departures[0],
+      destination: destinations[0]
+    }))
+  }, [departures, destinations]);
+
   const [searchQuery, setSearchQuery] = useState({
     departureDate: "",
     arrivalDate: "",
@@ -21,6 +29,11 @@ export default function BrowseFlights() {
     destination: "",
     numberOfTickets: 0,
   });
+
+  function resetSearch() {
+    setSearchQuery({departureDate: "", arrivalDate: "", departurePlace: "", destination: "", numberOfTickets: 0});
+    setFlights([]);
+  }
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -65,6 +78,7 @@ export default function BrowseFlights() {
                   numberOfTickets={numberOfTickets}
                   departurePlace={flight.departure}
                   destination={flight.destination}
+                  onBuyResetHandler={resetSearch}
                 />
               );
             })}

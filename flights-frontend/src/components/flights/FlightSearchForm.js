@@ -1,4 +1,5 @@
 import React from "react";
+import './FlightSearchForm.css'
 
 export default function FlightsSearchForm({
   handleSubmit,
