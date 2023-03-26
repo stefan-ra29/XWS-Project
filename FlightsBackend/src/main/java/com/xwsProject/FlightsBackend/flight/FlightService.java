@@ -27,7 +27,8 @@ public class FlightService implements IFlightService {
             if(flight.getDeparture().equals(searchQuery.getDeparturePlace()) &&
                flight.getDestination().equals(searchQuery.getDestination()) &&
                flight.getArrivalDateTime().toLocalDate().toString().equals(searchQuery.getArrivalDate()) &&
-               flight.getDepartureDateTime().toLocalDate().toString().equals(searchQuery.getDepartureDate())) {
+               flight.getDepartureDateTime().toLocalDate().toString().equals(searchQuery.getDepartureDate()) &&
+               flight.getAvailableSeats() >= searchQuery.getNumberOfTickets()) {
                 flightsMatchingQuery.add(flight);
             }
         }

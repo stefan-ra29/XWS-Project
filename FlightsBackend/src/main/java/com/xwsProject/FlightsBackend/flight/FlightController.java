@@ -37,16 +37,15 @@ public class FlightController {
     }
 
     @PostMapping("/search")
-    public List<FlightSearchResultDTO> search(@RequestBody FlightSearchQueryDTO searchQuery) {
+    public ResponseEntity<List<FlightSearchResultDTO>> search(@RequestBody FlightSearchQueryDTO searchQuery) {
         List<Flight> flightsMatchingQuery = flightService.search(searchQuery);
         List<FlightSearchResultDTO> dtos = new ArrayList<>();
 
         for (Flight flight : flightsMatchingQuery) {
             FlightSearchResultDTO dto = new FlightSearchResultDTO(flight);
-
             dtos.add(dto);
         }
 
-        return dtos;
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 }

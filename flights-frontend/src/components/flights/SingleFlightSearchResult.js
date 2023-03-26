@@ -9,6 +9,7 @@ export default function SingleFlightSearchResult({
   numberOfTickets,
   departurePlace,
   destination,
+  onBuyResetHandler
 }) {
   const totalPrice = parseInt(pricePerTicket) * parseInt(numberOfTickets);
 
@@ -40,10 +41,10 @@ export default function SingleFlightSearchResult({
           <p>${totalPrice}</p>
         </div>
       </div>
-      <div>
+      <div className="buyButtonWrapper">
         <button
           className="buyButton"
-          onClick={buyTickets.bind(this, flightId, numberOfTickets, totalPrice)}
+          onClick={buyTickets.bind(this, flightId, numberOfTickets, totalPrice, onBuyResetHandler)}
         >
           Buy {numberOfTickets} tickets!
         </button>

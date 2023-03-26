@@ -3,10 +3,13 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from './pages/Home';
 import BrowseFlights from './pages/BrowseFlights';
 import Header from './components/layout/Header';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Header />
       <main>
         <Routes>
