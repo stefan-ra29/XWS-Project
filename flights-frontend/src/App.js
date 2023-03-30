@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import UserTicketPurchaseHistory from "./pages/UserTicketPurchaseHistory";
+import FlightManagment from './pages/FlightManagment';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             path="ticket-history"
             element={<UserTicketPurchaseHistory />}
           />
+          <Route path='flights' element={<FlightManagment />} />
         </Routes>
       </main>
     </BrowserRouter>
