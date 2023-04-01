@@ -22,9 +22,6 @@ public class FlightController {
     @GetMapping("/getAll")
     public List<FlightSearchResultDTO> getAll() {
 
-        Flight f = Flight.builder().departureDateTime(LocalDateTime.now()).arrivalDateTime(LocalDateTime.now()).build();
-        flightService.create(f);
-
         List<Flight> allFlights = flightService.getAll();
         List<FlightSearchResultDTO> allFlightsDTOs = new ArrayList<>();
         for (Flight flight : allFlights) {
@@ -34,15 +31,6 @@ public class FlightController {
         }
 
         return allFlightsDTOs;
-    }
-
-    @PostMapping
-    public ResponseEntity<String> createFlight() {
-        Flight flight1 = Flight.builder().availableSeats(20).destination("prnjas").build();
-
-        flightService.create(flight1);
-
-        return new ResponseEntity(flight1, HttpStatus.CREATED);
     }
 
     @GetMapping("/available-places")

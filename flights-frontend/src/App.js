@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
+import UserTicketPurchaseHistory from "./pages/UserTicketPurchaseHistory";
 
 function App() {
   return (
@@ -19,6 +20,10 @@ function App() {
           <Route path="browse" element={<BrowseFlights />} />
           <Route path="registration" element={<Registration />} />
           <Route path="login" element={<Login />} />
+          <Route
+            path="ticket-history"
+            element={<UserTicketPurchaseHistory />}
+          />
         </Routes>
       </main>
     </BrowserRouter>
