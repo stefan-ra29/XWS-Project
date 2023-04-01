@@ -19,6 +19,7 @@ export default function Header() {
         {localStorage.getItem("token") == null && (
           <NavLink to="/registration">Register</NavLink>
         )}
+        <NavLink to="/ticket-history">Purchase history</NavLink>
       </nav>
     </header>
   );
