@@ -9,6 +9,7 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import UserTicketPurchaseHistory from "./pages/UserTicketPurchaseHistory";
 import FlightManagment from './pages/FlightManagment';
+import NewFlight from './pages/NewFlight';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             element={<UserTicketPurchaseHistory />}
           />
           <Route path='flights' element={<FlightManagment />} />
+          <Route path='new-flight' element={<NewFlight />} />
         </Routes>
       </main>
     </BrowserRouter>

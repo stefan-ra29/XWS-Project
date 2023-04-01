@@ -69,4 +69,8 @@ public class FlightService implements IFlightService {
             throw new RuntimeException("Can't access flight from database.");
         }
     }
+    public boolean saveNewFlight(Flight flight){
+        flightRepository.save(flight);
+        return true;
+    }
 }

@@ -3,6 +3,7 @@ package com.xwsProject.FlightsBackend.flight;
 import com.xwsProject.FlightsBackend.flight.dto.AvailablePlacesDTO;
 import com.xwsProject.FlightsBackend.flight.dto.FlightSearchQueryDTO;
 import com.xwsProject.FlightsBackend.flight.dto.FlightSearchResultDTO;
+import com.xwsProject.FlightsBackend.flightTickets.dto.FlightTicketPurchaseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +50,15 @@ public class FlightController {
         }
 
         return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<String> buy(@RequestBody Flight flight) {
+        try{
+            flightService.saveNewFlight(flight);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity("Error", HttpStatus.BAD_REQUEST);
+        }
     }
 }

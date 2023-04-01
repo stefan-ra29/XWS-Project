@@ -11,4 +11,5 @@ public interface IFlightService {
     List<Flight> search(FlightSearchQueryDTO searchQuery);
     AvailablePlacesDTO getAvailablePlaces();
     Flight getById(String flightId);
+    boolean saveNewFlight(Flight flight);
 }
