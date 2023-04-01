@@ -2,6 +2,7 @@ package com.xwsProject.FlightsBackend.security;
 
 import com.xwsProject.FlightsBackend.user.IUserService;
 import com.xwsProject.FlightsBackend.user.User;
+import com.xwsProject.FlightsBackend.utils.CustomBadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/auth")
 public class AuthController {
 
     private final JwtUtil jwtUtil;
@@ -27,7 +28,7 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
             );
         } catch (Exception e) {
-            throw new Exception("Invalid email or password");
+            throw new CustomBadRequestException("Invalid email or password");
         }
         User user = userService.getUserByUsername(authRequest.getEmail());
         return jwtUtil.generateToken(authRequest.getEmail(), user.getRole().name(), user.getId());

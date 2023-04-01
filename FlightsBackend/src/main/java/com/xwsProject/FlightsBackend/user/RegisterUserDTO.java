@@ -12,12 +12,16 @@ import lombok.NoArgsConstructor;
 public class RegisterUserDTO {
     String email;
     String password;
+    String name;
+    String surname;
 
     public User map() {
         return User.builder()
                 .role(UserRole.BASIC_USER)
                 .username(email)
                 .password(password)
+                .surname(surname)
+                .name(name)
                 .build();
     }
 }
