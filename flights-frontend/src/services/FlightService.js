@@ -1,9 +1,9 @@
-import axios from "axios";
+import { getAxios } from "../utils/AxiosWrapper";
 
 const apiURL = "http://localhost:8086/api/flight/";
 
 export function getAllFlights(setFlights) {
-  axios
+  getAxios()
     .get(apiURL + "getAll")
     .then((response) => {
       setFlights(response.data);
@@ -14,7 +14,7 @@ export function getAllFlights(setFlights) {
 }
 
 export function searchFlights(searchQuery, setFlights, setNumberOfTickets) {
-  axios
+  getAxios()
     .post(apiURL + "search", searchQuery)
     .then((response) => {
       setFlights(response.data);
@@ -26,7 +26,7 @@ export function searchFlights(searchQuery, setFlights, setNumberOfTickets) {
 }
 
 export function getAvailablePlaces(setDepartures, setDestinations) {
-  axios
+  getAxios()
     .get(apiURL + "available-places")
     .then((response) => {
       setDepartures(response.data.departures);
