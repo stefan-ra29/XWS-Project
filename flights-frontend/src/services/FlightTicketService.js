@@ -26,3 +26,15 @@ export function buyTickets(
       console.log(error);
     });
 }
+export function getUsersPurchasedTickets(setPurchasedTickets) {
+  getAxios()
+    .get(apiURL + "getByUser", { params: { userId: "0" } })
+    .then((response) => {
+      console.log("i got tickets");
+      console.log(response.data);
+      setPurchasedTickets(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}

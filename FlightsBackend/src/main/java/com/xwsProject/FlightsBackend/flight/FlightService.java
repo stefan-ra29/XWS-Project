@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -60,5 +61,17 @@ public class FlightService implements IFlightService {
                                 .destinations(destinations)
                                 .departures(departures)
                                 .build();
+    }
+
+    @Override
+    public Flight getById(String flightId) {
+        try{
+            Optional<Flight> flight = flightRepository.findById(flightId);
+            if(flight.isEmpty())
+                throw new Exception("Flight doesn't exist.");
+            return flight.get();
+        }catch (Exception e){
+            throw new RuntimeException("Can't access flight from database.");
+        }
     }
 }

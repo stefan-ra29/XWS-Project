@@ -2,10 +2,11 @@ package com.xwsProject.FlightsBackend.flightTickets;
 
 import com.xwsProject.FlightsBackend.flight.Flight;
 import com.xwsProject.FlightsBackend.flight.IFlightRepository;
-import com.xwsProject.FlightsBackend.flightTickets.FlightTicketPurchase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,25 @@ public class FlightTicketPurchaseService implements IFlightTicketPurchaseService
             }
         }catch (Exception e){
             throw new RuntimeException("Can't save to database.");
+        }
+    }
+
+    @Override
+    public List<PurchasedTicketWithFlight> getTickets(String userId) {
+        try{
+           List<PurchasedTicketWithFlight> ticketsWithFlight = new ArrayList<>();
+           List<FlightTicketPurchase> tickets = flightTicketPurchaseRepository.findAllByCustomerId(userId);
+           if (tickets.size() > 0 ){
+               for (FlightTicketPurchase ticket: tickets) {
+                   ticketsWithFlight.add(PurchasedTicketWithFlight.builder()
+                           .flight(flightRepository.findById(ticket.getFlightId()).get())
+                           .ticket(ticket)
+                           .build());
+               }
+           }
+           return ticketsWithFlight;
+        }catch(Exception e){
+            throw new RuntimeException("Can't access bought tickets from database.");
         }
     }
 }

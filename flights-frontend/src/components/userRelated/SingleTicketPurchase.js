@@ -29,12 +29,16 @@ export default function SingleTicketPurchase({
           <p>{arrivalDate}</p>
         </div>
         <div className="info-section">
-          <p>Total price for {numberOfTickets} tickets: </p>
+          <p>Number of tickets: </p>
+          <p>{numberOfTickets}</p>
+        </div>
+        <div className="info-section">
+          <p>Total price: </p>
           <p>${totalPrice}</p>
         </div>
         <div className="info-section">
           <p>Purchase date: </p>
-          <p>${purchaseDate}</p>
+          <p>{purchaseDate}</p>
         </div>
       </div>
     </div>

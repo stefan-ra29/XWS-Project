@@ -11,6 +11,6 @@ public interface IFlightService {
     List<Flight> search(FlightSearchQueryDTO searchQuery);
 
     Flight create(Flight flight);
-
     AvailablePlacesDTO getAvailablePlaces();
+    Flight getById(String flightId);
 }

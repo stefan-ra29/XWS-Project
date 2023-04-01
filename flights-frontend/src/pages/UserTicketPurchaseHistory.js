@@ -1,12 +1,15 @@
 import SingleTicketPurchase from "../components/userRelated/SingleTicketPurchase";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-//import { searchFlights, getAvailablePlaces } from "../services/FlightService";
+import { getUsersPurchasedTickets } from "../services/FlightTicketService";
 import "./styles/UserTicketPurchaseHistory.css";
-//import FlightsSearchForm from "../components/flights/FlightSearchForm";
 
 export default function UserTicketPurchaseHistory() {
   const [purchasedTickets, setPurchasedTickets] = useState([]);
+
+  useEffect(() => {
+    getUsersPurchasedTickets(setPurchasedTickets);
+  }, [setPurchasedTickets]);
 
   return (
     <>
@@ -18,9 +21,9 @@ export default function UserTicketPurchaseHistory() {
             {purchasedTickets.map((purchasedTicket) => {
               return (
                 <SingleTicketPurchase
-                  key={purchasedTicket.id}
-                  departureDate={purchasedTicket.departureDateTime}
-                  arrivalDate={purchasedTicket.arrivalDateTime}
+                  key={purchasedTicket.ticketId}
+                  departureDate={purchasedTicket.departureDate}
+                  arrivalDate={purchasedTicket.arrivalDate}
                   totalPrice={purchasedTicket.totalPrice}
                   numberOfTickets={purchasedTicket.numberOfTickets}
                   departure={purchasedTicket.departure}
