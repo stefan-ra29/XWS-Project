@@ -1,10 +1,14 @@
+h1{
+    color: white;
+    font-size: 40px;
+}
 .table{
-    margin-top: 60px;
+    margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
     color:white;
     font-size: 18px;
-    width:70%;
+    width:100%;
 }
 
 th{
@@ -27,7 +31,14 @@ td{
     
 }
 
-button{
+.tbl-content{
+    margin-top: 60px;
+    width:70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.delete-btn{
     background-color: #B13B36;
     color:white;
     font-weight: 600;
@@ -38,8 +49,29 @@ button{
     padding-left: 30px;
     padding-right: 30px;
 }
-    
-button:hover{
-    background-color: #d94a45;
+
+.delete-btn:hover{
+    background-color: #db261f;
+    transition: background-color .15s ease-in;
     cursor: pointer;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.new-flight-btn{
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 10px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+.new-flight-btn:hover{
+    background-color: white;
+    color: #47578C;
+    cursor: pointer;
+    transition: background-color .3s ease-in;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }

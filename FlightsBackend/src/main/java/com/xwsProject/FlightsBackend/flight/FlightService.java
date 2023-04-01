@@ -56,4 +56,9 @@ public class FlightService implements IFlightService {
                                 .departures(departures)
                                 .build();
     }
+
+    public boolean saveNewFlight(Flight flight){
+        flightRepository.save(flight);
+        return true;
+    }
 }

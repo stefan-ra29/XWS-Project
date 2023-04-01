@@ -13,6 +13,7 @@ export default function FlightManagment() {
     return (
     <>
     <div className="tbl-content">
+    <h1>Flight Managment</h1>
         <table class="table">
             <thead>
                 <tr>
@@ -34,11 +35,12 @@ export default function FlightManagment() {
                     <td>{flight.arrivalDateTime}</td>
                     <td>{flight.pricePerTicket}€</td>
                     <td>{flight.availableSeats}</td>
-                    <td><button>Delete</button></td>
+                    <td><button className="delete-btn">Delete</button></td>
                 </tr>
                 ))}
             </tbody>
         </table>
+        <a href="/new-flight"><button className="new-flight-btn">New flight</button></a>
     </div>
     </>
   );

@@ -35,4 +35,15 @@ export function getAvailablePlaces(setDepartures, setDestinations) {
     .catch((error) => {
       console.log(error);
     });
+} 
+
+export function saveFlight(newFlight) {
+  axios
+    .post(apiURL + "save", newFlight)
+    .then((response) => {
+      console.log("flight saved");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }

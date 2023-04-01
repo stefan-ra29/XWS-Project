@@ -9,6 +9,6 @@ public interface IFlightService {
 
     List<Flight> getAll();
     List<Flight> search(FlightSearchQueryDTO searchQuery);
-
     AvailablePlacesDTO getAvailablePlaces();
+    boolean saveNewFlight(Flight flight);
 }
