@@ -38,11 +38,6 @@ public class FlightService implements IFlightService {
     }
 
     @Override
-    public Flight create(Flight flight) {
-        return flightRepository.save(flight);
-    }
-
-    @Override
     public AvailablePlacesDTO getAvailablePlaces() {
         List<Flight> allFlights = flightRepository.findAll();
         List<String> departures = new ArrayList<>();
