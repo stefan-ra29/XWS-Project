@@ -10,5 +10,7 @@ public interface IFlightService {
     List<Flight> getAll();
     List<Flight> search(FlightSearchQueryDTO searchQuery);
 
+    Flight create(Flight flight);
+
     AvailablePlacesDTO getAvailablePlaces();
 }
