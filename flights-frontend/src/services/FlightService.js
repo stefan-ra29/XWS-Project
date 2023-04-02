@@ -38,7 +38,7 @@ export function getAvailablePlaces(setDepartures, setDestinations) {
 } 
 
 export function saveFlight(newFlight) {
-  axios
+  getAxios()
     .post(apiURL + "save", newFlight)
     .then((response) => {
       console.log("flight saved");
@@ -49,7 +49,7 @@ export function saveFlight(newFlight) {
 }
 
 export function deleteFlight(id) {
-  axios
+  getAxios()
     .delete(apiURL + "delete?id=" + id)
     .then((response) => {
       console.log("flight deleted");
