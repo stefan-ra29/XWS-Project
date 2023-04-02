@@ -8,6 +8,7 @@ import com.xwsProject.FlightsBackend.flightTickets.modelMapper.FlightTicketPurch
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class FlightTicketPurchaseController {
     private FlightTicketPurchaseDTOMapper flightTicketPurchaseDTOMapper = new FlightTicketPurchaseDTOMapper();
     private BoughtTicketDTOMapper boughtTicketDTOMapper = new BoughtTicketDTOMapper();
 
+    @PreAuthorize("hasRole('BASIC_USER')")
     @PostMapping("/buy")
     public ResponseEntity<String> buy(@RequestBody FlightTicketPurchaseDTO madePurchase) {
         try{
@@ -32,6 +34,7 @@ public class FlightTicketPurchaseController {
         }
     }
 
+    @PreAuthorize("hasRole('BASIC_USER')")
     @GetMapping("/getByUser")
     public ResponseEntity<List<BoughtTicketDTO>> getTickets(@RequestParam String userId) {
         try{

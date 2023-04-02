@@ -2,6 +2,8 @@ import { NavLink } from "react-router-dom";
 import "./Header.css";
 
 export default function Header() {
+  console.log(localStorage.getItem("token"));
+
   return (
     <header>
       <nav>
@@ -19,7 +21,9 @@ export default function Header() {
         {localStorage.getItem("token") == null && (
           <NavLink to="/registration">Register</NavLink>
         )}
-        <NavLink to="/ticket-history">Purchase history</NavLink>
+        {localStorage.getItem("token") !== null && (
+          <NavLink to="/ticket-history">Purchase history</NavLink>
+        )}
       </nav>
     </header>
   );
