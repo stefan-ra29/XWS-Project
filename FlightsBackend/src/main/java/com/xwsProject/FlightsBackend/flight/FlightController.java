@@ -4,6 +4,7 @@ import com.xwsProject.FlightsBackend.flight.dto.AvailablePlacesDTO;
 import com.xwsProject.FlightsBackend.flight.dto.FlightSearchQueryDTO;
 import com.xwsProject.FlightsBackend.flight.dto.FlightSearchResultDTO;
 import com.xwsProject.FlightsBackend.flightTickets.dto.FlightTicketPurchaseDTO;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,9 +52,19 @@ public class FlightController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> buy(@RequestBody Flight flight) {
+    public ResponseEntity<String> save(@RequestBody Flight flight) {
         try{
             flightService.saveNewFlight(flight);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity("Error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@PathParam("id") String id) {
+        try{
+            flightService.deleteFlight(id);
             return new ResponseEntity(HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity("Error", HttpStatus.BAD_REQUEST);

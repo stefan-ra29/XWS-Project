@@ -9,7 +9,7 @@ export default function Header() {
           <h1>XWS Flights</h1>
           <NavLink to='/'>Home</NavLink>
           <NavLink to='/browse'>Browse flights</NavLink>
-          <NavLink to='/flights'>Flight managmen</NavLink>
+          <NavLink to='/flights'>Flight managment</NavLink>
         </nav>
     </header>
   )

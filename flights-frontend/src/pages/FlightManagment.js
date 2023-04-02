@@ -1,6 +1,6 @@
 import "./styles/FlightManagment.css";
 import { useEffect, useState } from "react";
-import { getAllFlights } from "../services/FlightService";
+import { getAllFlights, deleteFlight } from "../services/FlightService";
 
 
 export default function FlightManagment() {
@@ -14,7 +14,7 @@ export default function FlightManagment() {
     <>
     <div className="tbl-content">
     <h1>Flight Managment</h1>
-        <table class="table">
+        <table className="table">
             <thead>
                 <tr>
                     <th>Departure</th>
@@ -35,7 +35,14 @@ export default function FlightManagment() {
                     <td>{flight.arrivalDateTime}</td>
                     <td>{flight.pricePerTicket}€</td>
                     <td>{flight.availableSeats}</td>
-                    <td><button className="delete-btn">Delete</button></td>
+                    <td><button className="delete-btn"
+                         onClick={() => {
+                            deleteFlight(flight.id); 
+                            const modifiedFlights = flights.filter(f => f.id !== flight.id);
+                            setFlights(modifiedFlights);
+                            }}>
+                        Delete
+                        </button></td>
                 </tr>
                 ))}
             </tbody>
