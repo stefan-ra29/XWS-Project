@@ -15,12 +15,14 @@ header nav h1 {
     margin-right: auto;
     border-bottom: 3px solid var(--primary);
     font-size: 2em;
+    color: aliceblue;
 }
 header nav a{
     text-decoration: none;
     padding: 8px;
     border-radius: 4px;
     height: fit-content;
+    color: aliceblue;
 }
 header nav a.active {
     background: var(--primary); 

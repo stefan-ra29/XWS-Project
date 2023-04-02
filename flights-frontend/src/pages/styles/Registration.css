@@ -1,0 +1,23 @@
+.registration-form-container {
+    padding: 20px;
+    background-color: white;
+    width: 500px;
+    border-radius: 30px;
+    margin: auto;
+    margin-top: 50px;
+}
+.registration-form-row {
+    margin-bottom: 20px;
+}
+.registration-form-label {
+    display: inline-block;
+    text-align: right;
+    width: 150px;
+}
+.registration-form-input {
+    margin-left: 10px;
+}
+.registration-form-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}

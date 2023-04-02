@@ -12,7 +12,7 @@ public class FlightTicketPurchaseDTOMapper {
                 .flightId(purchaseDTO.getFlightId())
                 .numberOfTickets(purchaseDTO.getNumberOfTickets())
                 .purchaseDate(LocalDateTime.now())
-                .customerId("0")
+                .customerId(purchaseDTO.getCustomerId())
                 .totalPrice(purchaseDTO.getTotalPrice())
                 .build();
     }

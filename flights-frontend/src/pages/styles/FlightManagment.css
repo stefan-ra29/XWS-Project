@@ -1,0 +1,77 @@
+.tbl-content h1{
+    color: white;
+    font-size: 40px;
+}
+.tbl-content .table{
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    color:white;
+    font-size: 18px;
+    width:100%;
+}
+
+.tbl-content th{
+    padding: 20px 15px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.tbl-content td{
+    text-align: center;
+    padding: 18px;
+    vertical-align:middle;
+    font-weight: 400;
+    font-size: 15px;
+    color: #fff;
+    border-bottom: solid 1px rgba(255,255,255,0.1);
+    
+}
+
+.tbl-content{
+    margin-top: 60px;
+    width:70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tbl-content .delete-btn{
+    background-color: #B13B36;
+    color:white;
+    font-weight: 600;
+    border-radius: 5px;
+    border:0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.tbl-content .delete-btn:hover{
+    background-color: #db261f;
+    transition: background-color .15s ease-in;
+    cursor: pointer;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.tbl-content .new-flight-btn{
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 10px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+.tbl-content .new-flight-btn:hover{
+    background-color: white;
+    color: #47578C;
+    cursor: pointer;
+    transition: background-color .3s ease-in;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}

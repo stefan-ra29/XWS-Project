@@ -1,0 +1,83 @@
+.new-flight-div h1{
+    color: white;
+    font-size: 40px;
+}
+
+.new-flight-div{
+    margin-top: 60px;
+    width:70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.new-flight-div input{
+    height: 30px;
+    width: 100%;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color:white;
+    font-size: 16px;
+}
+
+.new-flight-div input:focus{
+    background-color: #2d395e;
+    transition: background-color 0.3s;
+    outline:0px;
+}
+
+.new-flight-div label{
+    font-size: 18px;
+    margin-bottom: 25px;
+    font-weight: 600;
+    color:white;
+}
+
+.new-flight-div .cancel-btn{
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 10px 35px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-left: 20px;
+
+
+}
+
+.new-flight-div .cancel-btn:hover{
+    background-color: white;
+    color: #47578C;
+    cursor: pointer;
+    transition: background-color .3s ease-in;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.new-flight-div .save-btn{
+    background-color: white;
+    color:  #47578C;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 10px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-right: 20px;
+}
+
+.new-flight-div .save-btn:hover{
+    background-color: rgba(255, 255, 255, 0.678);
+    color: #47578C;
+    cursor: pointer;
+    transition: background-color .3s ease-in;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.new-flight-div .input-div{
+    width: 300px;
+    margin-top: 40px;
+}
