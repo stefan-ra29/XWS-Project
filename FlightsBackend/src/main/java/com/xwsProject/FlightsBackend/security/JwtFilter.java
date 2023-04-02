@@ -1,5 +1,6 @@
 package com.xwsProject.FlightsBackend.security;
 
+import com.xwsProject.FlightsBackend.utils.CustomBadRequestException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

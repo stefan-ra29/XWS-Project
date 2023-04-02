@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUsersPurchasedTickets } from "../services/FlightTicketService";
 import "./styles/UserTicketPurchaseHistory.css";
+import { getRoleFromLocalStorage } from "../utils/LocalStorageService";
 
 export default function UserTicketPurchaseHistory() {
   const [purchasedTickets, setPurchasedTickets] = useState([]);
-
+  const role = getRoleFromLocalStorage();
   useEffect(() => {
+    if (role != "BASIC_USER") {
+      window.location.replace("/");
+    }
     getUsersPurchasedTickets(setPurchasedTickets);
   }, [setPurchasedTickets]);
 

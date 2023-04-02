@@ -1,5 +1,5 @@
 import React from "react";
-import './FlightSearchForm.css'
+import "./FlightSearchForm.css";
 
 export default function FlightsSearchForm({
   handleSubmit,
@@ -8,6 +8,14 @@ export default function FlightsSearchForm({
   departures,
   destinations,
 }) {
+  const disablePastDate = () => {
+    const today = new Date();
+    const dd = String(today.getDate() + 1).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const yyyy = today.getFullYear();
+    return yyyy + "-" + mm + "-" + dd;
+  };
+
   return (
     <form className="searchForm" onSubmit={handleSubmit}>
       <div className="departureSection">
@@ -34,6 +42,7 @@ export default function FlightsSearchForm({
           id="departureDate"
           value={searchQuery.departureDate}
           onChange={handleInputChange}
+          min={disablePastDate()}
         />
       </div>
 
@@ -61,6 +70,7 @@ export default function FlightsSearchForm({
           id="arrivalDate"
           value={searchQuery.arrivalDate}
           onChange={handleInputChange}
+          min={disablePastDate()}
         />
       </div>
 

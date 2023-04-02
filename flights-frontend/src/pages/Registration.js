@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { register } from "../services/RegistrationService";
 import "./styles/Registration.css";
 
@@ -7,6 +7,12 @@ const Registration = () => {
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("token") != null) {
+      window.location.replace("/");
+    }
+  }, []);
 
   function handleRegistraion() {
     register({
