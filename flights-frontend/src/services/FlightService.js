@@ -1,4 +1,5 @@
 import { getAxios } from "../utils/AxiosWrapper";
+import { toast } from "react-toastify";
 
 const apiURL = "http://localhost:8086/api/flight/";
 
@@ -52,7 +53,7 @@ export function deleteFlight(id) {
   getAxios()
     .delete(apiURL + "delete?id=" + id)
     .then((response) => {
-      console.log("flight deleted");
+        toast.success("You have successfully deleted flight!")
     })
     .catch((error) => {
       console.log(error);

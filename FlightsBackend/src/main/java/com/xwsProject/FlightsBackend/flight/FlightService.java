@@ -69,11 +69,12 @@ public class FlightService implements IFlightService {
             throw new RuntimeException("Can't access flight from database.");
         }
     }
+    @Override
     public boolean saveNewFlight(Flight flight){
         flightRepository.save(flight);
         return true;
     }
-
+    @Override
     public boolean deleteFlight(String id){
         flightRepository.deleteById(id);
         return true;
