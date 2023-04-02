@@ -10,6 +10,7 @@ export function register(dto) {
       toast.success("You have successfully registered your account!", {
         position: "top-right",
       });
+      window.location.replace("/");
     })
     .catch((error) => {
       toast.error(error.response.data.message);

@@ -4,10 +4,12 @@ import com.xwsProject.FlightsBackend.flight.dto.AvailablePlacesDTO;
 import com.xwsProject.FlightsBackend.flight.dto.FlightSearchQueryDTO;
 import com.xwsProject.FlightsBackend.flight.dto.FlightSearchResultDTO;
 import com.xwsProject.FlightsBackend.flightTickets.dto.FlightTicketPurchaseDTO;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -53,6 +55,7 @@ public class FlightController {
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
+    @RolesAllowed("ROLE_ADMINISTRATOR")
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Flight flight) {
         try{
@@ -63,6 +66,7 @@ public class FlightController {
         }
     }
 
+    @RolesAllowed("ROLE_ADMINISTRATOR")
     @DeleteMapping("/delete")
     public ResponseEntity<String> delete(@PathParam("id") String id) {
         try{
