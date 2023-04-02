@@ -26,7 +26,7 @@ export default function FlightManagment() {
 
     return (
     <>
-    <div className="tbl-content">
+    <div className="new-flight-div">
         <h1>New Flight</h1>
 
         <div className="input-div">

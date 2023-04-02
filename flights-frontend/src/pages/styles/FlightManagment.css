@@ -1,8 +1,8 @@
-h1{
+.tbl-content h1{
     color: white;
     font-size: 40px;
 }
-.table{
+.tbl-content .table{
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
@@ -11,7 +11,7 @@ h1{
     width:100%;
 }
 
-th{
+.tbl-content th{
     padding: 20px 15px;
     text-align: center;
     font-weight: 500;
@@ -20,7 +20,7 @@ th{
     text-transform: uppercase;
 }
 
-td{
+.tbl-content td{
     text-align: center;
     padding: 18px;
     vertical-align:middle;
@@ -38,7 +38,7 @@ td{
     margin-right: auto;
 }
 
-.delete-btn{
+.tbl-content .delete-btn{
     background-color: #B13B36;
     color:white;
     font-weight: 600;
@@ -50,14 +50,14 @@ td{
     padding-right: 30px;
 }
 
-.delete-btn:hover{
+.tbl-content .delete-btn:hover{
     background-color: #db261f;
     transition: background-color .15s ease-in;
     cursor: pointer;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
-.new-flight-btn{
+.tbl-content .new-flight-btn{
     background-color: transparent;
     color: white;
     border: 1px solid white;
@@ -68,7 +68,7 @@ td{
     margin-top: 30px;
 }
 
-.new-flight-btn:hover{
+.tbl-content .new-flight-btn:hover{
     background-color: white;
     color: #47578C;
     cursor: pointer;

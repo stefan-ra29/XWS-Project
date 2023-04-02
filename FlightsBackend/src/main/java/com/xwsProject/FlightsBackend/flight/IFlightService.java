@@ -12,4 +12,5 @@ public interface IFlightService {
     AvailablePlacesDTO getAvailablePlaces();
     Flight getById(String flightId);
     boolean saveNewFlight(Flight flight);
+    boolean deleteFlight(String id);
 }

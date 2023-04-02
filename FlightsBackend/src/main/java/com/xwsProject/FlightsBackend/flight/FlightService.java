@@ -73,4 +73,9 @@ public class FlightService implements IFlightService {
         flightRepository.save(flight);
         return true;
     }
+
+    public boolean deleteFlight(String id){
+        flightRepository.deleteById(id);
+        return true;
+    }
 }

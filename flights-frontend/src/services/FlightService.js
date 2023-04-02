@@ -47,3 +47,14 @@ export function saveFlight(newFlight) {
       console.log(error);
     });
 }
+
+export function deleteFlight(id) {
+  axios
+    .delete(apiURL + "delete?id=" + id)
+    .then((response) => {
+      console.log("flight deleted");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
