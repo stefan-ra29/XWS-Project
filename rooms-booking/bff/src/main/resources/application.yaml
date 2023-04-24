@@ -1,0 +1,8 @@
+grpc:
+  client:
+    user-service:
+      address: static://localhost:6565
+      negotiationType: plaintext
+    room-service:
+      address: static://localhost:6565
+      negotiationType: plaintext

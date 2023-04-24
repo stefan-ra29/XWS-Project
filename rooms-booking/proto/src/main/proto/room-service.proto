@@ -1,0 +1,15 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "com.xwsBooking.room";
+
+message RoomTestRequest {
+  string roomNumber = 1;
+}
+
+message RoomTestResponse {
+  string roomNumberMessage = 1;
+}
+
+service RoomService {
+  rpc getTestMessage(RoomTestRequest) returns (RoomTestResponse);
+}
