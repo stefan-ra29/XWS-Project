@@ -4,5 +4,7 @@ grpc:
       address: static://localhost:6565
       negotiationType: plaintext
     room-service:
-      address: static://localhost:6565
+      address: static://localhost:7575
       negotiationType: plaintext
+server:
+  port: 8085
