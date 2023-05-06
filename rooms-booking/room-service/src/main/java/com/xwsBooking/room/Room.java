@@ -1,11 +1,14 @@
 package com.xwsBooking.room;
 
+import com.xwsBooking.availability.Availability;
+import com.xwsBooking.price.Price;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -44,4 +47,10 @@ public class Room {
 
     @Column(name = "host_id", nullable = false)
     private long hostId;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    private List<Availability> availabilities;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    private List<Price> prices;
 }

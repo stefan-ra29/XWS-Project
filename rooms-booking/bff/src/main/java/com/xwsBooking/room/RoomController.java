@@ -1,5 +1,7 @@
 package com.xwsBooking.room;
 
+import com.xwsBooking.room.dtos.AvailabilityDto;
+import com.xwsBooking.room.dtos.PriceDto;
 import com.xwsBooking.room.dtos.RoomDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,4 +22,15 @@ public class RoomController {
         return roomService.create(roomDto);
     }
 
+    @PostMapping
+    @RequestMapping("/create-availability")
+    public AvailabilityDto createAvailability(@RequestBody AvailabilityDto availabilityDto) {
+        return roomService.createAvailability(availabilityDto);
+    }
+
+    @PostMapping
+    @RequestMapping("/create-price")
+    public PriceDto createPrice(@RequestBody PriceDto priceDto) {
+        return roomService.createPrice(priceDto);
+    }
 }
