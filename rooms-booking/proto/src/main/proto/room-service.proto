@@ -24,7 +24,47 @@ message RoomGrpcDto {
   int64 hostId = 11;
 }
 
+message AvailabilityRequest {
+  int64 id = 1;
+  int64 roomId = 2;
+  string from = 3;
+  string to = 4;
+  int64 hostId = 5;
+}
+
+message AvailabilityResponse {
+  int64 id = 1;
+  int64 roomId = 2;
+  string from = 3;
+  string to = 4;
+  int64 hostId = 5;
+  string responseMessage = 6;
+}
+
+message PriceRequest {
+  int64 id = 1;
+  int64 roomId = 2;
+  string from = 3;
+  string to = 4;
+  int64 hostId = 5;
+  int32 type = 6;
+  double price = 7;
+}
+
+message PriceResponse {
+  int64 id = 1;
+  int64 roomId = 2;
+  string from = 3;
+  string to = 4;
+  int64 hostId = 5;
+  int32 type = 6;
+  double price = 7;
+  string responseMessage = 8;
+}
+
 service RoomService {
   rpc getTestMessage(RoomTestRequest) returns (RoomTestResponse);
   rpc create(RoomGrpcDto) returns (RoomGrpcDto);
+  rpc createAvailability(AvailabilityRequest) returns (AvailabilityResponse);
+  rpc createPrice(PriceRequest) returns (PriceResponse);
 }
