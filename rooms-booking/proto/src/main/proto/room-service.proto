@@ -10,6 +10,21 @@ message RoomTestResponse {
   string roomNumberMessage = 1;
 }
 
+message RoomGrpcDto {
+  int64 id = 1;
+  string name = 2;
+  string location = 3;
+  bool wifi = 4;
+  bool kitchen = 5;
+  bool freeParking = 6;
+  bool airConditioning = 7;
+  int32 minNumberOfGuests = 8;
+  int32 maxNumberOfGuests = 9;
+  repeated string images = 10;
+  int64 hostId = 11;
+}
+
 service RoomService {
   rpc getTestMessage(RoomTestRequest) returns (RoomTestResponse);
+  rpc create(RoomGrpcDto) returns (RoomGrpcDto);
 }
