@@ -10,6 +10,33 @@ message GetUsernameResponse {
   string username = 1;
 }
 
+message AddressDTO_grpc{
+    string country = 1;
+    string city = 2;
+    string street = 3;
+    string streetNumber = 4;
+}
+
+message RegisterUserDTO_grpc{
+    string firstName = 1;
+    string lastName = 2;
+    string username = 3;
+    string password = 4;
+    string email = 5;
+    bool isHost = 6;
+    AddressDTO_grpc address = 7;
+}
+
+message RegisterUserRequest{
+    RegisterUserDTO_grpc registerUserDTO = 1;
+}
+
+message RegisterUserResponse{
+    string username = 1;
+}
+
+
 service UserService {
   rpc getUsernameById(GetUsernameRequest) returns (GetUsernameResponse);
+  rpc registerUser(RegisterUserRequest) returns (RegisterUserResponse);
 }

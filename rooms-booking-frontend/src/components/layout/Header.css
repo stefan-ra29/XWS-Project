@@ -1,0 +1,35 @@
+:root {
+  --primary: seashell;
+  --secondary: #2a9d8f;
+  --ternary: #264653;
+}
+
+header nav {
+  display: flex;
+  justify-content: flex-end;
+  background-color: var(--secondary);
+  gap: 16px;
+  height: 60px;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+header nav h1 {
+  margin-right: auto;
+  color: seashell;
+  align-self: center;
+  font-size: xx-large;
+}
+
+header a {
+  color: seashell;
+  align-self: center;
+  font-size: large;
+}
+
+a:hover {
+  color: #264653;
+}
+header nav a.active {
+  color: #264653;
+}
