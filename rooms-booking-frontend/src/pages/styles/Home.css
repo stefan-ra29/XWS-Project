@@ -1,0 +1,7 @@
+:root {
+  --primary: seashell;
+  --secondary: #2a9d8f;
+}
+body {
+  background-color: var(--primary);
+}

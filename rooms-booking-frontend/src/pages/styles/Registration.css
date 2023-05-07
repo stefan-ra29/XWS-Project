@@ -1,0 +1,16 @@
+.alignment {
+  text-align: center;
+  margin-top: 20px;
+  color: #264653;
+}
+
+.button-alignment {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100%;
+}
+body {
+  background-color: seashell;
+}
