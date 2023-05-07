@@ -63,6 +63,34 @@ message PriceResponse {
   string responseMessage = 8;
 }
 
+message SearchRequest {
+  string location = 1;
+  int32 numberOfGuests = 2;
+  string dateFrom = 3;
+  string dateTo = 4;
+}
+
+message SearchResultGrpcDTO {
+  string location = 1;
+  string name = 2;
+  double pricePerDay = 3;
+  double totalPrice = 4;
+  bool hasAC = 5;
+  bool hasFreeParking = 6;
+  bool hasKitchen = 7;
+  bool hasWifi = 8;
+  int32 minGuests = 9;
+  int32 maxGuests = 10;
+}
+
+message SearchResponse {
+  repeated SearchResultGrpcDTO rooms = 1;
+}
+
+service ReservationService {
+  rpc searchRooms(SearchRequest) returns (SearchResponse);
+}
+
 service RoomService {
   rpc getTestMessage(RoomTestRequest) returns (RoomTestResponse);
   rpc create(RoomGrpcDto) returns (RoomGrpcDto);
