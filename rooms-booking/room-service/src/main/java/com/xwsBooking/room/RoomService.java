@@ -1,11 +1,17 @@
 package com.xwsBooking.room;
 
 import com.xwsBooking.availability.AvailabilityService;
+import com.xwsBooking.files.FirebaseFileService;
 import com.xwsBooking.price.PriceService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @GrpcService
@@ -15,6 +21,7 @@ public class RoomService extends RoomServiceGrpc.RoomServiceImplBase {
     private final RoomRepository roomRepository;
     private final AvailabilityService availabilityService;
     private final PriceService priceService;
+    private final FirebaseFileService fileService;
 
     @Override
     public void create(RoomGrpcDto request, StreamObserver<RoomGrpcDto> responseObserver) {
@@ -28,7 +35,18 @@ public class RoomService extends RoomServiceGrpc.RoomServiceImplBase {
                 .wifi(request.getWifi())
                 .maxNumberOfGuests(request.getMaxNumberOfGuests())
                 .minNumberOfGuests(request.getMinNumberOfGuests())
+                .images(new ArrayList<>())
                 .build());
+        for (int i = 0; i < request.getUploadImagesList().size(); i++) {
+            try {
+                var imagePath = fileService.saveTest(request.getUploadImages(i).toByteArray(), String.valueOf(i));
+                room.getImages().add(RoomImage.builder().path(imagePath).room(room).build());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        roomRepository.save(room);
+
         responseObserver.onNext(convert(room));
         responseObserver.onCompleted();
     }
@@ -57,6 +75,7 @@ public class RoomService extends RoomServiceGrpc.RoomServiceImplBase {
                 .setMaxNumberOfGuests(room.getMaxNumberOfGuests())
                 .setMinNumberOfGuests(room.getMinNumberOfGuests())
                 .setName(room.getName())
+                .addAllImages(room.getImages().stream().map(RoomImage::getPath).collect(Collectors.toSet()))
                 .setWifi(room.isWifi())
                 .setHostId(room.getHostId())
                 .build();

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -53,4 +54,7 @@ public class Room {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Price> prices;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "room")
+    private List<RoomImage> images = new ArrayList<>();
 }

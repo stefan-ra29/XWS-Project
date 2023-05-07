@@ -1,17 +1,29 @@
 package com.xwsBooking.utils;
 
+import com.google.protobuf.ByteString;
 import com.xwsBooking.room.*;
 import com.xwsBooking.room.dtos.AvailabilityDto;
 import com.xwsBooking.room.dtos.PriceDto;
 import com.xwsBooking.room.dtos.RoomDto;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Mappers {
 
-    public static RoomGrpcDto map(RoomDto roomDto) {
-
+    public static RoomGrpcDto map(RoomDto roomDto, List<byte[]> images) {
+//        List<ByteString> bytes = new ArrayList<>();
+//        for(var f : files) {
+//            try {
+//                bytes.add(ByteString.copyFrom(f.getBytes()));
+//            } catch (IOException e) {
+//                throw new CustomBadRequestException("");
+//            }
+//        }
         var r = RoomGrpcDto.newBuilder()
                 .setAirConditioning(roomDto.isAirConditioning())
                 .setFreeParking(roomDto.isFreeParking())
@@ -22,6 +34,7 @@ public class Mappers {
                 .setKitchen(roomDto.isKitchen())
                 .setMaxNumberOfGuests(roomDto.getMaxNumberOfGuests())
                 .setMinNumberOfGuests(roomDto.getMinNumberOfGuests())
+                .addAllUploadImages(images.stream().map(ByteString::copyFrom).collect(Collectors.toSet()))
                 .setWifi(roomDto.isWifi())
                 .buildPartial();
         return r;
@@ -39,7 +52,7 @@ public class Mappers {
                 .maxNumberOfGuests(roomGrpcDto.getMaxNumberOfGuests())
                 .minNumberOfGuests(roomGrpcDto.getMinNumberOfGuests())
                 .wifi(roomGrpcDto.getWifi())
-                .images(new ArrayList<>())
+                .images(roomGrpcDto.getImagesList())
                 .build();
     }
 

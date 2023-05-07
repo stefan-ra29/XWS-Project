@@ -33,3 +33,4 @@ build/
 .vscode/
 
 *.env
+/room-service/src/main/resources/firebase.json
