@@ -22,6 +22,7 @@ message RoomGrpcDto {
   int32 maxNumberOfGuests = 9;
   repeated string images = 10;
   int64 hostId = 11;
+  repeated bytes uploadImages = 12;
 }
 
 message AvailabilityRequest {

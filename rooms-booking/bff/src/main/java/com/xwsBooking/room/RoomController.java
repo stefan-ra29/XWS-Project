@@ -4,10 +4,10 @@ import com.xwsBooking.room.dtos.AvailabilityDto;
 import com.xwsBooking.room.dtos.PriceDto;
 import com.xwsBooking.room.dtos.RoomDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @RestController
@@ -18,8 +18,8 @@ public class RoomController {
     private final RoomService roomService;
 
     @PostMapping
-    public RoomDto create(@RequestBody RoomDto roomDto) {
-        return roomService.create(roomDto);
+    public RoomDto create(@RequestParam("files") List<MultipartFile> files, @ModelAttribute RoomDto roomDto) {
+        return roomService.create(roomDto, files);
     }
 
     @PostMapping
