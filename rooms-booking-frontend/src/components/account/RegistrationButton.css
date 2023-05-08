@@ -4,7 +4,7 @@
   --ternary: #264653;
 }
 
-button {
+.registrationButton {
   padding-left: 30px;
   padding-right: 30px;
   margin-left: 30px;
@@ -17,6 +17,6 @@ button {
   border: none;
 }
 
-button:hover {
+.registrationButton:hover {
   background-color: var(--ternary);
 }

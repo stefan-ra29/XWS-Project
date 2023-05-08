@@ -81,14 +81,29 @@ message SearchResultGrpcDTO {
   bool hasWifi = 8;
   int32 minGuests = 9;
   int32 maxGuests = 10;
+  int64 id = 11;
+  repeated string images = 12;
 }
 
 message SearchResponse {
   repeated SearchResultGrpcDTO rooms = 1;
 }
 
+message ReservationRequest {
+  int64 roomId = 1;
+  string fromDate = 2;
+  string toDate = 3;
+  int64 guestId = 4;
+  int32 numberOfGuests = 5;
+}
+
+message ReservationResponse {
+  bool successfullySaved = 1;
+}
+
 service ReservationService {
   rpc searchRooms(SearchRequest) returns (SearchResponse);
+  rpc sendReservationRequest(ReservationRequest) returns (ReservationResponse);
 }
 
 service RoomService {

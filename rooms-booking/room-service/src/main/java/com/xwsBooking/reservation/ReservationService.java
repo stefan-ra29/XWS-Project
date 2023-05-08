@@ -26,6 +26,7 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
     private final RoomRepository roomRepository;
     private final AvailabilityRepository availabilityRepository;
     private final PriceRepository priceRepository;
+    private final RoomImageRepository roomImageRepository;
 
     @Override
     public void searchRooms(SearchRequest request, StreamObserver<SearchResponse> responseObserver) {
@@ -38,6 +39,12 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
                 double totalPrice = calculateTotalPrice(request, room);
                 double pricePerDay = calculatePricePerDay(totalPrice, request);
 
+                List<RoomImage> roomImages = roomImageRepository.findAllByRoom_Id(room.getId());
+                List<String> imageLinks = new ArrayList<>();
+                for(RoomImage roomImage : roomImages) {
+                    imageLinks.add(roomImage.getPath());
+                }
+
                 SearchResultGrpcDTO searchResultGrpcDTO = SearchResultGrpcDTO.newBuilder()
                         .setLocation(room.getLocation())
                         .setName(room.getName())
@@ -49,6 +56,8 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
                         .setMaxGuests(room.getMaxNumberOfGuests())
                         .setTotalPrice(totalPrice)
                         .setPricePerDay(pricePerDay)
+                        .setId(room.getId())
+                        .addAllImages(imageLinks)
                         .build();
 
                 response.add(searchResultGrpcDTO);

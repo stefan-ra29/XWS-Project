@@ -1,12 +1,10 @@
 package com.xwsBooking.reservation;
 
+import com.xwsBooking.reservation.dtos.ReservationRequestDTO;
 import com.xwsBooking.reservation.dtos.SearchRequestDTO;
 import com.xwsBooking.reservation.dtos.SearchResultDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +19,12 @@ public class ReservationController {
     @RequestMapping("/search")
     public List<SearchResultDTO> search(@RequestBody SearchRequestDTO searchRequest) {
         return reservationService.search(searchRequest);
+    }
+
+    @PostMapping
+    @RequestMapping("/send-reservation-request")
+    public void sendReservationRequest(@RequestBody ReservationRequestDTO reservationRequest) {
+
     }
 
 }

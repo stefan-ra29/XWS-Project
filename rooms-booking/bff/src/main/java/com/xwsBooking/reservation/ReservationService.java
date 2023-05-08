@@ -41,6 +41,8 @@ public class ReservationService {
                     .minGuests(searchResultGrpcDTO.getMinGuests())
                     .pricePerDay(searchResultGrpcDTO.getPricePerDay())
                     .totalPrice(searchResultGrpcDTO.getTotalPrice())
+                    .id(searchResultGrpcDTO.getId())
+                    .images(searchResultGrpcDTO.getImagesList())
                     .build();
 
             searchResultDTOS.add(searchResultDTO);

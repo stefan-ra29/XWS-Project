@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,4 +22,6 @@ public class SearchResultDTO {
     private boolean hasWifi;
     private int minGuests;
     private int maxGuests;
+    private long id;
+    private List<String> images;
 }
