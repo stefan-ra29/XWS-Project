@@ -54,6 +54,9 @@ export default function Booking() {
                     totalPrice={room.totalPrice}
                     pricePerDay={room.pricePerDay}
                     images={room.images}
+                    fromDate={searchQuery.dateFrom}
+                    toDate={searchQuery.dateTo}
+                    numberOfGuests={searchQuery.numberOfGuests}
                 />
               );
             })}

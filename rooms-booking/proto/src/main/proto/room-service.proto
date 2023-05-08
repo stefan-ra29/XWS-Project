@@ -89,7 +89,7 @@ message SearchResponse {
   repeated SearchResultGrpcDTO rooms = 1;
 }
 
-message ReservationRequest {
+message ReservationRequestRequest {
   int64 roomId = 1;
   string fromDate = 2;
   string toDate = 3;
@@ -97,13 +97,13 @@ message ReservationRequest {
   int32 numberOfGuests = 5;
 }
 
-message ReservationResponse {
+message ReservationRequestResponse {
   bool successfullySaved = 1;
 }
 
 service ReservationService {
   rpc searchRooms(SearchRequest) returns (SearchResponse);
-  rpc sendReservationRequest(ReservationRequest) returns (ReservationResponse);
+  rpc sendReservationRequest(ReservationRequestRequest) returns (ReservationRequestResponse);
 }
 
 service RoomService {

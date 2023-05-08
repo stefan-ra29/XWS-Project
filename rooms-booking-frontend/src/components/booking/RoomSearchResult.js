@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import 'react-photo-view/dist/react-photo-view.css';
 import './RoomSearchResult.css'
 import { PhotoProvider, PhotoView } from 'react-photo-view';
+import { sendReservationRequest } from '../../service/BookingService';
 
 export default function RoomSearchResult(props) {
 
@@ -10,6 +11,18 @@ export default function RoomSearchResult(props) {
 
     function handleImageViewing() {
         setShowAllImages(!showAllImages);
+    }
+
+    function handleSendReservationRequest() {
+        const request = {
+            roomId: props.roomId,
+            fromDate: props.fromDate,
+            toDate: props.toDate,
+            guestId: 1007,
+            numberOfGuests: props.numberOfGuests
+        }
+
+        sendReservationRequest(request);
     }
 
   return (
@@ -62,7 +75,7 @@ export default function RoomSearchResult(props) {
                 <img onClick={handleImageViewing} src={props.images[0]} alt='slika'></img>
                 
 
-                <button className='reservationRequestButton'>Send reservation request!</button>
+                <button onClick={handleSendReservationRequest} className='reservationRequestButton'>Send reservation request for selected date range and number of guests</button>
             </div>
             
         </div>

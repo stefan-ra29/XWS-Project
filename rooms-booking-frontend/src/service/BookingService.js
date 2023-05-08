@@ -14,3 +14,16 @@ export function searchRooms(searchQuery, setRooms) {
       toast.error(error.message);
     });
 }
+
+
+export function sendReservationRequest(reservationRequest) {
+    getAxios()
+    .post("http://localhost:8085/api/reservations/send-reservation-request", reservationRequest)
+    .then((response) => {
+      toast.success('You have sucessfully sent your reservation request!')
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.message);
+    });
+}

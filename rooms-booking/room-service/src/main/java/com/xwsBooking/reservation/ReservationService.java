@@ -27,6 +27,31 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
     private final AvailabilityRepository availabilityRepository;
     private final PriceRepository priceRepository;
     private final RoomImageRepository roomImageRepository;
+    private final ReservationRequestRepository reservationRequestRepository;
+
+
+    @Override
+    public void sendReservationRequest(ReservationRequestRequest request, StreamObserver<ReservationRequestResponse> responseObserver) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        formatter = formatter.withLocale(Locale.US);  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
+        LocalDate dateFrom = LocalDate.parse(request.getFromDate(), formatter);
+        LocalDate dateTo = LocalDate.parse(request.getToDate(), formatter);
+
+
+        ReservationRequest reservationRequest = ReservationRequest.builder()
+                .customerId(request.getGuestId())
+                .room(roomRepository.findById(request.getRoomId()).get())
+                .numberOfGuests(request.getNumberOfGuests())
+                .fromDate(dateFrom)
+                .toDate(dateTo)
+                .build();
+
+        reservationRequestRepository.save(reservationRequest);
+
+        ReservationRequestResponse reservationRequestResponse = ReservationRequestResponse.newBuilder().setSuccessfullySaved(true).build();
+        responseObserver.onNext(reservationRequestResponse);
+        responseObserver.onCompleted();
+    }
 
     @Override
     public void searchRooms(SearchRequest request, StreamObserver<SearchResponse> responseObserver) {

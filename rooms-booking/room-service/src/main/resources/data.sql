@@ -5,7 +5,7 @@ insert into rooms values (1004, false,  true, 1010, false, 'Berlin', 4, 3, 'Nemo
 
 insert into rooms_images values(2000, 'https://firebasestorage.googleapis.com/v0/b/xws-rooms.appspot.com/o/fa1e6343-111f-4d84-9858-831a9c2928ba0?generation=1683555322095137&alt=media', 1001);
 insert into rooms_images values(2001, 'https://firebasestorage.googleapis.com/v0/b/xws-rooms.appspot.com/o/72252f68-1d10-4bc5-a3f8-02df3132cf2f1?generation=1683555322442835&alt=media', 1001);
-insert into rooms_images values(2001, 'https://firebasestorage.googleapis.com/v0/b/xws-rooms.appspot.com/o/a3cf814d-2d73-44e2-a368-643cdef1d65b7?generation=1683555324786047&alt=media', 1001);
+insert into rooms_images values(2008, 'https://firebasestorage.googleapis.com/v0/b/xws-rooms.appspot.com/o/a3cf814d-2d73-44e2-a368-643cdef1d65b7?generation=1683555324786047&alt=media', 1001);
 insert into rooms_images values(2002, 'https://firebasestorage.googleapis.com/v0/b/xws-rooms.appspot.com/o/e269ce32-0ab8-4cff-ba93-4733893d609b2?generation=1683555322753409&alt=media', 1002);
 insert into rooms_images values(2003, 'https://firebasestorage.googleapis.com/v0/b/xws-rooms.appspot.com/o/f718e872-f389-4c3f-9225-2e1b1fa1599e3?generation=1683555323192614&alt=media', 1002);
 insert into rooms_images values(2004, 'https://firebasestorage.googleapis.com/v0/b/xws-rooms.appspot.com/o/a12175bd-077e-4725-90db-538a51ea11824?generation=1683555323648912&alt=media', 1003);

@@ -1,11 +1,9 @@
 package com.xwsBooking.reservation;
 
+import com.xwsBooking.reservation.dtos.ReservationRequestDTO;
 import com.xwsBooking.reservation.dtos.SearchRequestDTO;
 import com.xwsBooking.reservation.dtos.SearchResultDTO;
-import com.xwsBooking.room.ReservationServiceGrpc;
-import com.xwsBooking.room.SearchRequest;
-import com.xwsBooking.room.SearchResponse;
-import com.xwsBooking.room.SearchResultGrpcDTO;
+import com.xwsBooking.room.*;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +47,20 @@ public class ReservationService {
         }
 
         return searchResultDTOS;
+    }
+
+    public boolean sendReservationRequest(ReservationRequestDTO reservationRequestDTO) {
+
+        ReservationRequestRequest request = ReservationRequestRequest.newBuilder()
+                .setNumberOfGuests(reservationRequestDTO.getNumberOfGuests())
+                .setFromDate(reservationRequestDTO.getFromDate())
+                .setToDate(reservationRequestDTO.getToDate())
+                .setGuestId(reservationRequestDTO.getGuestId())
+                .setRoomId(reservationRequestDTO.getRoomId())
+                .build();
+
+        reservationServiceBlockingStub.sendReservationRequest(request);
+        return true;
     }
 
 }

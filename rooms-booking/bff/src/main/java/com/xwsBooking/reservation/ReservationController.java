@@ -23,8 +23,8 @@ public class ReservationController {
 
     @PostMapping
     @RequestMapping("/send-reservation-request")
-    public void sendReservationRequest(@RequestBody ReservationRequestDTO reservationRequest) {
-
+    public boolean sendReservationRequest(@RequestBody ReservationRequestDTO reservationRequest) {
+        return reservationService.sendReservationRequest(reservationRequest);
     }
 
 }
