@@ -45,7 +45,7 @@ export default function RegistrationForm({ isHost, onSubmit }) {
         Register as {isHost ? "host" : "guest"} here!
       </h2>
       <div className="form-container">
-        <form onSubmit={(event) => submitForm(event)}>
+        <form className="registrationForm" onSubmit={(event) => submitForm(event)}>
           <div>
             <div
               style={{
@@ -59,8 +59,9 @@ export default function RegistrationForm({ isHost, onSubmit }) {
                   width: "260px",
                 }}
               >
-                <label htmlFor="fnmame">First name:</label>
+                <label className="label" htmlFor="fnmame">First name:</label>
                 <input
+                  className="textInput"
                   type="text"
                   id="fname"
                   onChange={(e) => handleUserInfoChange(e.target)}
@@ -68,8 +69,9 @@ export default function RegistrationForm({ isHost, onSubmit }) {
                 />
               </div>
               <div>
-                <label htmlFor="lname">Last name:</label>
+                <label className="label" htmlFor="lname">Last name:</label>
                 <input
+                  className="textInput"
                   type="text"
                   id="lname"
                   style={{ marginLeft: "45px" }}
@@ -91,8 +93,9 @@ export default function RegistrationForm({ isHost, onSubmit }) {
                   width: "260px",
                 }}
               >
-                <label htmlFor="a-country">Country:</label>
+                <label className="label" htmlFor="a-country">Country:</label>
                 <input
+                  className="textInput"
                   type="text"
                   id="a-country"
                   style={{ marginLeft: "29px" }}
@@ -101,8 +104,9 @@ export default function RegistrationForm({ isHost, onSubmit }) {
                 />
               </div>
               <div>
-                <label htmlFor="a-city">City:</label>
+                <label className="label" htmlFor="a-city">City:</label>
                 <input
+                  className="textInput"
                   type="text"
                   id="a-city"
                   style={{ marginLeft: "96px" }}
@@ -123,8 +127,9 @@ export default function RegistrationForm({ isHost, onSubmit }) {
                   width: "260px",
                 }}
               >
-                <label htmlFor="a-street">Street:</label>
+                <label className="label" htmlFor="a-street">Street:</label>
                 <input
+                  className="textInput"
                   type="text"
                   id="a-street"
                   style={{ marginLeft: "47px" }}
@@ -133,8 +138,9 @@ export default function RegistrationForm({ isHost, onSubmit }) {
                 />
               </div>
               <div>
-                <label htmlFor="a-number">Street number:</label>
+                <label className="label" htmlFor="a-number">Street number:</label>
                 <input
+                  className="textInput"
                   type="text"
                   id="a-number"
                   onChange={(e) => handleAddressInfoChange(e.target)}
@@ -154,8 +160,9 @@ export default function RegistrationForm({ isHost, onSubmit }) {
                   width: "260px",
                 }}
               >
-                <label htmlFor="uname">Username:</label>
+                <label className="label" htmlFor="uname">Username:</label>
                 <input
+                  className="textInput"
                   type="text"
                   id="uname"
                   name="username"
@@ -164,8 +171,9 @@ export default function RegistrationForm({ isHost, onSubmit }) {
                 />
               </div>
               <div>
-                <label htmlFor="pass">Password:</label>
+                <label className="label" htmlFor="pass">Password:</label>
                 <input
+                  className="textInput"
                   type="text"
                   id="pass"
                   name="password"
@@ -183,8 +191,9 @@ export default function RegistrationForm({ isHost, onSubmit }) {
               }}
             >
               <div>
-                <label htmlFor="id-email">E-mail address:</label>
+                <label className="label" htmlFor="id-email">E-mail address:</label>
                 <input
+                  className="textInput"
                   type="text"
                   id="id-email"
                   name="email"
@@ -201,7 +210,7 @@ export default function RegistrationForm({ isHost, onSubmit }) {
               justifyContent: "center",
             }}
           >
-            <input type="submit" value="Register" />
+            <input className="submitInput" type="submit" value="Register" />
           </div>
         </form>
       </div>

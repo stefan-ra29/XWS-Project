@@ -12,7 +12,7 @@
   width: 100%;
 }
 
-form {
+.registrationForm {
   border: 3px solid #264653;
   border-radius: 20px;
   padding: 15px;
@@ -29,7 +29,7 @@ input {
   margin: 15px;
 }
 
-input[type="submit"] {
+.submitInput {
   padding-left: 30px;
   padding-right: 30px;
   margin-left: 30px;
@@ -40,19 +40,20 @@ input[type="submit"] {
   color: var(--primary);
   border-radius: 20px;
   border: none;
+  cursor: pointer;
 }
 
-input[type="submit"]:hover {
+.submitInput:hover {
   background-color: var(--ternary);
 }
 
-label {
+.label {
   color: #264653;
   font-weight: 500;
   font-size: large;
 }
 
-input[type="text"] {
+.textInput {
   padding-left: 10px;
   padding-right: 10px;
   margin-left: 10px;
@@ -64,6 +65,6 @@ input[type="text"] {
   border-radius: 10px;
   border: 2px solid #264653;
 }
-input[type="text"]:focus {
+.textInput:focus {
   border: 2px solid #264653;
 }
