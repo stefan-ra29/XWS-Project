@@ -3,10 +3,12 @@ import RegistrationButton from "../components/account/RegistrationButton";
 import RegistrationForm from "../components/account/RegistrationForm";
 import { useState } from "react";
 import { register } from "../service/UserService";
+import { useNavigate } from "react-router-dom";
 
 export default function Registration() {
   const [isChosen, setIsChosen] = useState(false);
   const [isHost, setIsHost] = useState(false);
+  const navigate = useNavigate();
 
   const chooseAccountType = (isHost) => {
     setIsChosen(true);
@@ -14,9 +16,7 @@ export default function Registration() {
   };
 
   const registerUser = (user) => {
-    setIsChosen(false);
-    setIsHost(false);
-    register(user);
+    register(user, setIsChosen, setIsHost, navigate);
   };
   return (
     <div>
