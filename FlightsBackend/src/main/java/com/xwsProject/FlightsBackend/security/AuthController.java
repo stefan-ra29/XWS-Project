@@ -18,7 +18,6 @@ public class  AuthController {
 
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
-
     private final IUserService userService;
 
     @PostMapping()

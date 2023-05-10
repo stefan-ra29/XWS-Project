@@ -32,6 +32,7 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         }
         catch (Exception e){
+            //throw new CustomBadRequestException("Invalid email or password");
             return new ResponseEntity<String>("Invalid username or password!", HttpStatus.BAD_REQUEST);
         }
         User user = userService.findUserByUsername(authRequest.getUsername());

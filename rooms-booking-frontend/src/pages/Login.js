@@ -1,11 +1,22 @@
 import "./styles/Login.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../service/AuthService";
+import { getRoleFromLocalStorage } from "../utils/LocalStorageService";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
+
+  const role = getRoleFromLocalStorage();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (role === "GUEST" || role === "HOST") {
+      navigate("/");
+    }
+  }, []);
 
   const handleCredentialsChange = (event) => {
     const name = event.name;
@@ -16,6 +27,7 @@ export default function Login() {
   const submitForm = (event) => {
     event.preventDefault();
     console.log(credentials);
+    login(credentials, navigate);
   };
   return (
     <div>
@@ -50,7 +62,7 @@ export default function Login() {
             </div>
           </div>
           <div>
-            <input className="submitInput" type="submit" value="Register" />
+            <input className="submitInput" type="submit" value="Log in" />
           </div>
         </form>
       </div>
