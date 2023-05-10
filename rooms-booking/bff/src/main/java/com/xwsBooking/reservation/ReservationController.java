@@ -6,6 +6,7 @@ import com.xwsBooking.reservation.dtos.SearchResultDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -21,6 +22,7 @@ public class ReservationController {
         return reservationService.search(searchRequest);
     }
 
+    @RolesAllowed("ROLE_GUEST")
     @PostMapping
     @RequestMapping("/send-reservation-request")
     public boolean sendReservationRequest(@RequestBody ReservationRequestDTO reservationRequest) {

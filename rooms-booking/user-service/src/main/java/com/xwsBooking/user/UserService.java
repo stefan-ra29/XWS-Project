@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @GrpcService
 @Service
 public class UserService extends UserServiceGrpc.UserServiceImplBase{
 
     @Autowired
     UserRepository userRepository;
+
     @Override
     public void getUsernameById(GetUsernameRequest request, StreamObserver<GetUsernameResponse> responseObserver) {
 
@@ -61,6 +64,35 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
         };
 
 
+    }
+
+    @Override
+    public void findUserByUsername(UserRequestByUsername request, StreamObserver<UserResponseByUsername> responseObserver) {
+        UserResponseByUsername.Builder builder = UserResponseByUsername.newBuilder();
+        try{
+            if(request.getUsername() != null) {
+                Optional<User> user = userRepository.findByUsername(request.getUsername());
+                if(user.isEmpty())
+                    throw new Exception("Can't fin user with that email!");
+
+                builder.setUser(User_grpc.newBuilder()
+                        .setUsername(user.get().getUsername())
+                        .setPassword(user.get().getPassword())
+                        .setEmail(user.get().getEmail())
+                        .setFirstName(user.get().getFirstName())
+                        .setLastName(user.get().getLastName())
+                        .setId(user.get().getId().toString())
+                        .setRole(user.get().getRole().toString())
+                        .build());
+                responseObserver.onNext(builder.build());
+                responseObserver.onCompleted();
+            }
+            else
+                throw new Exception("Nothing is received");
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @Transactional

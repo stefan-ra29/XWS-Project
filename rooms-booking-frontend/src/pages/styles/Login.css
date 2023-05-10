@@ -4,6 +4,7 @@
   --ternary: #264653;
 }
 .form-container {
+  margin-top: 10%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -12,7 +13,7 @@
   width: 100%;
 }
 
-.registrationForm {
+.loginForm {
   border: 3px solid #264653;
   border-radius: 20px;
   padding: 15px;
@@ -24,11 +25,6 @@
   text-align: center;
   background-color: #e9c46a;
 }
-
-input {
-  margin: 15px;
-}
-
 .submitInput {
   padding-left: 20px;
   padding-right: 20px;
@@ -44,26 +40,4 @@ input {
 
 .submitInput:hover {
   background-color: var(--ternary);
-}
-
-.label {
-  color: #264653;
-  font-weight: 500;
-  font-size: large;
-}
-
-.textInput {
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-left: 10px;
-  width: 120px;
-  height: 30px;
-  font-size: large;
-  background-color: var(--primary);
-  color: var(--ternary);
-  border-radius: 10px;
-  border: 2px solid #264653;
-}
-.textInput:focus {
-  border: 2px solid #264653;
 }

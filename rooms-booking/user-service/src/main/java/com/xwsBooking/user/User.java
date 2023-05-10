@@ -36,9 +36,9 @@ public class User {
         this.password = registerUserDTO.getPassword();
         this.email = registerUserDTO.getEmail();
         if(registerUserDTO.getIsHost())
-            this.role = Role.Host;
+            this.role = Role.HOST;
         else
-            this.role = Role.Guest;
+            this.role = Role.GUEST;
         this.address = Address.builder()
                 .country(registerUserDTO.getAddress().getCountry())
                 .city(registerUserDTO.getAddress().getCity())

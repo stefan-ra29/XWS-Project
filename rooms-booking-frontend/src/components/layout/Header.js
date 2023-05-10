@@ -1,15 +1,33 @@
 import { NavLink } from "react-router-dom";
 import "./Header.css";
+import { getRoleFromLocalStorage } from "../../utils/LocalStorageService";
 
 export default function Header() {
+  const role = getRoleFromLocalStorage();
   return (
     <header className="direction">
       <nav>
         <h1>Booking</h1>
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/book">Book</NavLink>
-        <NavLink to="/register">Register</NavLink>
-        <NavLink to="/log-in">Log in</NavLink>
+        {localStorage.getItem("role") === "GUEST" && (
+          <NavLink to="/book">Book</NavLink>
+        )}
+        {localStorage.getItem("token") == null && (
+          <NavLink to="/register">Register</NavLink>
+        )}
+        {localStorage.getItem("token") == null && (
+          <NavLink to="/login">Log in</NavLink>
+        )}
+        {localStorage.getItem("token") != null && (
+          <NavLink
+            to="/"
+            onClick={() => {
+              localStorage.clear();
+            }}
+          >
+            Log out
+          </NavLink>
+        )}
       </nav>
     </header>
   );

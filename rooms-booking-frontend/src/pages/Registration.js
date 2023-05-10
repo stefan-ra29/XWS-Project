@@ -1,10 +1,20 @@
 import "./styles/Registration.css";
 import RegistrationButton from "../components/account/RegistrationButton";
 import RegistrationForm from "../components/account/RegistrationForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { register } from "../service/UserService";
+import { useNavigate } from "react-router-dom";
+import { getRoleFromLocalStorage } from "../utils/LocalStorageService";
 
 export default function Registration() {
+  const role = getRoleFromLocalStorage();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (role !== null) {
+      navigate("/");
+    }
+  }, []);
+
   const [isChosen, setIsChosen] = useState(false);
   const [isHost, setIsHost] = useState(false);
 
@@ -14,9 +24,7 @@ export default function Registration() {
   };
 
   const registerUser = (user) => {
-    setIsChosen(false);
-    setIsHost(false);
-    register(user);
+    register(user, setIsChosen, setIsHost, navigate);
   };
   return (
     <div>
@@ -44,6 +52,4 @@ export default function Registration() {
       </div>
     </div>
   );
-
-  /* podaci: ime, prezime, adresa, username, lozinka, mejl, host ili guest */
 }
