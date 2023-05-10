@@ -48,4 +48,29 @@ public class UserService {
 
     }
 
+    public User findUserByUsername(String username){
+        try{
+            UserRequestByUsername userRequestByUsername = UserRequestByUsername.newBuilder()
+                    .setUsername(username)
+                    .build();
+
+            UserResponseByUsername userResponseByUsername = userStub.findUserByUsername(userRequestByUsername);
+
+            var user  = userResponseByUsername.getUser();
+
+            return User.builder()
+                    .username(user.getUsername())
+                    .password(user.getPassword())
+                    .email(user.getEmail())
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .id(user.getId())
+                    .role(Role.valueOf(user.getRole()))
+                    .build();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
 }

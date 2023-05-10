@@ -12,9 +12,10 @@ export function register(user) {
         position: "top-right",
       });
       console.log(response);
-      //window.location.replace("/");
+      window.location.replace("/");
     })
     .catch((error) => {
       console.log(error);
+      toast.error("Something went wrong, please try again later.");
     });
 }
