@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> registerUser(@RequestBody RegisterUserDTO user, BindingResult bindingResult) {
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody RegisterUserDTO user, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             System.err.println("error!");
             Map<String, String> errors = new HashMap<>();
