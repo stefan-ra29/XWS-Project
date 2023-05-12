@@ -1,8 +1,10 @@
 package com.xwsBooking.user;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +15,13 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/user")
+@RequiredArgsConstructor
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/{id}")
     public String getUsernameById(@PathVariable String id) {
@@ -34,6 +39,7 @@ public class UserController {
             return new ResponseEntity<>(errors, HttpStatus.NOT_ACCEPTABLE);
         }
         try{
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             String username =  userService.registerUser(user);
             if(!username.equals(user.getUsername())){
                 //TO DO fali ovde sta da se desi

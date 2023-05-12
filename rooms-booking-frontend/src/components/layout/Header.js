@@ -23,6 +23,7 @@ export default function Header() {
             to="/"
             onClick={() => {
               localStorage.clear();
+              window.location.replace("http://localhost:3000/");
             }}
           >
             Log out

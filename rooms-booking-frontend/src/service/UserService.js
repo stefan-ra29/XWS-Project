@@ -3,18 +3,17 @@ import { getAxios } from "../utils/AxiosWrapper";
 
 const apiURL = "http://localhost:8085/api/user/";
 
-export function register(user, setIsChosen, setIsHost, navigate) {
+export function register(user, navigate) {
   getAxios()
     .post(apiURL, user)
     .then((response) => {
       toast.success("You have successfully registered!", {
         position: "top-right",
       });
-      setIsChosen(false);
-      setIsHost(false);
       navigate("/");
     })
     .catch((error) => {
+      console.log(error);
       if (error.response.status === 406) {
         var validationErrors = new Map();
         Object.keys(error.response.data).map(function (key) {
@@ -28,7 +27,5 @@ export function register(user, setIsChosen, setIsHost, navigate) {
       } else {
         toast.error("Something went wrong, please try again later.");
       }
-      setIsChosen(false);
-      setIsHost(false);
     });
 }

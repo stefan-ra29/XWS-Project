@@ -1,6 +1,5 @@
 package com.xwsBooking.user;
 
-import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    private PasswordEncoder passwordEncoder;
     @GrpcClient("user-service")
     private UserServiceGrpc.UserServiceBlockingStub userStub;
 
@@ -28,7 +26,7 @@ public class UserService {
                                                                         .setFirstName(registerUserDTO.getFirstName())
                                                                         .setLastName(registerUserDTO.getLastName())
                                                                         .setUsername(registerUserDTO.getUsername())
-                                                                        .setPassword(passwordEncoder.encode(registerUserDTO.getPassword()))
+                                                                        .setPassword(registerUserDTO.getPassword())
                                                                         .setEmail(registerUserDTO.getEmail())
                                                                         .setIsHost(registerUserDTO.getIsHost())
                                                                         .setAddress

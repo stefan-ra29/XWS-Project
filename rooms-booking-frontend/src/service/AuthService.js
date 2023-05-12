@@ -13,9 +13,8 @@ export function login(credentials, navigate) {
       localStorage.setItem("role", jwt_decode(response.data).role);
       localStorage.setItem("id", jwt_decode(response.data).id);
       localStorage.setItem("email", jwt_decode(response.data).email);
-      console.log(localStorage.getItem("role"));
-      navigate("/");
       toast.success("Successfully logged in");
+      window.location.replace("http://localhost:3000/");
     })
     .catch((error) => {
       toast.error(error.response.data.message);

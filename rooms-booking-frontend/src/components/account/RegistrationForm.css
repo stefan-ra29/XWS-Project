@@ -3,33 +3,103 @@
   --secondary: #2a9d8f;
   --ternary: #264653;
 }
-.form-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+
+.form-container-registration {
+  width: 50%;
+  margin: 0 auto;
 }
 
-.registrationForm {
+.registration-form {
   border: 3px solid #264653;
   border-radius: 20px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  width: fit-content;
+  padding-right: 20px;
+  padding-bottom: 15px;
   justify-content: center;
   text-align: center;
   background-color: #e9c46a;
 }
-
-input {
-  margin: 15px;
+.registration-form input[type="text"] {
+  border: 2px solid #264653;
+  border-radius: 10px;
+  font-size: medium;
+  justify-content: center;
+  text-align: center;
+  background-color: seashell;
+  color: #264653;
 }
 
-.submitInput {
+.row-wrapper-registration {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.row-wrapper-registration div {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.row-wrapper-registration label {
+  color: #264653;
+  font-size: large;
+}
+
+.email-row-wrapper-registration {
+  display: flex;
+  flex-direction: row;
+}
+
+.email-row-wrapper-registration div {
+  width: 50%;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.email-label {
+  justify-content: right;
+  padding-right: 8px;
+  color: #264653;
+  font-size: large;
+}
+.email-input {
+  padding-left: 8px;
+  justify-content: left;
+}
+.radio-button-row-wrapper-registration {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.radio-button-row-wrapper-registration div {
+  width: 35%;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.radio-label {
+  justify-content: right;
+  padding-right: 15px;
+  color: #264653;
+  font-size: large;
+}
+
+.radio-checker-host {
+  justify-content: left;
+  color: #264653;
+  font-size: large;
+}
+
+.radio-checker-guest {
+  justify-content: left;
+  color: #264653;
+  font-size: large;
+}
+
+.submit-input-registartion {
   padding-left: 20px;
   padding-right: 20px;
   width: 120px;
@@ -42,28 +112,17 @@ input {
   cursor: pointer;
 }
 
-.submitInput:hover {
+.submit-input-registartion:hover {
   background-color: var(--ternary);
+  cursor: pointer;
 }
 
-.label {
-  color: #264653;
-  font-weight: 500;
-  font-size: large;
+.submit-input-registartion:disabled {
+  background-color: var(--secondary);
+  cursor: default;
 }
 
-.textInput {
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-left: 10px;
-  width: 120px;
-  height: 30px;
-  font-size: large;
-  background-color: var(--primary);
-  color: var(--ternary);
-  border-radius: 10px;
-  border: 2px solid #264653;
-}
-.textInput:focus {
-  border: 2px solid #264653;
+.error-input-field {
+  border: 3px solid red !important;
+  color: red !important;
 }
