@@ -310,14 +310,7 @@ export default function RegistrationForm({ onSubmit }) {
             </div>
           </div>
         </div>
-        <div
-          style={{
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
+        <div>
           <input
             disabled={isDisabled}
             className="submit-input-registartion"
