@@ -1,7 +1,7 @@
 import "./RegistrationForm.css";
 import { useState } from "react";
 
-export default function RegistrationForm({ isHost, onSubmit }) {
+export default function RegistrationForm({ onSubmit }) {
   const [newUser, setNewUser] = useState({
     firstName: "",
     lastName: "",
@@ -9,7 +9,7 @@ export default function RegistrationForm({ isHost, onSubmit }) {
     username: "",
     password: "",
     email: "",
-    isHost: isHost,
+    isHost: false,
   });
   const [newAddress, setNewAddress] = useState({
     country: "",
@@ -18,20 +18,30 @@ export default function RegistrationForm({ isHost, onSubmit }) {
     streetNumber: "",
   });
 
+  const [isHost, setIsHost] = useState(false);
+
+  const handleRadioButtonSelectionChanged = (event) => {
+    setIsHost(event.target.value === "true");
+  };
+
   const handleUserInfoChange = (event) => {
     const name = event.name;
-    const value = event.value;
+    const value = event.value.trim();
     setNewUser((values) => ({ ...values, [name]: value }));
+    validateInputFields(event.id, value);
   };
 
   const handleAddressInfoChange = (event) => {
     const name = event.name;
-    const value = event.value;
+    const value = event.value.trim();
     setNewAddress((values) => ({ ...values, [name]: value }));
+    validateInputFields(event.id, value);
   };
+
   const submitForm = (event) => {
     event.preventDefault();
     newUser.address = newAddress;
+    newUser.isHost = isHost;
     setNewUser((values) => ({
       ...values,
       values: newUser,
@@ -39,181 +49,283 @@ export default function RegistrationForm({ isHost, onSubmit }) {
     onSubmit(newUser);
   };
 
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const nameRegex = /^[A-Z][a-z]*(\s[A-Z][a-z]*)*$/;
+  const addressRegex = /^[A-Z][a-z]*(\s[A-Z]?[a-z]*)*$/;
+  const streetNumberRegex = /^[1-9]+[A-Z]?$/;
+  const credentialsRegex = /^([A-Za-z0-9]{3,})$/;
+  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+  function validateInputFields(id, value) {
+    switch (id) {
+      case "fname": {
+        if (nameRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "lname": {
+        if (nameRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "a-country": {
+        if (addressRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "a-city": {
+        if (addressRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "a-street": {
+        if (addressRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "a-number": {
+        if (streetNumberRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "uname": {
+        if (credentialsRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "pass": {
+        if (credentialsRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "id-email": {
+        if (emailRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      default:
+        return;
+    }
+    checkAccessibilityOfSubmitButton();
+  }
+
+  function checkAccessibilityOfSubmitButton() {
+    if (
+      nameRegex.test(document.getElementById("fname").value) === true &&
+      nameRegex.test(document.getElementById("lname").value) === true &&
+      addressRegex.test(document.getElementById("a-country").value) === true &&
+      addressRegex.test(document.getElementById("a-city").value) === true &&
+      addressRegex.test(document.getElementById("a-street").value) === true &&
+      streetNumberRegex.test(document.getElementById("a-number").value) ===
+        true &&
+      credentialsRegex.test(document.getElementById("uname").value) === true &&
+      credentialsRegex.test(document.getElementById("pass").value) === true &&
+      emailRegex.test(document.getElementById("id-email").value) === true
+    ) {
+      setIsDisabled(false);
+    }
+  }
+
   return (
-    <div>
-      <h2 style={{ textAlign: "center", justifyContent: "center" }}>
-        Register as {isHost ? "host" : "guest"} here!
-      </h2>
-      <div className="form-container">
-        <form className="registrationForm" onSubmit={(event) => submitForm(event)}>
-          <div>
-            <div
-              style={{
-                textAlign: "left",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <div
-                style={{
-                  width: "260px",
-                }}
-              >
-                <label className="label" htmlFor="fnmame">First name:</label>
+    <div className="form-container-registration">
+      <form
+        className="registration-form"
+        onSubmit={(event) => submitForm(event)}
+      >
+        <div>
+          <div className="radio-button-row-wrapper-registration">
+            <div className="radio-label">Register as</div>
+            <div>
+              <div className="radio-checker-guest">
                 <input
-                  className="textInput"
-                  type="text"
-                  id="fname"
-                  onChange={(e) => handleUserInfoChange(e.target)}
-                  name="firstName"
+                  type="radio"
+                  id="guest"
+                  name="role"
+                  value={false}
+                  checked={isHost === false}
+                  onChange={(e) => handleRadioButtonSelectionChanged(e)}
                 />
+
+                <label htmlFor="guest">Guest</label>
               </div>
-              <div>
-                <label className="label" htmlFor="lname">Last name:</label>
+              <div className="radio-checker-host">
                 <input
-                  className="textInput"
-                  type="text"
-                  id="lname"
-                  style={{ marginLeft: "45px" }}
-                  onChange={(e) => handleUserInfoChange(e.target)}
-                  name="lastName"
+                  type="radio"
+                  id="host"
+                  name="role"
+                  value={true}
+                  checked={isHost === true}
+                  onChange={(e) => handleRadioButtonSelectionChanged(e)}
                 />
+                <label htmlFor="host">Host</label>{" "}
               </div>
+            </div>
+          </div>
+          <div className="row-wrapper-registration">
+            <div>
+              <label htmlFor="fnmame">First name:</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                id="fname"
+                onChange={(e) => handleUserInfoChange(e.target)}
+                name="firstName"
+              />
             </div>
 
-            <div
-              style={{
-                textAlign: "left",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <div
-                style={{
-                  width: "260px",
-                }}
-              >
-                <label className="label" htmlFor="a-country">Country:</label>
-                <input
-                  className="textInput"
-                  type="text"
-                  id="a-country"
-                  style={{ marginLeft: "29px" }}
-                  onChange={(e) => handleAddressInfoChange(e.target)}
-                  name="country"
-                />
-              </div>
-              <div>
-                <label className="label" htmlFor="a-city">City:</label>
-                <input
-                  className="textInput"
-                  type="text"
-                  id="a-city"
-                  style={{ marginLeft: "96px" }}
-                  onChange={(e) => handleAddressInfoChange(e.target)}
-                  name="city"
-                />
-              </div>
+            <div>
+              <label htmlFor="lname">Last name:</label>
             </div>
-            <div
-              style={{
-                textAlign: "left",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <div
-                style={{
-                  width: "260px",
-                }}
-              >
-                <label className="label" htmlFor="a-street">Street:</label>
-                <input
-                  className="textInput"
-                  type="text"
-                  id="a-street"
-                  style={{ marginLeft: "47px" }}
-                  onChange={(e) => handleAddressInfoChange(e.target)}
-                  name="street"
-                />
-              </div>
-              <div>
-                <label className="label" htmlFor="a-number">Street number:</label>
-                <input
-                  className="textInput"
-                  type="text"
-                  id="a-number"
-                  onChange={(e) => handleAddressInfoChange(e.target)}
-                  name="streetNumber"
-                />
-              </div>
-            </div>
-            <div
-              style={{
-                textAlign: "left",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <div
-                style={{
-                  width: "260px",
-                }}
-              >
-                <label className="label" htmlFor="uname">Username:</label>
-                <input
-                  className="textInput"
-                  type="text"
-                  id="uname"
-                  name="username"
-                  style={{ marginLeft: "13px" }}
-                  onChange={(e) => handleUserInfoChange(e.target)}
-                />
-              </div>
-              <div>
-                <label className="label" htmlFor="pass">Password:</label>
-                <input
-                  className="textInput"
-                  type="text"
-                  id="pass"
-                  name="password"
-                  style={{ marginLeft: "51px" }}
-                  onChange={(e) => handleUserInfoChange(e.target)}
-                />
-              </div>
-            </div>
-            <div
-              style={{
-                textAlign: "center",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-              }}
-            >
-              <div>
-                <label className="label" htmlFor="id-email">E-mail address:</label>
-                <input
-                  className="textInput"
-                  type="text"
-                  id="id-email"
-                  name="email"
-                  onChange={(e) => handleUserInfoChange(e.target)}
-                />
-              </div>
+            <div>
+              <input
+                type="text"
+                id="lname"
+                onChange={(e) => handleUserInfoChange(e.target)}
+                name="lastName"
+              />
             </div>
           </div>
-          <div
-            style={{
-              textAlign: "center",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
-            <input className="submitInput" type="submit" value="Register" />
+
+          <div className="row-wrapper-registration">
+            <div>
+              <label htmlFor="a-country">Country:</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                id="a-country"
+                onChange={(e) => handleAddressInfoChange(e.target)}
+                name="country"
+              />
+            </div>
+            <div>
+              <label htmlFor="a-city">City:</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                id="a-city"
+                onChange={(e) => handleAddressInfoChange(e.target)}
+                name="city"
+              />
+            </div>
           </div>
-        </form>
-      </div>
+          <div className="row-wrapper-registration">
+            <div>
+              <label htmlFor="a-street">Street:</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                id="a-street"
+                onChange={(e) => handleAddressInfoChange(e.target)}
+                name="street"
+              />
+            </div>
+            <div>
+              <label htmlFor="a-number">Street number:</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                id="a-number"
+                onChange={(e) => handleAddressInfoChange(e.target)}
+                name="streetNumber"
+              />
+            </div>
+          </div>
+          <div className="row-wrapper-registration">
+            <div>
+              <label htmlFor="uname">Username:</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                id="uname"
+                name="username"
+                onChange={(e) => handleUserInfoChange(e.target)}
+              />
+            </div>
+            <div>
+              <label htmlFor="pass">Password:</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                id="pass"
+                name="password"
+                onChange={(e) => handleUserInfoChange(e.target)}
+              />
+            </div>
+          </div>
+          <div className="email-row-wrapper-registration">
+            <div className="email-label">
+              <label htmlFor="id-email">E-mail address:</label>{" "}
+            </div>
+            <div className="email-input">
+              <input
+                type="text"
+                id="id-email"
+                name="email"
+                onChange={(e) => handleUserInfoChange(e.target)}
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <input
+            disabled={isDisabled}
+            className="submit-input-registartion"
+            type="submit"
+            value="Register"
+          />
+        </div>
+      </form>
     </div>
   );
 }
