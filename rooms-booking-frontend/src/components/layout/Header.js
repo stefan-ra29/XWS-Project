@@ -29,6 +29,7 @@ export default function Header() {
             Log out
           </NavLink>
         )}
+        <NavLink to="/create-room">Create Room</NavLink>
       </nav>
     </header>
   );

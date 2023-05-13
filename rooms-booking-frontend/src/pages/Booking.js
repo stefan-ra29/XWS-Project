@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import RoomSearchForm from "../components/booking/RoomSearchForm";
 import { searchRooms } from "../service/BookingService";
 import RoomSearchResult from "../components/booking/RoomSearchResult";
@@ -16,14 +16,6 @@ export default function Booking() {
     dateTo: "",
     numberOfGuests: 1,
   });
-
-  const role = getRoleFromLocalStorage();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (role !== "GUEST") {
-      navigate("/");
-    }
-  }, []);
 
   function handleInputChange(event) {
     const { name, value } = event.target;
