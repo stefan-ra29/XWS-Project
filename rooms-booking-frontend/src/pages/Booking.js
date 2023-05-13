@@ -1,5 +1,9 @@
 import React from "react";
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
+=======
+import { useState } from "react";
+>>>>>>> Creating rooms frontend implemented
 import RoomSearchForm from "../components/booking/RoomSearchForm";
 import { searchRooms } from "../service/BookingService";
 import RoomSearchResult from "../components/booking/RoomSearchResult";
@@ -17,6 +21,7 @@ export default function Booking() {
     numberOfGuests: 1,
   });
 
+<<<<<<< HEAD
   const role = getRoleFromLocalStorage();
   const navigate = useNavigate();
   useEffect(() => {
@@ -33,6 +38,16 @@ export default function Booking() {
     }));
   }
 
+=======
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setSearchQuery((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+
+>>>>>>> Creating rooms frontend implemented
   function handleSubmit(event) {
     event.preventDefault();
     searchRooms(searchQuery, setRooms);
