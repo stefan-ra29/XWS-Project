@@ -12,6 +12,9 @@ export default function Header() {
         {localStorage.getItem("role") === "GUEST" && (
           <NavLink to="/book">Book</NavLink>
         )}
+        {localStorage.getItem("role") === "GUEST" && (
+          <NavLink to="/guestReservationRequests">Reservation requests</NavLink>
+        )}
         {localStorage.getItem("token") == null && (
           <NavLink to="/register">Register</NavLink>
         )}
@@ -27,6 +30,16 @@ export default function Header() {
             }}
           >
             Log out
+          </NavLink>
+        )}
+        {localStorage.getItem("token") != null && (
+          <NavLink
+            to="/"
+            onClick={() => {
+              window.location.replace("http://localhost:3000/");
+            }}
+          >
+            Deactivate account
           </NavLink>
         )}
         <NavLink to="/create-room">Create Room</NavLink>

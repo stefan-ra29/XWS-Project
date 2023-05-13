@@ -101,9 +101,41 @@ message ReservationRequestResponse {
   bool successfullySaved = 1;
 }
 
+message AvailablePlacesRequest { }
+
+message AvailablePlacesResponse {
+  repeated string availablePlaces = 1;
+}
+
+message ReservationRequestsByGuestRequest {
+  int64 guestId = 1;
+}
+
+message ReservationRequestGrpcDTO {
+  string roomName = 1;
+  string fromDate = 2;
+  string toDate = 3;
+  int64 requestId = 4;
+  int32 numberOfGuests = 5;
+  string location = 6;
+}
+
+message ReservationRequestsByGuestResponse {
+  repeated ReservationRequestGrpcDTO reservationRequests = 1;
+}
+
+message DeleteReservationRequestRequest {
+  int64 requestId = 1;
+}
+
+message DeleteReservationRequestResponse { }
+
 service ReservationService {
   rpc searchRooms(SearchRequest) returns (SearchResponse);
   rpc sendReservationRequest(ReservationRequestRequest) returns (ReservationRequestResponse);
+  rpc getAvailablePlaces(AvailablePlacesRequest) returns (AvailablePlacesResponse);
+  rpc getReservationRequestsByGuest(ReservationRequestsByGuestRequest) returns (ReservationRequestsByGuestResponse);
+  rpc deleteReservationRequest(DeleteReservationRequestRequest) returns (DeleteReservationRequestResponse);
 }
 
 service RoomService {

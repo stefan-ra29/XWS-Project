@@ -8,6 +8,8 @@ import Registration from "./pages/Registration";
 import Booking from "./pages/Booking";
 import RoomImages from "./components/booking/RoomImages";
 import Login from "./pages/Login";
+import GuestReservationRequest from "./components/booking/GuestReservationRequest";
+import GuestReservationRequests from "./pages/GuestReservationRequests";
 import { CreateRoom } from "./pages/CreateRoom";
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
           <Route path="roomImages" element={<RoomImages />} />
           <Route path="register" element={<Registration />} />
           <Route path="login" element={<Login />} />
+          <Route path="guestReservationRequests" element={<GuestReservationRequests />} />
           <Route path="create-room" element={<CreateRoom />} />
         </Routes>
       </main>

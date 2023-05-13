@@ -14,11 +14,12 @@ export default function RoomSearchResult(props) {
     }
 
     function handleSendReservationRequest() {
+
         const request = {
             roomId: props.roomId,
             fromDate: props.fromDate,
             toDate: props.toDate,
-            guestId: 1007,
+            guestId: localStorage.getItem("id"),
             numberOfGuests: props.numberOfGuests
         }
 

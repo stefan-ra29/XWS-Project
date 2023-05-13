@@ -31,6 +31,48 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
 
 
     @Override
+    public void deleteReservationRequest(DeleteReservationRequestRequest request, StreamObserver<DeleteReservationRequestResponse> responseObserver) {
+        reservationRequestRepository.deleteById(request.getRequestId());
+
+        DeleteReservationRequestResponse response = DeleteReservationRequestResponse.newBuilder().build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getReservationRequestsByGuest(ReservationRequestsByGuestRequest request, StreamObserver<ReservationRequestsByGuestResponse> responseObserver) {
+        List<ReservationRequest> reservationRequestsByGuest = reservationRequestRepository.findAllByCustomerId(request.getGuestId());
+        List<ReservationRequestGrpcDTO> reservationRequestGrpcDTOS = new ArrayList<>();
+
+        for(ReservationRequest reservationRequest : reservationRequestsByGuest) {
+            ReservationRequestGrpcDTO reservationRequestGrpcDTO = ReservationRequestGrpcDTO.newBuilder()
+                    .setNumberOfGuests(reservationRequest.getNumberOfGuests())
+                    .setRequestId(reservationRequest.getId())
+                    .setLocation(reservationRequest.getRoom().getLocation())
+                    .setFromDate(reservationRequest.getFromDate().toString())
+                    .setToDate(reservationRequest.getToDate().toString())
+                    .setRoomName(reservationRequest.getRoom().getName())
+                    .build();
+
+            reservationRequestGrpcDTOS.add(reservationRequestGrpcDTO);
+        }
+
+        ReservationRequestsByGuestResponse response = ReservationRequestsByGuestResponse.newBuilder().addAllReservationRequests(reservationRequestGrpcDTOS).build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getAvailablePlaces(AvailablePlacesRequest request, StreamObserver<AvailablePlacesResponse> responseObserver) {
+        List<String> availablePlaces = roomRepository.findDistinctLocations();
+
+        AvailablePlacesResponse response = AvailablePlacesResponse.newBuilder().addAllAvailablePlaces(availablePlaces).build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
     public void sendReservationRequest(ReservationRequestRequest request, StreamObserver<ReservationRequestResponse> responseObserver) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         formatter = formatter.withLocale(Locale.US);  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH

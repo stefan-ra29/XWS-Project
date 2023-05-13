@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import RoomSearchForm from "../components/booking/RoomSearchForm";
-import { searchRooms } from "../service/BookingService";
+import { searchRooms, getAvailableLocations } from "../service/BookingService";
 import RoomSearchResult from "../components/booking/RoomSearchResult";
 import "./styles/Booking.css";
 import { getRoleFromLocalStorage } from "../utils/LocalStorageService";
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Booking() {
   const [rooms, setRooms] = useState([]);
+  const [availableLocations, setAvailableLocations] = useState([]);
 
   const [searchQuery, setSearchQuery] = useState({
     location: "",
@@ -16,6 +17,25 @@ export default function Booking() {
     dateTo: "",
     numberOfGuests: 1,
   });
+
+  useEffect(() => {
+    getAvailableLocations(setAvailableLocations);
+  }, []);
+
+  useEffect(() => {
+    setSearchQuery((prevState) => ({
+      ...prevState,
+      location: availableLocations[0]
+    })) 
+  }, [availableLocations]);
+
+  const role = getRoleFromLocalStorage();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (role !== "GUEST") {
+      navigate("/");
+    }
+  }, []);
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -36,6 +56,7 @@ export default function Booking() {
         handleSubmit={handleSubmit}
         searchQuery={searchQuery}
         handleInputChange={handleInputChange}
+        availableLocations={availableLocations}
       />
 
       {rooms.length !== 0 && (

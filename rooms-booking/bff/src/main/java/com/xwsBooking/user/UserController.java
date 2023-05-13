@@ -56,4 +56,10 @@ public class UserController {
         return new ResponseEntity<Object>(userService.findUserByUsername(username), HttpStatus.OK);
     }
 
+    @DeleteMapping
+    @RequestMapping("/{userId}")
+    public void deleteUserAccount(@PathVariable long userId) {
+        
+    }
+
 }
