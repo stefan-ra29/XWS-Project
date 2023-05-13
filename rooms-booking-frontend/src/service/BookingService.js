@@ -39,3 +39,30 @@ export function sendReservationRequest(reservationRequest) {
       toast.error(error.message);
     });
 }
+
+export function getReservationRequestsByGuest(setReservationRequests) {
+  let gouestId = localStorage.getItem("id");
+
+  getAxios()
+    .get("http://localhost:8085/api/reservations/reservation-requests/" + gouestId)
+    .then((response) => {
+      setReservationRequests(response.data)
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.message);
+    });
+}
+
+export function deleteGuestReservationRequest(requestId) {
+  getAxios()
+    .delete("http://localhost:8085/api/reservations/reservation-request/" + requestId)
+    .then((response) => {
+      window.location.reload();
+      toast.success('You successfully canceled your reservation request!')
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.message);
+    });
+}

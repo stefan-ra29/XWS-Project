@@ -1,6 +1,7 @@
 package com.xwsBooking.reservation;
 
 import com.xwsBooking.reservation.dtos.ReservationRequestDTO;
+import com.xwsBooking.reservation.dtos.ReservationRequestDisplayDTO;
 import com.xwsBooking.reservation.dtos.SearchRequestDTO;
 import com.xwsBooking.reservation.dtos.SearchResultDTO;
 import lombok.RequiredArgsConstructor;
@@ -36,4 +37,17 @@ public class ReservationController {
         return reservationService.sendReservationRequest(reservationRequest);
     }
 
+    @RolesAllowed("ROLE_GUEST")
+    @GetMapping
+    @RequestMapping("/reservation-requests/{guestId}")
+    public List<ReservationRequestDisplayDTO> getReservationRequestsByGuest(@PathVariable long guestId) {
+        return reservationService.getReservationRequestsByGuest(guestId);
+    }
+
+    @RolesAllowed("ROLE_GUEST")
+    @DeleteMapping
+    @RequestMapping("/reservation-request/{requestId}")
+    public void deleteReservationRequest(@PathVariable long requestId) {
+        reservationService.deleteReservationRequest(requestId);
+    }
 }
