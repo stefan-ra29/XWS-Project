@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import RoomSearchForm from "../components/booking/RoomSearchForm";
 import { searchRooms, getAvailableLocations } from "../service/BookingService";
 import RoomSearchResult from "../components/booking/RoomSearchResult";

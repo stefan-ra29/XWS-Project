@@ -42,7 +42,7 @@ export default function Header() {
             Deactivate account
           </NavLink>
         )}
-
+        <NavLink to="/create-room">Create Room</NavLink>
       </nav>
     </header>
   );
