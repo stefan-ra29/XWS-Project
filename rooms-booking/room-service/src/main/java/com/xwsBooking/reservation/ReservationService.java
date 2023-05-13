@@ -31,6 +31,16 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
 
 
     @Override
+    public void getAvailablePlaces(AvailablePlacesRequest request, StreamObserver<AvailablePlacesResponse> responseObserver) {
+        List<String> availablePlaces = roomRepository.findDistinctLocations();
+
+        AvailablePlacesResponse response = AvailablePlacesResponse.newBuilder().addAllAvailablePlaces(availablePlaces).build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
     public void sendReservationRequest(ReservationRequestRequest request, StreamObserver<ReservationRequestResponse> responseObserver) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         formatter = formatter.withLocale(Locale.US);  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH

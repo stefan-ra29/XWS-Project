@@ -1,7 +1,7 @@
 import React from 'react'
 import './RoomSearchForm.css'
 
-export default function RoomSearchForm({handleSubmit, searchQuery, handleInputChange}) {
+export default function RoomSearchForm({handleSubmit, searchQuery, handleInputChange, availableLocations}) {
     const getValidFromDate = () => {
         const today = new Date();
         const dd = String(today.getDate()).padStart(2, "0");
@@ -21,7 +21,15 @@ export default function RoomSearchForm({handleSubmit, searchQuery, handleInputCh
   return (
     <form className='searchForm' onSubmit={handleSubmit}>
         <label htmlFor='location'>Location:</label>
-        <input name='location' id='location' type='text' value={searchQuery.location} onChange={handleInputChange}></input>
+        <select name='location' id='location' value={searchQuery.location} onChange={handleInputChange}>
+          {availableLocations.map((location) => {
+              return (
+                <option key={location} value={location}>
+                  {location}
+                </option>
+              );
+          })}
+        </select>
 
         <label htmlFor='dateFrom'>From:</label>
         <input type='date' name='dateFrom' id='dateFrom' min={getValidFromDate()} value={searchQuery.fromDate} onChange={handleInputChange}></input>

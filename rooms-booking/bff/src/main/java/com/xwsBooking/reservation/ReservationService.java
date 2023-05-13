@@ -16,6 +16,13 @@ public class ReservationService {
     @GrpcClient("room-service")
     private ReservationServiceGrpc.ReservationServiceBlockingStub reservationServiceBlockingStub;
 
+    public List<String> getAvailablePlaces() {
+        AvailablePlacesRequest request = AvailablePlacesRequest.newBuilder().build();
+        AvailablePlacesResponse response = reservationServiceBlockingStub.getAvailablePlaces(request);
+
+        return response.getAvailablePlacesList();
+    }
+
     public List<SearchResultDTO> search(SearchRequestDTO searchRequestDTO) {
         SearchRequest searchRequest = SearchRequest.newBuilder()
                 .setLocation(searchRequestDTO.getLocation())

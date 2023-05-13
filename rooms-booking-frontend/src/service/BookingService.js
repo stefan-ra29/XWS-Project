@@ -15,6 +15,18 @@ export function searchRooms(searchQuery, setRooms) {
     });
 }
 
+export function getAvailableLocations(setAvailableLocations) {
+  getAxios()
+  .get("http://localhost:8085/api/reservations/available-locations")
+  .then((response) => {
+    setAvailableLocations(response.data);
+  })
+  .catch((error) => {
+    console.log(error);
+    toast.error(error.message);
+  });
+}
+
 
 export function sendReservationRequest(reservationRequest) {
     getAxios()

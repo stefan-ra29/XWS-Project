@@ -22,6 +22,13 @@ public class ReservationController {
         return reservationService.search(searchRequest);
     }
 
+    @GetMapping
+    @RequestMapping("/available-locations")
+    public List<String> getAvailableLocations() {
+        List<String> availableLocations = reservationService.getAvailablePlaces();
+        return availableLocations;
+    }
+
     @RolesAllowed("ROLE_GUEST")
     @PostMapping
     @RequestMapping("/send-reservation-request")

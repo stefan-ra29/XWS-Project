@@ -101,9 +101,16 @@ message ReservationRequestResponse {
   bool successfullySaved = 1;
 }
 
+message AvailablePlacesRequest { }
+
+message AvailablePlacesResponse {
+  repeated string availablePlaces = 1;
+}
+
 service ReservationService {
   rpc searchRooms(SearchRequest) returns (SearchResponse);
   rpc sendReservationRequest(ReservationRequestRequest) returns (ReservationRequestResponse);
+  rpc getAvailablePlaces(AvailablePlacesRequest) returns (AvailablePlacesResponse);
 }
 
 service RoomService {
