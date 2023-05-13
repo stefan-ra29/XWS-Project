@@ -1,8 +1,6 @@
 package com.xwsBooking.room;
 
-import com.xwsBooking.room.dtos.AvailabilityDto;
-import com.xwsBooking.room.dtos.PriceDto;
-import com.xwsBooking.room.dtos.RoomDto;
+import com.xwsBooking.room.dtos.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,5 +34,26 @@ public class RoomController {
     @RequestMapping("/create-price")
     public PriceDto createPrice(@RequestBody PriceDto priceDto) {
         return roomService.createPrice(priceDto);
+    }
+
+    @RolesAllowed("ROLE_HOST")
+    @GetMapping
+    @RequestMapping("/host/{hostId}")
+    public HostRoomsDto getHostRooms(@PathVariable long hostId) {
+        return roomService.getHostRooms(hostId);
+    }
+
+    @RolesAllowed("ROLE_HOST")
+    @GetMapping
+    @RequestMapping("/{roomId}/prices")
+    public RoomPricesDto getRoomPrices(@PathVariable long roomId) {
+        return roomService.getRoomPrices(roomId);
+    }
+
+    @RolesAllowed("ROLE_HOST")
+    @GetMapping
+    @RequestMapping("/{roomId}/availabilities")
+    public RoomAvailabilitiesDto getRoomAvailabilities(@PathVariable long roomId) {
+        return roomService.getRoomAvailabilities(roomId);
     }
 }

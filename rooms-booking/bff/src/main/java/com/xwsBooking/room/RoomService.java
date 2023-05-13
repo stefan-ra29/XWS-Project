@@ -1,8 +1,6 @@
 package com.xwsBooking.room;
 
-import com.xwsBooking.room.dtos.AvailabilityDto;
-import com.xwsBooking.room.dtos.PriceDto;
-import com.xwsBooking.room.dtos.RoomDto;
+import com.xwsBooking.room.dtos.*;
 import com.xwsBooking.utils.CustomBadRequestException;
 import com.xwsBooking.utils.Mappers;
 import ij.ImagePlus;
@@ -22,6 +20,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
@@ -48,6 +47,27 @@ public class RoomService {
             throw new CustomBadRequestException(response.getResponseMessage());
         }
         return Mappers.map(response);
+    }
+
+    public HostRoomsDto getHostRooms(long hostId) {
+        return new HostRoomsDto(roomstub
+                .getAllHostRooms(HostIdRequest.newBuilder().setHostId(hostId).build())
+                .getRoomsList()
+                .stream()
+                .map(Mappers::map)
+                .collect(Collectors.toList()));
+    }
+
+    public RoomAvailabilitiesDto getRoomAvailabilities(long roomId) {
+        return new RoomAvailabilitiesDto(roomstub
+                .getAllRoomAvailabilities(RoomAvailabilitiesRequest.newBuilder().setRoomId(roomId).build())
+                .getAvailabilitiesList().stream().map(Mappers::map).collect(Collectors.toList()));
+    }
+
+    public RoomPricesDto getRoomPrices(long roomId) {
+        return new RoomPricesDto(roomstub
+                .getAllRoomPrices(RoomPricesRequest.newBuilder().setRoomId(roomId).build())
+                .getPricesList().stream().map(Mappers::map).collect(Collectors.toList()));
     }
 
     private List<byte[]> compressImages(List<MultipartFile> files) {

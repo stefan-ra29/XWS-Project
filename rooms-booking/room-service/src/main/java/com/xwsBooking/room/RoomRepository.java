@@ -10,6 +10,10 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     Optional<Room> findById(long id);
     List<Room> findRoomsByLocation(String location);
 
+
     @Query("SELECT DISTINCT r.location FROM rooms r")
     List<String> findDistinctLocations();
+
+    List<Room> findAllByHostId(long hostId);
+
 }

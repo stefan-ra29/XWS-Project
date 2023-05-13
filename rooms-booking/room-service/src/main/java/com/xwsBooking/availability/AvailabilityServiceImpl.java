@@ -1,13 +1,11 @@
 package com.xwsBooking.availability;
 
-import com.xwsBooking.room.AvailabilityRequest;
-import com.xwsBooking.room.AvailabilityResponse;
-import com.xwsBooking.room.Room;
-import com.xwsBooking.room.RoomRepository;
+import com.xwsBooking.room.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -19,12 +17,30 @@ public class AvailabilityServiceImpl implements AvailabilityService{
     @Override
     public AvailabilityResponse create(AvailabilityRequest dto) {
         var room = roomRepository.findById(dto.getRoomId());
+        if(!availabilityRepository.findAvailableByFromDateAndToDate(LocalDate.parse(dto.getFrom()),
+                LocalDate.parse(dto.getTo())).isEmpty()) {
+            return AvailabilityResponse.newBuilder()
+                    .setResponseMessage("There is already availabilities in given interval")
+                    .build();
+        }
         if (room.isEmpty() || room.get().getHostId() != dto.getHostId()) {
             return AvailabilityResponse.newBuilder()
                     .setResponseMessage("Cannot create availability")
                     .build();
         }
         return convert(availabilityRepository.save(convert(dto)), room.get().getHostId());
+    }
+
+    @Override
+    public RoomAvailabilitiesResponse getAllFromRoom(RoomAvailabilitiesRequest request) {
+        var availabilities = availabilityRepository.findAvailabilitiesByRoom_Id(request.getRoomId());
+        var room = roomRepository.findById(request.getRoomId());
+        return RoomAvailabilitiesResponse.newBuilder()
+                .addAllAvailabilities(availabilities.stream()
+                        .map(a -> convert(a, room.orElseThrow().getHostId()))
+                        .collect(Collectors.toList()))
+                .build();
+
     }
 
     private AvailabilityResponse convert(Availability availability, long hostId) {
@@ -37,6 +53,7 @@ public class AvailabilityServiceImpl implements AvailabilityService{
                 .setResponseMessage("")
                 .build();
     }
+
 
     private Availability convert(AvailabilityRequest dto) {
         return Availability.builder()
