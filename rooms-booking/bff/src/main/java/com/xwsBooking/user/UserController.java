@@ -67,7 +67,7 @@ public class UserController {
                 return new ResponseEntity<>(responseMessage, HttpStatus.OK);
             }
             else {
-                return  new ResponseEntity<>(responseMessage, HttpStatus.NOT_ACCEPTABLE);
+                return  new ResponseEntity<>(responseMessage, HttpStatus.OK);
             }
 
         }

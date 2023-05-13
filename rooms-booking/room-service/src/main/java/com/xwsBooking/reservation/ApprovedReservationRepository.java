@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ApprovedReservationRepository extends JpaRepository<ApprovedReservation, Long> {
     List<ApprovedReservation> findAllByCustomerId(long customerId);
+    List<ApprovedReservation> deleteAllByRoomId(long roomId);
 }

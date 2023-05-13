@@ -1,12 +1,17 @@
 package com.xwsBooking.room;
 
+import com.xwsBooking.availability.AvailabilityRepository;
 import com.xwsBooking.availability.AvailabilityService;
 import com.xwsBooking.files.FirebaseFileService;
+import com.xwsBooking.price.PriceRepository;
 import com.xwsBooking.price.PriceService;
+import com.xwsBooking.reservation.ApprovedReservationRepository;
+import com.xwsBooking.reservation.ReservationRequestRepository;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +27,10 @@ public class RoomService extends RoomServiceGrpc.RoomServiceImplBase {
     private final AvailabilityService availabilityService;
     private final PriceService priceService;
     private final FirebaseFileService fileService;
+    private final ApprovedReservationRepository approvedReservationRepository;
+    private final AvailabilityRepository availabilityRepository;
+    private final PriceRepository priceRepository;
+    private final ReservationRequestRepository reservationRequestRepository;
 
     @Override
     public void create(RoomGrpcDto request, StreamObserver<RoomGrpcDto> responseObserver) {
@@ -48,6 +57,24 @@ public class RoomService extends RoomServiceGrpc.RoomServiceImplBase {
         roomRepository.save(room);
 
         responseObserver.onNext(convert(room));
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    @Transactional
+    public void deleteRoomsForHost(DeleteRoomsForHostRequest request, StreamObserver<DeleteRoomsForHostResponse> responseObserver) {
+
+        List<Room> hostsRooms = roomRepository.findAllByHostId(request.getHostId());
+        for(Room room : hostsRooms) {
+            reservationRequestRepository.deleteAllByRoomId(room.getId());
+            priceRepository.deleteAllByRoomId(room.getId());
+            availabilityRepository.deleteAllByRoomId(room.getId());
+            approvedReservationRepository.deleteAllByRoomId(room.getId());
+            roomRepository.deleteById(room.getId());
+        }
+
+        DeleteRoomsForHostResponse deleteRoomsForHostResponse = DeleteRoomsForHostResponse.newBuilder().build();
+        responseObserver.onNext(deleteRoomsForHostResponse);
         responseObserver.onCompleted();
     }
 

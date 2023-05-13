@@ -161,6 +161,20 @@ message RoomPricesResponse {
   repeated PriceResponse prices = 1;
 }
 
+message HostReservationsExistRequest {
+  int64 hostId = 1;
+}
+
+message HostReservationsExistResponse {
+  bool reservationsExists = 1;
+}
+
+message DeleteRoomsForHostRequest {
+  int64 hostId = 1;
+}
+
+message DeleteRoomsForHostResponse { }
+
 service ReservationService {
   rpc searchRooms(SearchRequest) returns (SearchResponse);
   rpc sendReservationRequest(ReservationRequestRequest) returns (ReservationRequestResponse);
@@ -168,6 +182,7 @@ service ReservationService {
   rpc getReservationRequestsByGuest(ReservationRequestsByGuestRequest) returns (ReservationRequestsByGuestResponse);
   rpc deleteReservationRequest(DeleteReservationRequestRequest) returns (DeleteReservationRequestResponse);
   rpc doesReservationExistsForUser(GuestReservationExistRequest) returns (GuestReservationExistResponse);
+  rpc doesReservationExistsForHost(HostReservationsExistRequest) returns (HostReservationsExistResponse);
 }
 
 service RoomService {
@@ -178,4 +193,5 @@ service RoomService {
   rpc create(RoomGrpcDto) returns (RoomGrpcDto);
   rpc createAvailability(AvailabilityRequest) returns (AvailabilityResponse);
   rpc createPrice(PriceRequest) returns (PriceResponse);
+  rpc deleteRoomsForHost(DeleteRoomsForHostRequest) returns (DeleteRoomsForHostResponse);
 }

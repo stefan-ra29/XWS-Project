@@ -29,6 +29,8 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
+    private boolean isDeleted;
+
     public User(RegisterUserDTO_grpc registerUserDTO) {
         this.firstName = registerUserDTO.getFirstName();
         this.lastName = registerUserDTO.getLastName();

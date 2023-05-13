@@ -10,8 +10,12 @@ import java.util.List;
 public interface PriceRepository extends JpaRepository<Price, Long> {
 
     List<Price> findPricesByRoom_Id(Long roomId);
+
+    List<Price> deleteAllByRoomId(long roomId);
+
     @Query(value = "SELECT * FROM prices a " +
             "WHERE a.to_date >= :fromDate AND a.from_date <= :toDate", nativeQuery = true)
     List<Price> findAvailableByFromDateAndToDate(@Param("fromDate") LocalDate fromDate,
                                                         @Param("toDate") LocalDate toDate);
+
 }
