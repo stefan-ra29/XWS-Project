@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -22,8 +23,11 @@ public class UserController {
     private UserService userService;
 
     private final PasswordEncoder passwordEncoder;
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-    @GetMapping("/{id}")
+    @GetMapping("/test/{id}")
     public String getUsernameById(@PathVariable String id) {
         return userService.getUsernameById(id);
     }
@@ -51,9 +55,15 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("/get/{username}")
-    public ResponseEntity<Object> getUserByUsername(@PathVariable String username) {
-        return new ResponseEntity<Object>(userService.findUserByUsername(username), HttpStatus.OK);
+//    @GetMapping("/by-username/{username}")
+//    public ResponseEntity<Object> getUserByUsername(@PathVariable String username) {
+//        return new ResponseEntity<Object>(userService.findUserByUsername(username), HttpStatus.OK);
+//    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getUserById(@PathVariable String id) {
+        UserDTO user = userService.findUserById(id);
+        return new ResponseEntity<Object>(user, HttpStatus.OK);
     }
 
     @DeleteMapping

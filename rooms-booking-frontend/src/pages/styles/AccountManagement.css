@@ -1,0 +1,98 @@
+:root {
+  --primary: seashell;
+  --secondary: #2a9d8f;
+  --ternary: #264653;
+}
+
+.form-container-account {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.account-form {
+  border: 3px solid #264653;
+  border-radius: 20px;
+  padding: 15px;
+  justify-content: center;
+  text-align: center;
+  background-color: #e9c46a;
+}
+.account-form input[type="text"] {
+  border: 2px solid #264653;
+  border-radius: 10px;
+  font-size: medium;
+  justify-content: center;
+  text-align: center;
+  background-color: seashell;
+  color: #264653;
+}
+
+.row-wrapper-account {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.row-wrapper-account div {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.row-wrapper-account label {
+  color: #264653;
+  font-size: large;
+}
+
+.email-row-wrapper-account {
+  display: flex;
+  flex-direction: row;
+}
+
+.email-row-wrapper-account div {
+  width: 70%;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.email-label {
+  justify-content: right;
+  padding-right: 8px;
+  color: #264653;
+  font-size: large;
+}
+.email-input {
+  padding-left: 8px;
+  justify-content: left;
+}
+
+.change-button-account {
+  margin-top: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: fit-content;
+  height: 60px;
+  font-size: large;
+  background-color: var(--secondary);
+  color: var(--primary);
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.change-button-account:hover {
+  background-color: var(--ternary);
+  cursor: pointer;
+}
+
+.change-button-account:disabled {
+  background-color: var(--secondary);
+  cursor: default;
+}
+
+.error-input-field {
+  border: 3px solid red !important;
+  color: red !important;
+}

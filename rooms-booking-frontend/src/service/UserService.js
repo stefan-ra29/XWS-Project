@@ -30,17 +30,29 @@ export function register(user, navigate) {
     });
 }
 
+export function getUser(id, setUser) {
+  getAxios()
+    .get(apiURL + `${id}`)
+    .then((response) => {
+      setUser(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
 export function deleteAccount() {
   let userId = localStorage.getItem("id");
   getAxios()
     .delete(apiURL + userId)
     .then((response) => {
-      if(response.data === 'Account deleted successfully') {
+      if (response.data === "Account deleted successfully") {
         localStorage.clear();
         toast.info(response.data);
-        window.setTimeout(() => window.location.replace('http://localhost:3000/'), 3000);
-      }
-      else {
+        window.setTimeout(
+          () => window.location.replace("http://localhost:3000/"),
+          3000
+        );
+      } else {
         toast.info(response.data);
       }
     })

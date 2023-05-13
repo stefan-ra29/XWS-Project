@@ -9,3 +9,7 @@ export function getRoleFromLocalStorage() {
 export function getEmailFromLocalStorage() {
   return localStorage.getItem("email");
 }
+
+export function getTokenFromLocalStorage() {
+  return localStorage.getItem("token");
+}

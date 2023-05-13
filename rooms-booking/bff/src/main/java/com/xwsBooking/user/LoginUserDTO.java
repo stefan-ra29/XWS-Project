@@ -14,7 +14,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Builder
 @Data
-public class User implements UserDetails{
+public class LoginUserDTO implements UserDetails{
 
     private String id;
     private String username;
