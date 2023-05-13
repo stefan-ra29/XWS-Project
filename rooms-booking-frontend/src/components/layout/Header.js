@@ -1,9 +1,17 @@
 import { NavLink } from "react-router-dom";
 import "./Header.css";
 import { getRoleFromLocalStorage } from "../../utils/LocalStorageService";
+import { deleteAccount } from "../../service/UserService";
 
 export default function Header() {
   const role = getRoleFromLocalStorage();
+
+  function handleAccountDeletion() {
+    if(window.confirm('Are you sure you want to delete your account?')){
+      deleteAccount();
+    }
+  }
+
   return (
     <header className="direction">
       <nav>
@@ -35,11 +43,9 @@ export default function Header() {
         {localStorage.getItem("token") != null && (
           <NavLink
             to="/"
-            onClick={() => {
-              window.location.replace("http://localhost:3000/");
-            }}
+            onClick={handleAccountDeletion}
           >
-            Deactivate account
+            Delete account
           </NavLink>
         )}
         <NavLink to="/create-room">Create Room</NavLink>

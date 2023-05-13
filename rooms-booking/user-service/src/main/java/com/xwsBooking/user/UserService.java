@@ -96,7 +96,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
     }
 
     @Transactional
-    private User saveRegisteredUser(User user){
+    public User saveRegisteredUser(User user){
         try{
             userRepository.save(user);
             return user;
@@ -104,5 +104,36 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
         catch (Exception e){
             throw new UnsupportedOperationException("Can't save user!");
         }
+    }
+
+    @Override
+    public void deleteUser(DeleteUserRequest request, StreamObserver<DeleteUserResponse> responseObserver) {
+        User user = userRepository.findById(request.getUserId()).get();
+
+        if(user.getRole() == Role.GUEST) {
+            // provjera da li ima aktivnih rezervacija taj guest
+
+            //
+            userRepository.deleteById(request.getUserId());
+            DeleteUserResponse response = DeleteUserResponse.newBuilder().setResponseMessage("Account deleted successfully").build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+
+        else if(user.getRole() == Role.HOST) {
+            // provjera da li ima aktivnih rezervacija taj host
+
+            //
+
+            // brisanje svih smjestaja tog host-a
+
+            //
+
+            userRepository.deleteById(request.getUserId());
+            DeleteUserResponse response = DeleteUserResponse.newBuilder().setResponseMessage("Account deleted successfully").build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+
     }
 }

@@ -53,8 +53,17 @@ message UserResponseByUsername{
     User_grpc user = 1;
 }
 
+message DeleteUserRequest {
+    int64 userId = 1;
+}
+
+message DeleteUserResponse {
+    string responseMessage = 1;
+}
+
 service UserService {
   rpc getUsernameById(GetUsernameRequest) returns (GetUsernameResponse);
   rpc registerUser(RegisterUserRequest) returns (RegisterUserResponse);
   rpc findUserByUsername(UserRequestByUsername) returns (UserResponseByUsername);
+  rpc deleteUser(DeleteUserRequest) returns (DeleteUserResponse);
 }

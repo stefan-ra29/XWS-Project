@@ -58,8 +58,23 @@ public class UserController {
 
     @DeleteMapping
     @RequestMapping("/{userId}")
-    public void deleteUserAccount(@PathVariable long userId) {
-        
+    public ResponseEntity<String> deleteUserAccount(@PathVariable long userId) {
+
+        try {
+            String responseMessage = userService.deleteUser(userId);
+
+            if(responseMessage.equals("Account deleted successfully")) {
+                return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+            }
+            else {
+                return  new ResponseEntity<>(responseMessage, HttpStatus.NOT_ACCEPTABLE);
+            }
+
+        }
+
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
