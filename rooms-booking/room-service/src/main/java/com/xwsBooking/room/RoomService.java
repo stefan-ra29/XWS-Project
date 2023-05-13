@@ -92,6 +92,32 @@ public class RoomService extends RoomServiceGrpc.RoomServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void getAllHostRooms(HostIdRequest request, StreamObserver<HostRoomsResponse> responseObserver) {
+        var response = HostRoomsResponse.newBuilder()
+                .addAllRooms(roomRepository.findAllByHostId(request.getHostId())
+                        .stream()
+                        .map(this::convert)
+                        .collect(Collectors.toSet()))
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getAllRoomAvailabilities(RoomAvailabilitiesRequest request, StreamObserver<RoomAvailabilitiesResponse> responseObserver) {
+        var response = availabilityService.getAllFromRoom(request);
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getAllRoomPrices(RoomPricesRequest request, StreamObserver<RoomPricesResponse> responseObserver) {
+        var response = priceService.getAllRoomPrices(request);
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
     private RoomGrpcDto convert(Room room) {
         return RoomGrpcDto.newBuilder()
                 .setId(room.getId())
