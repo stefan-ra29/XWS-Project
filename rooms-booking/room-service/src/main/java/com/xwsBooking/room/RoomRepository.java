@@ -12,4 +12,8 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     @Query("SELECT DISTINCT r.location FROM rooms r")
     List<String> findDistinctLocations();
+
+    List<Room> deleteAllByHostId(long hostId);
+
+    List<Room> findAllByHostId(long hostId);
 }

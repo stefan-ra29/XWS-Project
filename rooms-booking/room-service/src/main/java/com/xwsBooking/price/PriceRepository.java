@@ -8,4 +8,5 @@ import java.util.List;
 public interface PriceRepository extends JpaRepository<Price, Long> {
 
     List<Price> findPricesByRoom_Id(Long roomId);
+    List<Price> deleteAllByRoomId(long roomId);
 }

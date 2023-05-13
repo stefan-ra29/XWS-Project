@@ -1,6 +1,8 @@
 package com.xwsBooking.user;
 
+import com.xwsBooking.room.*;
 import io.grpc.stub.StreamObserver;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,12 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
 
     @Autowired
     UserRepository userRepository;
+
+    @GrpcClient("room-service")
+    private ReservationServiceGrpc.ReservationServiceBlockingStub reservationServiceBlockingStub;
+
+    @GrpcClient("room-service")
+    private RoomServiceGrpc.RoomServiceBlockingStub roomstub;
 
     @Override
     public void getUsernameById(GetUsernameRequest request, StreamObserver<GetUsernameResponse> responseObserver) {
@@ -72,8 +80,8 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
         try{
             if(request.getUsername() != null) {
                 Optional<User> user = userRepository.findByUsername(request.getUsername());
-                if(user.isEmpty())
-                    throw new Exception("Can't fin user with that email!");
+                if(user.isEmpty() || user.get().isDeleted())
+                    throw new Exception("Can't find user with that email!");
 
                 builder.setUser(User_grpc.newBuilder()
                         .setUsername(user.get().getUsername())
@@ -112,27 +120,45 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
 
         if(user.getRole() == Role.GUEST) {
             // provjera da li ima aktivnih rezervacija taj guest
+            GuestReservationExistRequest guestReservationExistRequest = GuestReservationExistRequest.newBuilder().setGuestId(request.getUserId()).build();
+            GuestReservationExistResponse guestReservationExistResponse = reservationServiceBlockingStub.doesReservationExistsForUser(guestReservationExistRequest);
+            if(guestReservationExistResponse.getReservationExists()) {
+                DeleteUserResponse response = DeleteUserResponse.newBuilder().setResponseMessage("You cannot delete your account while you have active reservations").build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+            }
 
-            //
-            userRepository.deleteById(request.getUserId());
-            DeleteUserResponse response = DeleteUserResponse.newBuilder().setResponseMessage("Account deleted successfully").build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            else {
+                user.setDeleted(true);
+                userRepository.save(user);
+                DeleteUserResponse response = DeleteUserResponse.newBuilder().setResponseMessage("Account deleted successfully").build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+            }
         }
 
         else if(user.getRole() == Role.HOST) {
             // provjera da li ima aktivnih rezervacija taj host
+            HostReservationsExistRequest hostReservationsExistRequest = HostReservationsExistRequest.newBuilder().setHostId(request.getUserId()).build();
+            HostReservationsExistResponse hostReservationsExistResponse = reservationServiceBlockingStub.doesReservationExistsForHost(hostReservationsExistRequest);
+            if(hostReservationsExistResponse.getReservationsExists()) {
+                DeleteUserResponse response = DeleteUserResponse.newBuilder().setResponseMessage("You cannot delete your account while you have active reservations in one of your rooms").build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+            }
 
-            //
+            else {
+                // brisanje svih smjestaja tog host-a
+                DeleteRoomsForHostRequest deleteRoomsForHostRequest = DeleteRoomsForHostRequest.newBuilder().setHostId(request.getUserId()).build();
+                roomstub.deleteRoomsForHost(deleteRoomsForHostRequest);
+                // brisanje host-a
+                user.setDeleted(true);
+                userRepository.save(user);
+                DeleteUserResponse response = DeleteUserResponse.newBuilder().setResponseMessage("Account deleted successfully").build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+            }
 
-            // brisanje svih smjestaja tog host-a
-
-            //
-
-            userRepository.deleteById(request.getUserId());
-            DeleteUserResponse response = DeleteUserResponse.newBuilder().setResponseMessage("Account deleted successfully").build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
         }
 
     }

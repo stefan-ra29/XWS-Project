@@ -34,3 +34,5 @@ insert into availabilities values (1017, '2023-05-15', '2023-08-15', 1001);
 insert into availabilities values (1018, '2023-05-15', '2023-08-15', 1002);
 insert into availabilities values (1019, '2023-05-15', '2023-08-15', 1003);
 insert into availabilities values (1020, '2023-05-15', '2023-08-15', 1004);
+
+insert into approved_reservations values (1021, 1008, '2023-05-15', 3, '2023-05-20', 1001);
