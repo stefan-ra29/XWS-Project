@@ -29,3 +29,14 @@ export function register(user, navigate) {
       }
     });
 }
+
+export function getUser(id) {
+  getAxios()
+    .get(apiURL, id)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}

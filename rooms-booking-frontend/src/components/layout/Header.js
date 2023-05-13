@@ -13,6 +13,9 @@ export default function Header() {
           <NavLink to="/book">Book</NavLink>
         )}
         {localStorage.getItem("token") == null && (
+          <NavLink to="/account-management">Account</NavLink>
+        )}
+        {localStorage.getItem("token") == null && (
           <NavLink to="/register">Register</NavLink>
         )}
         {localStorage.getItem("token") == null && (
