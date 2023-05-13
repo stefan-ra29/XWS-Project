@@ -50,4 +50,10 @@ public class ReservationController {
     public void deleteReservationRequest(@PathVariable long requestId) {
         reservationService.deleteReservationRequest(requestId);
     }
+
+    @GetMapping
+    @RequestMapping("/reservation-exist/{guestId}")
+    public boolean doesGuestHaveReservation(@PathVariable long guestId) {
+        return reservationService.doesGuestHaveReservation(guestId);
+    }
 }

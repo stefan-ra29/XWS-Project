@@ -28,6 +28,7 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
     private final PriceRepository priceRepository;
     private final RoomImageRepository roomImageRepository;
     private final ReservationRequestRepository reservationRequestRepository;
+    private final ApprovedReservationRepository approvedReservationRepository;
 
 
     @Override
@@ -137,6 +138,18 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void doesReservationExistsForUser(GuestReservationExistRequest request, StreamObserver<GuestReservationExistResponse> responseObserver) {
+        List<ApprovedReservation> list = approvedReservationRepository.findAllByCustomerId(request.getGuestId());
+        boolean reservationExist = approvedReservationRepository.findAllByCustomerId(request.getGuestId()).size() > 0;
+
+        GuestReservationExistResponse guestReservationExistResponse =
+                GuestReservationExistResponse.newBuilder().setReservationExists(reservationExist).build();
+
+        responseObserver.onNext(guestReservationExistResponse);
+        responseObserver.onCompleted();
+    }
+
     public double calculatePricePerDay(double totalPrice, SearchRequest request) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         formatter = formatter.withLocale(Locale.US);  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
@@ -206,4 +219,6 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
 
         return false;
     }
+
+
 }

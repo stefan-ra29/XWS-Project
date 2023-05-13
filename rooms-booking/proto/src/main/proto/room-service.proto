@@ -130,12 +130,21 @@ message DeleteReservationRequestRequest {
 
 message DeleteReservationRequestResponse { }
 
+message GuestReservationExistRequest {
+  int64 guestId = 1;
+}
+
+message GuestReservationExistResponse{
+  bool reservationExists = 1;
+}
+
 service ReservationService {
   rpc searchRooms(SearchRequest) returns (SearchResponse);
   rpc sendReservationRequest(ReservationRequestRequest) returns (ReservationRequestResponse);
   rpc getAvailablePlaces(AvailablePlacesRequest) returns (AvailablePlacesResponse);
   rpc getReservationRequestsByGuest(ReservationRequestsByGuestRequest) returns (ReservationRequestsByGuestResponse);
   rpc deleteReservationRequest(DeleteReservationRequestRequest) returns (DeleteReservationRequestResponse);
+  rpc doesReservationExistsForUser(GuestReservationExistRequest) returns (GuestReservationExistResponse);
 }
 
 service RoomService {

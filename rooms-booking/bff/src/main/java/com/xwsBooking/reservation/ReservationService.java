@@ -1,9 +1,6 @@
 package com.xwsBooking.reservation;
 
-import com.xwsBooking.reservation.dtos.ReservationRequestDTO;
-import com.xwsBooking.reservation.dtos.ReservationRequestDisplayDTO;
-import com.xwsBooking.reservation.dtos.SearchRequestDTO;
-import com.xwsBooking.reservation.dtos.SearchResultDTO;
+import com.xwsBooking.reservation.dtos.*;
 import com.xwsBooking.room.*;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
@@ -97,4 +94,12 @@ public class ReservationService {
         return true;
     }
 
+    public boolean doesGuestHaveReservation(long guestId){
+        GuestReservationExistRequest guestReservationExistRequest = GuestReservationExistRequest.newBuilder()
+                .setGuestId(guestId).build();
+
+        GuestReservationExistResponse response = reservationServiceBlockingStub.doesReservationExistsForUser(guestReservationExistRequest);
+
+        return response.getReservationExists();
+    }
 }
