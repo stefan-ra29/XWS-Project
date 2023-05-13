@@ -41,18 +41,18 @@
   margin-bottom: 15px;
 }
 
-.row-wrapper-registration label {
+.row-wrapper-account label {
   color: #264653;
   font-size: large;
 }
 
-.email-row-wrapper-registration {
+.email-row-wrapper-account {
   display: flex;
   flex-direction: row;
 }
 
-.email-row-wrapper-registration div {
-  width: 50%;
+.email-row-wrapper-account div {
+  width: 70%;
   display: flex;
   margin-bottom: 10px;
 }
@@ -68,7 +68,7 @@
   justify-content: left;
 }
 
-.submit-input-account {
+.change-button-account {
   margin-top: 15px;
   padding-left: 20px;
   padding-right: 20px;
@@ -82,12 +82,12 @@
   cursor: pointer;
 }
 
-.submit-input-account:hover {
+.change-button-account:hover {
   background-color: var(--ternary);
   cursor: pointer;
 }
 
-.submit-input-account:disabled {
+.change-button-account:disabled {
   background-color: var(--secondary);
   cursor: default;
 }

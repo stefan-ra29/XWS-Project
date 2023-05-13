@@ -73,9 +73,9 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
             if(request.getUsername() != null) {
                 Optional<User> user = userRepository.findByUsername(request.getUsername());
                 if(user.isEmpty())
-                    throw new Exception("Can't fin user with that email!");
+                    throw new Exception("Can't find user with that email!");
 
-                builder.setUser(User_grpc.newBuilder()
+                builder.setUser(LoginUser.newBuilder()
                         .setUsername(user.get().getUsername())
                         .setPassword(user.get().getPassword())
                         .setEmail(user.get().getEmail())
@@ -83,6 +83,41 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
                         .setLastName(user.get().getLastName())
                         .setId(user.get().getId().toString())
                         .setRole(user.get().getRole().toString())
+                        .build());
+                responseObserver.onNext(builder.build());
+                responseObserver.onCompleted();
+            }
+            else
+                throw new Exception("Nothing is received");
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void findUserById(UserRequestById request, StreamObserver<UserResponseById> responseObserver) {
+        UserResponseById.Builder builder = UserResponseById.newBuilder();
+        try{
+            if(request.getId() != null) {
+                Optional<User> user = userRepository.findById(Long.parseLong(request.getId()));
+                if(user.isEmpty())
+                    throw new Exception("Can't find user with that email!");
+
+                builder.setUser(AccountInfoUser.newBuilder()
+                        .setUsername(user.get().getUsername())
+                        .setPassword(user.get().getPassword())
+                        .setEmail(user.get().getEmail())
+                        .setFirstName(user.get().getFirstName())
+                        .setLastName(user.get().getLastName())
+                        .setId(user.get().getId().toString())
+                        .setRole(user.get().getRole().toString())
+                        .setAddress(AddressDTO_grpc.newBuilder()
+                                .setCountry(user.get().getAddress().getCountry())
+                                .setCity(user.get().getAddress().getCity())
+                                .setStreet(user.get().getAddress().getStreet())
+                                .setStreetNumber(user.get().getAddress().getStreetNumber())
+                                .build())
                         .build());
                 responseObserver.onNext(builder.build());
                 responseObserver.onCompleted();

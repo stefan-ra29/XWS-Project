@@ -30,11 +30,11 @@ export function register(user, navigate) {
     });
 }
 
-export function getUser(id) {
+export function getUser(id, setUser) {
   getAxios()
-    .get(apiURL, id)
+    .get(apiURL + `${id}`)
     .then((response) => {
-      return response.data;
+      setUser(response.data);
     })
     .catch((error) => {
       console.log(error);

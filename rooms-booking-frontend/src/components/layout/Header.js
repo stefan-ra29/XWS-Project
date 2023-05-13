@@ -12,7 +12,7 @@ export default function Header() {
         {localStorage.getItem("role") === "GUEST" && (
           <NavLink to="/book">Book</NavLink>
         )}
-        {localStorage.getItem("token") == null && (
+        {localStorage.getItem("token") != null && (
           <NavLink to="/account-management">Account</NavLink>
         )}
         {localStorage.getItem("token") == null && (

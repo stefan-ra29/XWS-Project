@@ -5,7 +5,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>proto</module>
-		<module>user-service</module>
+		<module>loginUserDTO-service</module>
 		<module>room-service</module>
 		<module>bff</module>
 	</modules>

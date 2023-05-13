@@ -1,10 +1,15 @@
 import "./styles/AccountManagement.css";
 import { useEffect, useState } from "react";
 import { getUser } from "../service/UserService";
-import { getRoleFromLocalStorage } from "../utils/LocalStorageService";
+import {
+  getTokenFromLocalStorage,
+  getIdFromLocalStorage,
+} from "../utils/LocalStorageService";
+import { useNavigate } from "react-router-dom";
 
 export default function AccountManagement() {
-  const role = getRoleFromLocalStorage();
+  const token = getTokenFromLocalStorage();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -15,19 +20,20 @@ export default function AccountManagement() {
   });
   const [isChangeActivated, setIsChangeActivated] = useState(false);
   useEffect(() => {
-    // if (role === "GUEST" || role === "HOST") {
-    //     navigate("/");
-    //   }
-    //setUser(getUser());
+    if (token === null) {
+      navigate("/");
+    }
+    getUser(getIdFromLocalStorage(), setUser);
   }, []);
 
-  function onChange() {
-    console.log("here");
-  }
+  const onChange = (event) => {
+    event.preventDefault();
+    setIsChangeActivated(!isChangeActivated);
+  };
 
   return (
     <div className="form-container-account">
-      <form className="account-form">
+      <form className="account-form" onSubmit={(e) => onChange(e)}>
         <div>
           <div className="row-wrapper-account">
             <div>
@@ -37,7 +43,7 @@ export default function AccountManagement() {
               <input
                 type="text"
                 id="fname"
-                disabled={true}
+                disabled={!isChangeActivated}
                 value={user.firstName}
                 name="firstName"
               />
@@ -50,7 +56,7 @@ export default function AccountManagement() {
               <input
                 type="text"
                 id="lname"
-                disabled={true}
+                disabled={!isChangeActivated}
                 value={user.lastName}
                 name="lastName"
               />
@@ -65,7 +71,7 @@ export default function AccountManagement() {
               <input
                 type="text"
                 id="a-country"
-                disabled={true}
+                disabled={!isChangeActivated}
                 value={user.address.country}
                 name="country"
               />
@@ -77,7 +83,7 @@ export default function AccountManagement() {
               <input
                 type="text"
                 id="a-city"
-                disabled={true}
+                disabled={!isChangeActivated}
                 value={user.address.city}
                 name="city"
               />
@@ -91,7 +97,7 @@ export default function AccountManagement() {
               <input
                 type="text"
                 id="a-street"
-                disabled={true}
+                disabled={!isChangeActivated}
                 value={user.address.street}
                 name="street"
               />
@@ -103,7 +109,7 @@ export default function AccountManagement() {
               <input
                 type="text"
                 id="a-number"
-                disabled={true}
+                disabled={!isChangeActivated}
                 value={user.address.streetNumber}
                 name="streetNumber"
               />
@@ -118,7 +124,7 @@ export default function AccountManagement() {
                 type="text"
                 id="uname"
                 name="username"
-                disabled={true}
+                disabled={!isChangeActivated}
                 value={user.username}
               />
             </div>
@@ -130,7 +136,7 @@ export default function AccountManagement() {
                 type="text"
                 id="pass"
                 name="password"
-                disabled={true}
+                disabled={!isChangeActivated}
                 value={user.password}
               />
             </div>
@@ -144,16 +150,21 @@ export default function AccountManagement() {
                 type="text"
                 id="id-email"
                 name="email"
-                disabled={true}
+                disabled={!isChangeActivated}
                 value={user.email}
               />
             </div>
           </div>
         </div>
         <div>
-          <button className="submit-input-account" onChange={onChange}>
-            Change account information
-          </button>
+          {!isChangeActivated && (
+            <button className="change-button-account">
+              Change account information
+            </button>
+          )}
+          {isChangeActivated && (
+            <button className="change-button-account">Submit</button>
+          )}
         </div>
       </form>
     </div>
