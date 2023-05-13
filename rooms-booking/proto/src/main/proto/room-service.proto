@@ -101,14 +101,97 @@ message ReservationRequestResponse {
   bool successfullySaved = 1;
 }
 
+message AvailablePlacesRequest { }
+
+message AvailablePlacesResponse {
+  repeated string availablePlaces = 1;
+}
+
+message ReservationRequestsByGuestRequest {
+  int64 guestId = 1;
+}
+
+message ReservationRequestGrpcDTO {
+  string roomName = 1;
+  string fromDate = 2;
+  string toDate = 3;
+  int64 requestId = 4;
+  int32 numberOfGuests = 5;
+  string location = 6;
+}
+
+message ReservationRequestsByGuestResponse {
+  repeated ReservationRequestGrpcDTO reservationRequests = 1;
+}
+
+message DeleteReservationRequestRequest {
+  int64 requestId = 1;
+}
+
+message DeleteReservationRequestResponse { }
+
+message GuestReservationExistRequest {
+  int64 guestId = 1;
+}
+
+message GuestReservationExistResponse{
+  bool reservationExists = 1;
+}
+message HostIdRequest {
+  int64 hostId = 1;
+}
+
+message HostRoomsResponse {
+  repeated RoomGrpcDto rooms = 1;
+}
+
+message RoomAvailabilitiesRequest {
+  int64 roomId = 1;
+}
+
+message RoomAvailabilitiesResponse {
+  repeated AvailabilityResponse availabilities = 1;
+}
+
+message RoomPricesRequest {
+  int64 roomId = 1;
+}
+
+message RoomPricesResponse {
+  repeated PriceResponse prices = 1;
+}
+
+message HostReservationsExistRequest {
+  int64 hostId = 1;
+}
+
+message HostReservationsExistResponse {
+  bool reservationsExists = 1;
+}
+
+message DeleteRoomsForHostRequest {
+  int64 hostId = 1;
+}
+
+message DeleteRoomsForHostResponse { }
+
 service ReservationService {
   rpc searchRooms(SearchRequest) returns (SearchResponse);
   rpc sendReservationRequest(ReservationRequestRequest) returns (ReservationRequestResponse);
+  rpc getAvailablePlaces(AvailablePlacesRequest) returns (AvailablePlacesResponse);
+  rpc getReservationRequestsByGuest(ReservationRequestsByGuestRequest) returns (ReservationRequestsByGuestResponse);
+  rpc deleteReservationRequest(DeleteReservationRequestRequest) returns (DeleteReservationRequestResponse);
+  rpc doesReservationExistsForUser(GuestReservationExistRequest) returns (GuestReservationExistResponse);
+  rpc doesReservationExistsForHost(HostReservationsExistRequest) returns (HostReservationsExistResponse);
 }
 
 service RoomService {
+  rpc getAllRoomAvailabilities(RoomAvailabilitiesRequest) returns (RoomAvailabilitiesResponse);
+  rpc getAllRoomPrices(RoomPricesRequest) returns (RoomPricesResponse);
+  rpc getAllHostRooms(HostIdRequest) returns (HostRoomsResponse);
   rpc getTestMessage(RoomTestRequest) returns (RoomTestResponse);
   rpc create(RoomGrpcDto) returns (RoomGrpcDto);
   rpc createAvailability(AvailabilityRequest) returns (AvailabilityResponse);
   rpc createPrice(PriceRequest) returns (PriceResponse);
+  rpc deleteRoomsForHost(DeleteRoomsForHostRequest) returns (DeleteRoomsForHostResponse);
 }

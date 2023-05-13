@@ -28,7 +28,50 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
     private final PriceRepository priceRepository;
     private final RoomImageRepository roomImageRepository;
     private final ReservationRequestRepository reservationRequestRepository;
+    private final ApprovedReservationRepository approvedReservationRepository;
 
+
+    @Override
+    public void deleteReservationRequest(DeleteReservationRequestRequest request, StreamObserver<DeleteReservationRequestResponse> responseObserver) {
+        reservationRequestRepository.deleteById(request.getRequestId());
+
+        DeleteReservationRequestResponse response = DeleteReservationRequestResponse.newBuilder().build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getReservationRequestsByGuest(ReservationRequestsByGuestRequest request, StreamObserver<ReservationRequestsByGuestResponse> responseObserver) {
+        List<ReservationRequest> reservationRequestsByGuest = reservationRequestRepository.findAllByCustomerId(request.getGuestId());
+        List<ReservationRequestGrpcDTO> reservationRequestGrpcDTOS = new ArrayList<>();
+
+        for(ReservationRequest reservationRequest : reservationRequestsByGuest) {
+            ReservationRequestGrpcDTO reservationRequestGrpcDTO = ReservationRequestGrpcDTO.newBuilder()
+                    .setNumberOfGuests(reservationRequest.getNumberOfGuests())
+                    .setRequestId(reservationRequest.getId())
+                    .setLocation(reservationRequest.getRoom().getLocation())
+                    .setFromDate(reservationRequest.getFromDate().toString())
+                    .setToDate(reservationRequest.getToDate().toString())
+                    .setRoomName(reservationRequest.getRoom().getName())
+                    .build();
+
+            reservationRequestGrpcDTOS.add(reservationRequestGrpcDTO);
+        }
+
+        ReservationRequestsByGuestResponse response = ReservationRequestsByGuestResponse.newBuilder().addAllReservationRequests(reservationRequestGrpcDTOS).build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getAvailablePlaces(AvailablePlacesRequest request, StreamObserver<AvailablePlacesResponse> responseObserver) {
+        List<String> availablePlaces = roomRepository.findDistinctLocations();
+
+        AvailablePlacesResponse response = AvailablePlacesResponse.newBuilder().addAllAvailablePlaces(availablePlaces).build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
 
     @Override
     public void sendReservationRequest(ReservationRequestRequest request, StreamObserver<ReservationRequestResponse> responseObserver) {
@@ -92,6 +135,34 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
         SearchResponse searchResponse = SearchResponse.newBuilder().addAllRooms(response).build();
 
         responseObserver.onNext(searchResponse);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void doesReservationExistsForUser(GuestReservationExistRequest request, StreamObserver<GuestReservationExistResponse> responseObserver) {
+        List<ApprovedReservation> list = approvedReservationRepository.findAllByCustomerId(request.getGuestId());
+        boolean reservationExist = approvedReservationRepository.findAllByCustomerId(request.getGuestId()).size() > 0;
+
+        GuestReservationExistResponse guestReservationExistResponse =
+                GuestReservationExistResponse.newBuilder().setReservationExists(reservationExist).build();
+
+        responseObserver.onNext(guestReservationExistResponse);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void doesReservationExistsForHost(HostReservationsExistRequest request, StreamObserver<HostReservationsExistResponse> responseObserver) {
+        List<ApprovedReservation> approvedReservations = approvedReservationRepository.findAll();
+        for(ApprovedReservation approvedReservation : approvedReservations) {
+            if(approvedReservation.getRoom().getHostId() == request.getHostId() && (approvedReservation.getFromDate().isAfter(LocalDate.now()) || approvedReservation.getToDate().isAfter(LocalDate.now()))) {
+                HostReservationsExistResponse hostReservationsExistResponse = HostReservationsExistResponse.newBuilder().setReservationsExists(true).build();
+                responseObserver.onNext(hostReservationsExistResponse);
+                responseObserver.onCompleted();
+            }
+        }
+
+        HostReservationsExistResponse hostReservationsExistResponse = HostReservationsExistResponse.newBuilder().setReservationsExists(false).build();
+        responseObserver.onNext(hostReservationsExistResponse);
         responseObserver.onCompleted();
     }
 
@@ -164,4 +235,6 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
 
         return false;
     }
+
+
 }

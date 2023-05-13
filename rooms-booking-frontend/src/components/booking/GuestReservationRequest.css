@@ -1,0 +1,10 @@
+.guestReservationRequestWrapper {
+    background-color: #264653;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.guestReservationRequestWrapper button {
+    margin-top: 10px;
+}

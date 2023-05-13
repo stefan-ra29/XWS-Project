@@ -103,5 +103,12 @@ public class UserService {
             return null;
         }
     }
+    public String deleteUser(long userId) {
+        DeleteUserRequest request = DeleteUserRequest.newBuilder().setUserId(userId).build();
+
+        DeleteUserResponse response = userStub.deleteUser(request);
+
+        return  response.getResponseMessage();
+    }
 
 }

@@ -1,8 +1,6 @@
 package com.xwsBooking.reservation;
 
-import com.xwsBooking.reservation.dtos.ReservationRequestDTO;
-import com.xwsBooking.reservation.dtos.SearchRequestDTO;
-import com.xwsBooking.reservation.dtos.SearchResultDTO;
+import com.xwsBooking.reservation.dtos.*;
 import com.xwsBooking.room.*;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
@@ -15,6 +13,39 @@ public class ReservationService {
 
     @GrpcClient("room-service")
     private ReservationServiceGrpc.ReservationServiceBlockingStub reservationServiceBlockingStub;
+
+    public void deleteReservationRequest(long requestId) {
+        DeleteReservationRequestRequest request = DeleteReservationRequestRequest.newBuilder().setRequestId(requestId).build();
+        reservationServiceBlockingStub.deleteReservationRequest(request);
+    }
+
+    public List<ReservationRequestDisplayDTO> getReservationRequestsByGuest(long guestId) {
+        ReservationRequestsByGuestRequest request = ReservationRequestsByGuestRequest.newBuilder().setGuestId(guestId).build();
+        ReservationRequestsByGuestResponse response = reservationServiceBlockingStub.getReservationRequestsByGuest(request);
+
+        List<ReservationRequestDisplayDTO> requestsByGuest = new ArrayList<>();
+        for(ReservationRequestGrpcDTO dto : response.getReservationRequestsList()) {
+            ReservationRequestDisplayDTO reservationRequestDisplayDTO = ReservationRequestDisplayDTO.builder()
+                    .numberOfGuests(dto.getNumberOfGuests())
+                    .requestId(dto.getRequestId())
+                    .fromDate(dto.getFromDate())
+                    .toDate(dto.getToDate())
+                    .roomName(dto.getRoomName())
+                    .location(dto.getLocation())
+                    .build();
+
+            requestsByGuest.add(reservationRequestDisplayDTO);
+        }
+
+        return requestsByGuest;
+    }
+
+    public List<String> getAvailablePlaces() {
+        AvailablePlacesRequest request = AvailablePlacesRequest.newBuilder().build();
+        AvailablePlacesResponse response = reservationServiceBlockingStub.getAvailablePlaces(request);
+
+        return response.getAvailablePlacesList();
+    }
 
     public List<SearchResultDTO> search(SearchRequestDTO searchRequestDTO) {
         SearchRequest searchRequest = SearchRequest.newBuilder()
@@ -63,4 +94,12 @@ public class ReservationService {
         return true;
     }
 
+    public boolean doesGuestHaveReservation(long guestId){
+        GuestReservationExistRequest guestReservationExistRequest = GuestReservationExistRequest.newBuilder()
+                .setGuestId(guestId).build();
+
+        GuestReservationExistResponse response = reservationServiceBlockingStub.doesReservationExistsForUser(guestReservationExistRequest);
+
+        return response.getReservationExists();
+    }
 }
