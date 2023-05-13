@@ -1,15 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
-import { createRoom } from "../service/CreateRoomService";
+import { createRoom } from "../service/RoomService";
 
 export const CreateRoom = () => {
   const [room, setRoom] = useState({
     maxNumberOfGuests: 1,
     minNumberOfGuests: 0,
   });
-  useEffect(() => {
-    console.log(room);
-  }, [room]);
 
   return (
     <div className="bg-white w-[500px] m-auto rounded-lg p-8">
