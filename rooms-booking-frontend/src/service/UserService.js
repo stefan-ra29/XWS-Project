@@ -29,3 +29,19 @@ export function register(user, navigate) {
       }
     });
 }
+
+export function deleteAccount() {
+  let userId = localStorage.getItem("id");
+  getAxios()
+    .delete(apiURL + userId)
+    .then((response) => {
+      localStorage.clear();
+      toast.info(response.data);
+      window.setTimeout(() => window.location.replace('http://localhost:3000/'), 3000);
+      
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.message);
+    });
+}
