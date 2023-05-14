@@ -83,6 +83,35 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
 
         if(roomRepository.findById(request.getRoomId()).get().isAutomaticReservationConfirmation()){
             saveApprovedReservation(request, dateFrom, dateTo);
+
+            Availability roomAvailability = null;
+            for(Availability availability : availabilityRepository.findAvailabilitiesByRoom_Id(request.getRoomId())) {
+                if(datesFit(availability, request.getFromDate().toString(), request.getToDate().toString())) {
+                    roomAvailability = availability;
+                    availabilityRepository.delete(availability);
+                    break;
+                }
+            }
+
+            if(!roomAvailability.getFromDate().equals(request.getFromDate())){
+                Availability newAvailabilityBefore = Availability.builder()
+                        .fromDate(roomAvailability.getFromDate())
+                        .toDate(LocalDate.parse(request.getFromDate()).minusDays(1))
+                        .room(roomRepository.findById(request.getRoomId()).get())
+                        .build();
+
+                availabilityRepository.save(newAvailabilityBefore);
+            }
+
+            if(!roomAvailability.getToDate().equals(request.getToDate())){
+                Availability newAvailabilityAfter = Availability.builder()
+                        .fromDate(LocalDate.parse(request.getToDate()).plusDays(1))
+                        .toDate(roomAvailability.getToDate())
+                        .room(roomRepository.findById(request.getRoomId()).get())
+                        .build();
+
+                availabilityRepository.save(newAvailabilityAfter);
+            }
         }
         else{
             saveReservationRequest(request, dateFrom, dateTo);
@@ -174,14 +203,16 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
     public void cancelApprovedReservation(CancelApprovedReservationRequest request, StreamObserver<CancelApprovedReservationResponse> responseObserver) {
 
         GuestCancellation guestCancellation = null;
+        ApprovedReservation reservation = approvedReservationRepository.findById(request.getReservationId()).get();
+
         for (GuestCancellation cancellation: guestCancellationRepository.findAll()) {
-            if(cancellation.getCustomerId() == approvedReservationRepository.findById(request.getReservationId()).get().getCustomerId()){
+            if(cancellation.getCustomerId() == reservation.getCustomerId()){
                 guestCancellation = cancellation;
             }
         }
         if(guestCancellation == null){
             guestCancellation = GuestCancellation.builder()
-                    .customerId(approvedReservationRepository.findById(request.getReservationId()).get().getCustomerId())
+                    .customerId(reservation.getCustomerId())
                     .cancellationCount(1)
                     .build();
             guestCancellationRepository.save(guestCancellation);
@@ -189,6 +220,24 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
         else{
             guestCancellation.setCancellationCount(guestCancellation.getCancellationCount() + 1);
         }
+
+        Availability newAvailability = Availability.builder()
+                .fromDate(reservation.getFromDate())
+                .toDate(reservation.getToDate())
+                .room(reservation.getRoom())
+                .build();
+
+        for(Availability availability : availabilityRepository.findAvailabilitiesByRoom_Id(reservation.getRoom().getId())) {
+            if(availability.getToDate().equals(newAvailability.getFromDate().minusDays(1))){
+                newAvailability.setFromDate(availability.getFromDate());
+                availabilityRepository.delete(availability);
+            }
+            else if(availability.getFromDate().equals(newAvailability.getToDate().plusDays(1))){
+                newAvailability.setToDate(availability.getToDate());
+                availabilityRepository.delete(availability);
+            }
+        }
+        availabilityRepository.save(newAvailability);
 
         approvedReservationRepository.deleteById(request.getReservationId());
 
