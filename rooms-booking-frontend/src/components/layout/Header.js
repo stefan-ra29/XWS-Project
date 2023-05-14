@@ -23,6 +23,12 @@ export default function Header() {
         {localStorage.getItem("role") === "GUEST" && (
           <NavLink to="/guestReservationRequests">Reservation requests</NavLink>
         )}
+        {localStorage.getItem("role") === "HOST" && (
+          <NavLink to="/create-room">Create room</NavLink>
+        )}
+        {localStorage.getItem("role") === "HOST" && (
+          <NavLink to="/my-rooms">My rooms</NavLink>
+        )}
         {localStorage.getItem("token") != null && (
           <NavLink to="/account-management">Account</NavLink>
         )}
@@ -42,17 +48,6 @@ export default function Header() {
           >
             Log out
           </NavLink>
-        )}
-        {localStorage.getItem("token") != null && (
-          <NavLink to="/" onClick={handleAccountDeletion}>
-            Delete account
-          </NavLink>
-        )}
-        {localStorage.getItem("role") === "HOST" && (
-          <NavLink to="/create-room">Create room</NavLink>
-        )}
-        {localStorage.getItem("role") === "HOST" && (
-          <NavLink to="/my-rooms">My rooms</NavLink>
         )}
       </nav>
     </header>

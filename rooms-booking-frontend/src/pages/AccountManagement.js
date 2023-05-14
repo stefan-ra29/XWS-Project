@@ -6,6 +6,8 @@ import {
   getIdFromLocalStorage,
 } from "../utils/LocalStorageService";
 import { useNavigate } from "react-router-dom";
+import { deleteAccount } from "../service/UserService";
+import { changeUserInfo } from "../service/UserService";
 
 export default function AccountManagement() {
   const token = getTokenFromLocalStorage();
@@ -17,23 +19,184 @@ export default function AccountManagement() {
     username: "",
     password: "",
     email: "",
+    role: "",
+    id: "",
+  });
+
+  const [address, setAddress] = useState({
+    country: "",
+    city: "",
+    street: "",
+    streetNumber: "",
   });
   const [isChangeActivated, setIsChangeActivated] = useState(false);
+  const [isDeleteButtonDisabled, setIsDeleteButtonDisabled] = useState(false);
+
   useEffect(() => {
     if (token === null) {
       navigate("/");
     }
-    getUser(getIdFromLocalStorage(), setUser);
+    getUser(getIdFromLocalStorage(), setUser, setAddress);
   }, []);
 
   const onChange = (event) => {
     event.preventDefault();
-    setIsChangeActivated(!isChangeActivated);
+    if (isChangeActivated) {
+      user.address = address;
+      setUser((values) => ({
+        ...values,
+        values: user,
+      }));
+      changeUserInfo(
+        user,
+        setIsChangeActivated,
+        setIsDeleteButtonDisabled,
+        navigate
+      );
+    } else {
+      setIsChangeActivated(!isChangeActivated);
+      setIsDeleteButtonDisabled(!isDeleteButtonDisabled);
+    }
   };
+
+  const handleAccountDeletion = (event) => {
+    event.preventDefault();
+    if (window.confirm("Are you sure you want to delete your account?")) {
+      deleteAccount();
+    }
+  };
+
+  const handleUserInfoChange = (event) => {
+    const name = event.name;
+    const value = event.value;
+    setUser((values) => ({ ...values, [name]: value }));
+    validateInputFields(event.id, value);
+  };
+
+  const handleAddressInfoChange = (event) => {
+    const name = event.name;
+    const value = event.value;
+    setAddress((values) => ({ ...values, [name]: value }));
+    validateInputFields(event.id, value);
+  };
+
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const nameRegex = /^[A-Z][a-z]*(\s[A-Z][a-z]*)*$/;
+  const addressRegex = /^[A-Z][a-z]*(\s[A-Z]?[a-z]*)*$/;
+  const streetNumberRegex = /^[1-9]+[A-Z]?$/;
+  const credentialsRegex = /^([A-Za-z0-9]{3,})$/;
+  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+  function validateInputFields(id, value) {
+    switch (id) {
+      case "fname": {
+        if (nameRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "lname": {
+        if (nameRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "a-country": {
+        if (addressRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "a-city": {
+        if (addressRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "a-street": {
+        if (addressRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "a-number": {
+        if (streetNumberRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "uname": {
+        if (credentialsRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "pass": {
+        if (credentialsRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      case "id-email": {
+        if (emailRegex.test(value) === false) {
+          document.getElementById(id).className = "error-input-field";
+          setIsDisabled(true);
+        } else {
+          document.getElementById(id).className = "";
+        }
+        break;
+      }
+      default:
+        return;
+    }
+    checkAccessibilityOfSubmitButton();
+  }
+
+  function checkAccessibilityOfSubmitButton() {
+    if (
+      nameRegex.test(document.getElementById("fname").value) === true &&
+      nameRegex.test(document.getElementById("lname").value) === true &&
+      addressRegex.test(document.getElementById("a-country").value) === true &&
+      addressRegex.test(document.getElementById("a-city").value) === true &&
+      addressRegex.test(document.getElementById("a-street").value) === true &&
+      streetNumberRegex.test(document.getElementById("a-number").value) ===
+        true &&
+      credentialsRegex.test(document.getElementById("uname").value) === true &&
+      credentialsRegex.test(document.getElementById("pass").value) === true &&
+      emailRegex.test(document.getElementById("id-email").value) === true
+    ) {
+      setIsDisabled(false);
+    }
+  }
 
   return (
     <div className="form-container-account">
-      <form className="account-form" onSubmit={(e) => onChange(e)}>
+      <form className="account-form">
         <div>
           <div className="row-wrapper-account">
             <div>
@@ -46,6 +209,7 @@ export default function AccountManagement() {
                 disabled={!isChangeActivated}
                 value={user.firstName}
                 name="firstName"
+                onChange={(e) => handleUserInfoChange(e.target)}
               />
             </div>
 
@@ -59,6 +223,7 @@ export default function AccountManagement() {
                 disabled={!isChangeActivated}
                 value={user.lastName}
                 name="lastName"
+                onChange={(e) => handleUserInfoChange(e.target)}
               />
             </div>
           </div>
@@ -72,8 +237,9 @@ export default function AccountManagement() {
                 type="text"
                 id="a-country"
                 disabled={!isChangeActivated}
-                value={user.address.country}
+                value={address.country}
                 name="country"
+                onChange={(e) => handleAddressInfoChange(e.target)}
               />
             </div>
             <div>
@@ -84,8 +250,9 @@ export default function AccountManagement() {
                 type="text"
                 id="a-city"
                 disabled={!isChangeActivated}
-                value={user.address.city}
+                value={address.city}
                 name="city"
+                onChange={(e) => handleAddressInfoChange(e.target)}
               />
             </div>
           </div>
@@ -98,8 +265,9 @@ export default function AccountManagement() {
                 type="text"
                 id="a-street"
                 disabled={!isChangeActivated}
-                value={user.address.street}
+                value={address.street}
                 name="street"
+                onChange={(e) => handleAddressInfoChange(e.target)}
               />
             </div>
             <div>
@@ -110,8 +278,9 @@ export default function AccountManagement() {
                 type="text"
                 id="a-number"
                 disabled={!isChangeActivated}
-                value={user.address.streetNumber}
+                value={address.streetNumber}
                 name="streetNumber"
+                onChange={(e) => handleAddressInfoChange(e.target)}
               />
             </div>
           </div>
@@ -126,6 +295,7 @@ export default function AccountManagement() {
                 name="username"
                 disabled={!isChangeActivated}
                 value={user.username}
+                onChange={(e) => handleUserInfoChange(e.target)}
               />
             </div>
             <div>
@@ -138,6 +308,7 @@ export default function AccountManagement() {
                 name="password"
                 disabled={!isChangeActivated}
                 value={user.password}
+                onChange={(e) => handleUserInfoChange(e.target)}
               />
             </div>
           </div>
@@ -152,19 +323,36 @@ export default function AccountManagement() {
                 name="email"
                 disabled={!isChangeActivated}
                 value={user.email}
+                onChange={(e) => handleUserInfoChange(e.target)}
               />
             </div>
           </div>
         </div>
-        <div>
+        <div className="row-wrapper-change-button-account">
           {!isChangeActivated && (
-            <button className="change-button-account">
+            <button
+              className="change-button-account"
+              onClick={(e) => onChange(e)}
+            >
               Change account information
             </button>
           )}
           {isChangeActivated && (
-            <button className="change-button-account">Submit</button>
+            <button
+              disabled={isDisabled}
+              className="change-button-account"
+              onClick={(e) => onChange(e)}
+            >
+              Submit
+            </button>
           )}
+          <button
+            className="delete-button-account"
+            disabled={isDeleteButtonDisabled}
+            onClick={(e) => handleAccountDeletion(e)}
+          >
+            Delete account
+          </button>
         </div>
       </form>
     </div>

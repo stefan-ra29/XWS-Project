@@ -56,6 +56,8 @@ public class UserService {
 
             UserResponseByUsername userResponseByUsername = userStub.findUserByUsername(userRequestByUsername);
 
+            if(userResponseByUsername.getResponseMessage().length() > 0)
+                throw new Exception(userResponseByUsername.getResponseMessage());
             var user  = userResponseByUsername.getUser();
 
             return LoginUserDTO.builder()
@@ -109,6 +111,36 @@ public class UserService {
         DeleteUserResponse response = userStub.deleteUser(request);
 
         return  response.getResponseMessage();
+    }
+
+    public ChangeAccountResponse changeUserAccountInformation(UserDTO userDTO) {
+        try{
+            ChangeAccountRequest changeAccountRequest = ChangeAccountRequest.newBuilder()
+                    .setUser(AccountInfoUser.newBuilder()
+                                    .setFirstName(userDTO.getFirstName())
+                                    .setLastName(userDTO.getLastName())
+                                    .setUsername(userDTO.getUsername())
+                                    .setPassword(userDTO.getPassword())
+                                    .setEmail(userDTO.getEmail())
+                                    .setRole(userDTO.getRole().toString())
+                                    .setAddress
+                                            (AddressDTO_grpc.newBuilder()
+                                                    .setCountry(userDTO.getAddress().getCountry())
+                                                    .setCity(userDTO.getAddress().getCity())
+                                                    .setStreet(userDTO.getAddress().getStreet())
+                                                    .setStreetNumber(userDTO.getAddress().getStreetNumber())
+                                                    .build())
+                                    .setId(userDTO.getId())
+                                    .build())
+                    .build();
+
+            ChangeAccountResponse changeAccountResponse = userStub.changeAccountInformation(changeAccountRequest);
+            return changeAccountResponse;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
     }
 
 }

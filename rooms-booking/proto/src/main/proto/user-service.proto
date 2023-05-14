@@ -51,15 +51,8 @@ message UserRequestByUsername{
 
 message UserResponseByUsername{
   LoginUser user = 1;
+  string responseMessage = 2;
 }
-
-//message AddressInfo{
-//  string country = 1;
-//  string city = 2;
-//  string street = 3;
-//  string streetNumber = 4;
-//  string id = 5;
-//}
 
  message AccountInfoUser{
    string firstName = 1;
@@ -88,10 +81,21 @@ message DeleteUserResponse {
     string responseMessage = 1;
 }
 
+message ChangeAccountRequest{
+  AccountInfoUser user = 1;
+}
+
+message ChangeAccountResponse{
+  string username = 1;
+  string responseMessage = 2;
+}
+
 service UserService {
   rpc getUsernameById(GetUsernameRequest) returns (GetUsernameResponse);
   rpc registerUser(RegisterUserRequest) returns (RegisterUserResponse);
   rpc findUserByUsername(UserRequestByUsername) returns (UserResponseByUsername);
   rpc findUserById(UserRequestById) returns (UserResponseById);
   rpc deleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+  rpc changeAccountInformation(ChangeAccountRequest) returns (ChangeAccountResponse);
+
 }

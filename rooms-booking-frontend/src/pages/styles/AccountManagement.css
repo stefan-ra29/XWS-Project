@@ -68,6 +68,12 @@
   justify-content: left;
 }
 
+.row-wrapper-change-button-account {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .change-button-account {
   margin-top: 15px;
   padding-left: 20px;
@@ -89,6 +95,31 @@
 
 .change-button-account:disabled {
   background-color: var(--secondary);
+  cursor: default;
+}
+
+.delete-button-account {
+  margin-top: 15px;
+  margin-left: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: fit-content;
+  height: 60px;
+  font-size: large;
+  background-color: red;
+  color: var(--primary);
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-button-account:hover {
+  background-color: brown;
+  cursor: pointer;
+}
+
+.delete-button-account:disabled {
+  background-color: brown;
   cursor: default;
 }
 
