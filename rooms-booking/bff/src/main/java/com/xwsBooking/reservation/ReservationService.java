@@ -102,4 +102,25 @@ public class ReservationService {
 
         return response.getReservationExists();
     }
+
+    public List<ApprovedReservationDTO> getApprovedReservationForGuest(long guestId){
+        GuestApprovedReservationsRequest request = GuestApprovedReservationsRequest.newBuilder().setGuestId(guestId).build();
+        GuestApprovedReservationsResponse response = reservationServiceBlockingStub.getApprovedReservationsForGuest(request);
+        ArrayList<ApprovedReservationDTO> approvedReservationDTOs = new ArrayList<>();
+
+        for (GuestApprovedReservationDTO reservationDTO: response.getApprovedReservationsList()) {
+            ApprovedReservationDTO reservation = ApprovedReservationDTO.builder()
+                    .numberOfGuests(reservationDTO.getNumberOfGuests())
+                    .reservationId(reservationDTO.getReservationId())
+                    .fromDate(reservationDTO.getFromDate())
+                    .toDate(reservationDTO.getToDate())
+                    .roomName(reservationDTO.getRoomName())
+                    .location(reservationDTO.getLocation())
+                    .build();
+
+            approvedReservationDTOs.add(reservation);
+        }
+
+        return approvedReservationDTOs;
+    }
 }

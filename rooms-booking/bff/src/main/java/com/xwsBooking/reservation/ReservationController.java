@@ -1,9 +1,6 @@
 package com.xwsBooking.reservation;
 
-import com.xwsBooking.reservation.dtos.ReservationRequestDTO;
-import com.xwsBooking.reservation.dtos.ReservationRequestDisplayDTO;
-import com.xwsBooking.reservation.dtos.SearchRequestDTO;
-import com.xwsBooking.reservation.dtos.SearchResultDTO;
+import com.xwsBooking.reservation.dtos.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,5 +52,12 @@ public class ReservationController {
     @RequestMapping("/reservation-exist/{guestId}")
     public boolean doesGuestHaveReservation(@PathVariable long guestId) {
         return reservationService.doesGuestHaveReservation(guestId);
+    }
+
+    @RolesAllowed("ROLE_GUEST")
+    @GetMapping
+    @RequestMapping("/approved-reservations/{guestId}")
+    public List<ApprovedReservationDTO> getApprovedReservationForGuest(@PathVariable long guestId) {
+        return reservationService.getApprovedReservationForGuest(guestId);
     }
 }

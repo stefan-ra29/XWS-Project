@@ -140,13 +140,36 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
 
     @Override
     public void doesReservationExistsForUser(GuestReservationExistRequest request, StreamObserver<GuestReservationExistResponse> responseObserver) {
-        List<ApprovedReservation> list = approvedReservationRepository.findAllByCustomerId(request.getGuestId());
         boolean reservationExist = approvedReservationRepository.findAllByCustomerId(request.getGuestId()).size() > 0;
 
         GuestReservationExistResponse guestReservationExistResponse =
                 GuestReservationExistResponse.newBuilder().setReservationExists(reservationExist).build();
 
         responseObserver.onNext(guestReservationExistResponse);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getApprovedReservationsForGuest(GuestApprovedReservationsRequest request, StreamObserver<GuestApprovedReservationsResponse> responseObserver) {
+        List<ApprovedReservation> approvedReservations = approvedReservationRepository.findAllByCustomerId(request.getGuestId());
+        ArrayList<GuestApprovedReservationDTO> approvedReservationsDTOs = new ArrayList<>();
+
+        for(ApprovedReservation reservation : approvedReservations){
+            GuestApprovedReservationDTO response = GuestApprovedReservationDTO.newBuilder()
+                    .setFromDate(reservation.getFromDate().toString())
+                    .setToDate(reservation.getToDate().toString())
+                    .setNumberOfGuests(reservation.getNumberOfGuests())
+                    .setLocation(reservation.getRoom().getLocation())
+                    .setRoomName(reservation.getRoom().getName())
+                    .setReservationId(reservation.getId())
+                    .build();
+
+            approvedReservationsDTOs.add(response);
+        }
+
+        GuestApprovedReservationsResponse response = GuestApprovedReservationsResponse.newBuilder().addAllApprovedReservations(approvedReservationsDTOs).build();
+
+        responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
