@@ -7,7 +7,7 @@ export default function Header() {
   const role = getRoleFromLocalStorage();
 
   function handleAccountDeletion() {
-    if(window.confirm('Are you sure you want to delete your account?')){
+    if (window.confirm("Are you sure you want to delete your account?")) {
       deleteAccount();
     }
   }
@@ -27,7 +27,13 @@ export default function Header() {
           <NavLink to="/reservations">Reservations</NavLink>
         )}
         {localStorage.getItem("role") === "HOST" && (
-          <NavLink to="/hostReservationRequests">Reservation requests</NavLink>
+          <NavLink to="/create-room">Create room</NavLink>
+        )}
+        {localStorage.getItem("role") === "HOST" && (
+          <NavLink to="/my-rooms">My rooms</NavLink>
+        )}
+        {localStorage.getItem("token") != null && (
+          <NavLink to="/account-management">Account</NavLink>
         )}
         {localStorage.getItem("token") == null && (
           <NavLink to="/register">Register</NavLink>
@@ -46,15 +52,6 @@ export default function Header() {
             Log out
           </NavLink>
         )}
-        {localStorage.getItem("token") != null && (
-          <NavLink
-            to="/"
-            onClick={handleAccountDeletion}
-          >
-            Delete account
-          </NavLink>
-        )}
-        <NavLink to="/create-room">Create Room</NavLink>
       </nav>
     </header>
   );

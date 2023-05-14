@@ -1,7 +1,11 @@
 :root {
   --primary: seashell;
   --secondary: #2a9d8f;
+  --ternary: #264653;
 }
 body {
   background-color: var(--primary);
+}
+.header-text {
+  color: #264653;
 }

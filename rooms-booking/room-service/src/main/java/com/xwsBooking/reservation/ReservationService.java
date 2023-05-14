@@ -283,6 +283,23 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
         responseObserver.onCompleted();
     }
 
+    
+    @Override
+    public void doesReservationExistsForHost(HostReservationsExistRequest request, StreamObserver<HostReservationsExistResponse> responseObserver) {
+        List<ApprovedReservation> approvedReservations = approvedReservationRepository.findAll();
+        for(ApprovedReservation approvedReservation : approvedReservations) {
+            if(approvedReservation.getRoom().getHostId() == request.getHostId() && (approvedReservation.getFromDate().isAfter(LocalDate.now()) || approvedReservation.getToDate().isAfter(LocalDate.now()))) {
+                HostReservationsExistResponse hostReservationsExistResponse = HostReservationsExistResponse.newBuilder().setReservationsExists(true).build();
+                responseObserver.onNext(hostReservationsExistResponse);
+                responseObserver.onCompleted();
+            }
+        }
+
+        HostReservationsExistResponse hostReservationsExistResponse = HostReservationsExistResponse.newBuilder().setReservationsExists(false).build();
+        responseObserver.onNext(hostReservationsExistResponse);
+        responseObserver.onCompleted();
+    }
+
     private void saveReservationRequest(ReservationRequestRequest request, LocalDate dateFrom, LocalDate dateTo) {
         ReservationRequest reservationRequest = ReservationRequest.builder()
                 .customerId(request.getGuestId())
@@ -306,6 +323,7 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
 
         approvedReservationRepository.save(approvedReservation);
     }
+
 
     public double calculatePricePerDay(double totalPrice, SearchRequest request) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

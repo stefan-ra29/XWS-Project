@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ReservationRequestRepository extends JpaRepository<ReservationRequest, Long> {
     List<ReservationRequest> findAllByCustomerId(long customerId);
+    List<ReservationRequest> deleteAllByRoomId(long roomId);
 }
