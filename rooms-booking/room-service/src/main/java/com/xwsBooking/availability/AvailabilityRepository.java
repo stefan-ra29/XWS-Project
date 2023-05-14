@@ -13,7 +13,7 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Long
     List<Availability> deleteAllByRoomId(long roomId);
 
     @Query(value = "SELECT * FROM availabilities a " +
-            "WHERE a.to_date >= :fromDate AND a.from_date <= :toDate", nativeQuery = true)
+            "WHERE a.to_date >= :fromDate AND a.from_date <= :toDate AND a.room_id = :roomId", nativeQuery = true)
     List<Availability> findAvailableByFromDateAndToDate(@Param("fromDate") LocalDate fromDate,
-                                     @Param("toDate") LocalDate toDate);
+                                     @Param("toDate") LocalDate toDate, @Param("roomId") long roomId);
 }

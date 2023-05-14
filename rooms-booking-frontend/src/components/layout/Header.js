@@ -48,7 +48,12 @@ export default function Header() {
             Delete account
           </NavLink>
         )}
-        <NavLink to="/create-room">Create Room</NavLink>
+        {localStorage.getItem("role") === "HOST" && (
+          <NavLink to="/create-room">Create room</NavLink>
+        )}
+        {localStorage.getItem("role") === "HOST" && (
+          <NavLink to="/my-rooms">My rooms</NavLink>
+        )}
       </nav>
     </header>
   );
