@@ -22,7 +22,7 @@ export const RoomAvailabilities = () => {
       {availabilities &&
         availabilities.map((av) => (
           <div key={av.id}>
-            <Availability av={av} />{" "}
+            <Availability av={av} roomId={id} />{" "}
           </div>
         ))}
       <CreateAvailability roomId={id} />

@@ -23,7 +23,7 @@ export const RoomPrices = () => {
       {prices &&
         prices.map((price) => (
           <div key={price.id}>
-            <Price price={price} key={price.id} />
+            <Price pr={price} roomId={id} key={price.id} />
           </div>
         ))}
       <CreatePrice roomId={id} />

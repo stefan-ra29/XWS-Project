@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { createAvailability } from "../../service/RoomService";
+import { getIdFromLocalStorage } from "../../utils/LocalStorageService";
 
-export const Availability = ({ av }) => {
+export const Availability = ({ av, roomId }) => {
   const [changing, setChanging] = useState(false);
+  const [from, setFrom] = useState();
+  const [to, setTo] = useState();
 
   const getValidFromDate = () => {
     const today = new Date();
@@ -31,6 +35,7 @@ export const Availability = ({ av }) => {
                 name="dateFrom"
                 id="dateFrom"
                 min={getValidFromDate()}
+                onChange={(e) => setFrom(e.target.value)}
               ></input>
             )}
           </div>
@@ -43,16 +48,44 @@ export const Availability = ({ av }) => {
                 name="dateFrom"
                 id="dateFrom"
                 min={getValidToDate()}
+                onChange={(e) => setTo(e.target.value)}
               ></input>
             )}
           </div>
         </div>
-        <div
-          className="self-center bg-cyan-100 p-5 rounded-lg cursor-pointer"
-          onClick={() => setChanging(!changing)}
-        >
-          Change
-        </div>
+        {!changing && (
+          <div
+            className="self-center bg-cyan-100 p-5 rounded-lg cursor-pointer"
+            onClick={() => setChanging(!changing)}
+          >
+            Change
+          </div>
+        )}
+        {changing && (
+          <div className="flex gap-4">
+            <div
+              className="self-center bg-cyan-100 p-5 rounded-lg cursor-pointer"
+              onClick={() => {
+                console.log(roomId);
+                createAvailability({
+                  id: av.id,
+                  roomId: roomId,
+                  from: from,
+                  to: to,
+                  hostId: parseInt(getIdFromLocalStorage()),
+                });
+              }}
+            >
+              Change
+            </div>
+            <div
+              className="self-center bg-red-400 p-5 rounded-lg cursor-pointer"
+              onClick={() => setChanging(!changing)}
+            >
+              Cancel
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

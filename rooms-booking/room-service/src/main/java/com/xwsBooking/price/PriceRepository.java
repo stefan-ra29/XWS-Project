@@ -14,8 +14,8 @@ public interface PriceRepository extends JpaRepository<Price, Long> {
     List<Price> deleteAllByRoomId(long roomId);
 
     @Query(value = "SELECT * FROM prices a " +
-            "WHERE a.to_date >= :fromDate AND a.from_date <= :toDate", nativeQuery = true)
+            "WHERE a.to_date >= :fromDate AND a.from_date <= :toDate AND a.room_id = :roomId", nativeQuery = true)
     List<Price> findAvailableByFromDateAndToDate(@Param("fromDate") LocalDate fromDate,
-                                                        @Param("toDate") LocalDate toDate);
+                                                        @Param("toDate") LocalDate toDate, @Param("roomId") long roomId);
 
 }
