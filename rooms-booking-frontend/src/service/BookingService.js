@@ -66,3 +66,30 @@ export function deleteGuestReservationRequest(requestId) {
       toast.error(error.message);
     });
 }
+
+export function getApprovedReservationsByGuest(setApprovedReservation) {
+  let guestId = localStorage.getItem("id");
+
+  getAxios()
+    .get("http://localhost:8085/api/reservations/approved-reservations/" + guestId)
+    .then((response) => {
+      setApprovedReservation(response.data)
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.message);
+    });
+}
+
+export function cancelApprovedReservation(reservationId) {
+  getAxios()
+    .get("http://localhost:8085/api/reservations/cancel-reservation/" + reservationId)
+    .then((response) => {
+      window.location.reload();
+      toast.success('You successfully canceled your reservation!')
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.message);
+    });
+}

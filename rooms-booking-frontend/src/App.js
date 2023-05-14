@@ -10,6 +10,7 @@ import RoomImages from "./components/booking/RoomImages";
 import Login from "./pages/Login";
 import GuestReservationRequests from "./pages/GuestReservationRequests";
 import { CreateRoom } from "./pages/CreateRoom";
+import GuestApprovedReservations from "./pages/GuestApprovedReservations";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="register" element={<Registration />} />
           <Route path="login" element={<Login />} />
           <Route path="guestReservationRequests" element={<GuestReservationRequests />} />
+          <Route path="reservations" element={<GuestApprovedReservations />} />
           <Route path="create-room" element={<CreateRoom />} />
         </Routes>
       </main>
