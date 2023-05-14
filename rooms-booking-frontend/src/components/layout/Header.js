@@ -24,6 +24,12 @@ export default function Header() {
           <NavLink to="/guestReservationRequests">Reservation requests</NavLink>
         )}
         {localStorage.getItem("role") === "HOST" && (
+          <NavLink to="/hostReservationRequests">Reservation requests</NavLink>
+        )}
+        {localStorage.getItem("role") === "GUEST" && (
+          <NavLink to="/reservations">Reservations</NavLink>
+        )}
+        {localStorage.getItem("role") === "HOST" && (
           <NavLink to="/create-room">Create room</NavLink>
         )}
         {localStorage.getItem("role") === "HOST" && (

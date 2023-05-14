@@ -11,6 +11,8 @@ import Login from "./pages/Login";
 import AccountManagement from "./pages/AccountManagement";
 import GuestReservationRequests from "./pages/GuestReservationRequests";
 import { CreateRoom } from "./pages/CreateRoom";
+import GuestApprovedReservations from "./pages/GuestApprovedReservations";
+import HostReservationRequests from "./pages/HostReservationRequests";
 import { HostRooms } from "./pages/HostRooms";
 import { RoomAvailabilities } from "./pages/RoomAvailabilities";
 import { RoomPrices } from "./pages/RoomPrices";
@@ -28,10 +30,9 @@ function App() {
           <Route path="account-management" element={<AccountManagement />} />
           <Route path="register" element={<Registration />} />
           <Route path="login" element={<Login />} />
-          <Route
-            path="guestReservationRequests"
-            element={<GuestReservationRequests />}
-          />
+          <Route path="guestReservationRequests" element={<GuestReservationRequests />} />
+          <Route path="reservations" element={<GuestApprovedReservations />} />
+          <Route path="hostReservationRequests" element={<HostReservationRequests />} />
           <Route path="create-room" element={<CreateRoom />} />
           <Route path="my-rooms">
             <Route index element={<HostRooms />} />

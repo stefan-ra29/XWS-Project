@@ -23,6 +23,7 @@ message RoomGrpcDto {
   repeated string images = 10;
   int64 hostId = 11;
   repeated bytes uploadImages = 12;
+  bool automaticReservationConfirmation = 13;
 }
 
 message AvailabilityRequest {
@@ -175,6 +176,61 @@ message DeleteRoomsForHostRequest {
 
 message DeleteRoomsForHostResponse { }
 
+message GuestApprovedReservationsRequest {
+  int64 guestId = 1;
+}
+
+message GuestApprovedReservationDTO{
+  string roomName = 1;
+  string fromDate = 2;
+  string toDate = 3;
+  int64 reservationId = 4;
+  int32 numberOfGuests = 5;
+  string location = 6;
+}
+
+message GuestApprovedReservationsResponse {
+  repeated GuestApprovedReservationDTO approvedReservations = 1;
+}
+
+message CancelApprovedReservationRequest{
+  int64 reservationId = 1;
+}
+
+message CancelApprovedReservationResponse{}
+
+message ReservationRequestsByHostRequest {
+  int64 hostId = 1;
+}
+
+message ReservationRequestsByHostDTO {
+  string roomName = 1;
+  string fromDate = 2;
+  string toDate = 3;
+  int64 requestId = 4;
+  int32 numberOfGuests = 5;
+  string location = 6;
+  int32 guestCancellationCount = 7;
+}
+
+message ReservationRequestsByHostResponse {
+  repeated ReservationRequestsByHostDTO reservationRequests = 1;
+}
+
+message ApproveReservationRequest{
+  int64 requestId = 1;
+}
+
+message ApproveReservationResponse{
+}
+
+message DeclineReservationRequest{
+  int64 requestId = 1;
+}
+
+message DeclineReservationResponse{
+}
+
 service ReservationService {
   rpc searchRooms(SearchRequest) returns (SearchResponse);
   rpc sendReservationRequest(ReservationRequestRequest) returns (ReservationRequestResponse);
@@ -182,6 +238,11 @@ service ReservationService {
   rpc getReservationRequestsByGuest(ReservationRequestsByGuestRequest) returns (ReservationRequestsByGuestResponse);
   rpc deleteReservationRequest(DeleteReservationRequestRequest) returns (DeleteReservationRequestResponse);
   rpc doesReservationExistsForUser(GuestReservationExistRequest) returns (GuestReservationExistResponse);
+  rpc getApprovedReservationsForGuest(GuestApprovedReservationsRequest) returns (GuestApprovedReservationsResponse);
+  rpc cancelApprovedReservation(CancelApprovedReservationRequest) returns (CancelApprovedReservationResponse);
+  rpc getReservationRequestsByHost(ReservationRequestsByHostRequest) returns (ReservationRequestsByHostResponse);
+  rpc approveReservationRequest(ApproveReservationRequest) returns (ApproveReservationResponse);
+  rpc declineReservationRequest(DeclineReservationRequest) returns (DeclineReservationResponse);
   rpc doesReservationExistsForHost(HostReservationsExistRequest) returns (HostReservationsExistResponse);
 }
 
