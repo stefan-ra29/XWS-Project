@@ -1,0 +1,59 @@
+.room-wrapper {
+    background-color: #e9c46a;
+    margin-bottom: 30px;
+    padding: 10px;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.room-wrapper img {
+    width: 400px;
+}
+
+.commodity {
+    display: flex;
+}
+
+.green {
+    color: green;
+    margin-left: 5px;
+}
+
+.red {
+    color: red;
+    margin-left: 5px;
+}
+
+.reservationRequestButton {
+    margin-top: 20px;
+    background-color: #2a9d8f;
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+    border: 0;
+    cursor: pointer;
+}
+
+.image-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.allImages {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: -30px;
+    margin-bottom: 30px;
+    padding-left: 2em;
+    padding-right: 2em;
+    justify-content: space-evenly;
+}
+
+.allImages img {
+    width: 20%;
+}

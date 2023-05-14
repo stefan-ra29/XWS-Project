@@ -1,0 +1,70 @@
+:root {
+  --primary: seashell;
+  --secondary: #2a9d8f;
+  --ternary: #264653;
+}
+.form-container-login {
+  width: 25%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.login-form {
+  border: 3px solid #264653;
+  border-radius: 20px;
+  padding: 20px;
+  justify-content: center;
+  text-align: center;
+  background-color: #e9c46a;
+}
+
+.login-form input[type="text"] {
+  border: 2px solid #264653;
+  border-radius: 10px;
+  font-size: medium;
+  justify-content: center;
+  text-align: center;
+  background-color: seashell;
+  color: #264653;
+}
+
+.row-wrapper-login {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.row-wrapper-login div {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.row-wrapper-login label {
+  color: #264653;
+  font-size: large;
+}
+
+.submit-input-login {
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 120px;
+  height: 60px;
+  font-size: large;
+  background-color: var(--secondary);
+  color: var(--primary);
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-input-login:hover {
+  background-color: var(--ternary);
+  cursor: pointer;
+}
+
+.submit-input-login:disabled {
+  background-color: var(--secondary);
+  cursor: default;
+}

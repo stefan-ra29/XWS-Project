@@ -1,0 +1,101 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "com.xwsBooking.user";
+
+message GetUsernameRequest {
+  string userId = 1;
+}
+
+message GetUsernameResponse {
+  string username = 1;
+}
+
+message AddressDTO_grpc{
+    string country = 1;
+    string city = 2;
+    string street = 3;
+    string streetNumber = 4;
+}
+
+message RegisterUserDTO_grpc{
+    string firstName = 1;
+    string lastName = 2;
+    string username = 3;
+    string password = 4;
+    string email = 5;
+    bool isHost = 6;
+    AddressDTO_grpc address = 7;
+}
+
+message RegisterUserRequest{
+    RegisterUserDTO_grpc registerUserDTO = 1;
+}
+
+message RegisterUserResponse{
+    string username = 1;
+}
+
+message LoginUser{
+    string firstName = 1;
+    string lastName = 2;
+    string username = 3;
+    string password = 4;
+    string email = 5;
+    string id = 7;
+    string role = 8;
+}
+
+message UserRequestByUsername{
+    string username = 1;
+}
+
+message UserResponseByUsername{
+  LoginUser user = 1;
+  string responseMessage = 2;
+}
+
+ message AccountInfoUser{
+   string firstName = 1;
+   string lastName = 2;
+   string username = 3;
+   string password = 4;
+   string email = 5;
+   string id = 7;
+   string role = 8;
+   AddressDTO_grpc address = 9;
+ }
+
+message UserRequestById{
+    string id = 1;
+}
+
+message UserResponseById{
+  AccountInfoUser user = 1;
+}
+
+message DeleteUserRequest {
+    int64 userId = 1;
+}
+
+message DeleteUserResponse {
+    string responseMessage = 1;
+}
+
+message ChangeAccountRequest{
+  AccountInfoUser user = 1;
+}
+
+message ChangeAccountResponse{
+  string username = 1;
+  string responseMessage = 2;
+}
+
+service UserService {
+  rpc getUsernameById(GetUsernameRequest) returns (GetUsernameResponse);
+  rpc registerUser(RegisterUserRequest) returns (RegisterUserResponse);
+  rpc findUserByUsername(UserRequestByUsername) returns (UserResponseByUsername);
+  rpc findUserById(UserRequestById) returns (UserResponseById);
+  rpc deleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+  rpc changeAccountInformation(ChangeAccountRequest) returns (ChangeAccountResponse);
+
+}

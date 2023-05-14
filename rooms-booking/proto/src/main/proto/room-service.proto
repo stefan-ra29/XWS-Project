@@ -1,0 +1,258 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "com.xwsBooking.room";
+
+message RoomTestRequest {
+  string roomNumber = 1;
+}
+
+message RoomTestResponse {
+  string roomNumberMessage = 1;
+}
+
+message RoomGrpcDto {
+  int64 id = 1;
+  string name = 2;
+  string location = 3;
+  bool wifi = 4;
+  bool kitchen = 5;
+  bool freeParking = 6;
+  bool airConditioning = 7;
+  int32 minNumberOfGuests = 8;
+  int32 maxNumberOfGuests = 9;
+  repeated string images = 10;
+  int64 hostId = 11;
+  repeated bytes uploadImages = 12;
+  bool automaticReservationConfirmation = 13;
+}
+
+message AvailabilityRequest {
+  int64 id = 1;
+  int64 roomId = 2;
+  string from = 3;
+  string to = 4;
+  int64 hostId = 5;
+}
+
+message AvailabilityResponse {
+  int64 id = 1;
+  int64 roomId = 2;
+  string from = 3;
+  string to = 4;
+  int64 hostId = 5;
+  string responseMessage = 6;
+}
+
+message PriceRequest {
+  int64 id = 1;
+  int64 roomId = 2;
+  string from = 3;
+  string to = 4;
+  int64 hostId = 5;
+  int32 type = 6;
+  double price = 7;
+}
+
+message PriceResponse {
+  int64 id = 1;
+  int64 roomId = 2;
+  string from = 3;
+  string to = 4;
+  int64 hostId = 5;
+  int32 type = 6;
+  double price = 7;
+  string responseMessage = 8;
+}
+
+message SearchRequest {
+  string location = 1;
+  int32 numberOfGuests = 2;
+  string dateFrom = 3;
+  string dateTo = 4;
+}
+
+message SearchResultGrpcDTO {
+  string location = 1;
+  string name = 2;
+  double pricePerDay = 3;
+  double totalPrice = 4;
+  bool hasAC = 5;
+  bool hasFreeParking = 6;
+  bool hasKitchen = 7;
+  bool hasWifi = 8;
+  int32 minGuests = 9;
+  int32 maxGuests = 10;
+  int64 id = 11;
+  repeated string images = 12;
+}
+
+message SearchResponse {
+  repeated SearchResultGrpcDTO rooms = 1;
+}
+
+message ReservationRequestRequest {
+  int64 roomId = 1;
+  string fromDate = 2;
+  string toDate = 3;
+  int64 guestId = 4;
+  int32 numberOfGuests = 5;
+}
+
+message ReservationRequestResponse {
+  bool successfullySaved = 1;
+}
+
+message AvailablePlacesRequest { }
+
+message AvailablePlacesResponse {
+  repeated string availablePlaces = 1;
+}
+
+message ReservationRequestsByGuestRequest {
+  int64 guestId = 1;
+}
+
+message ReservationRequestGrpcDTO {
+  string roomName = 1;
+  string fromDate = 2;
+  string toDate = 3;
+  int64 requestId = 4;
+  int32 numberOfGuests = 5;
+  string location = 6;
+}
+
+message ReservationRequestsByGuestResponse {
+  repeated ReservationRequestGrpcDTO reservationRequests = 1;
+}
+
+message DeleteReservationRequestRequest {
+  int64 requestId = 1;
+}
+
+message DeleteReservationRequestResponse { }
+
+message GuestReservationExistRequest {
+  int64 guestId = 1;
+}
+
+message GuestReservationExistResponse{
+  bool reservationExists = 1;
+}
+message HostIdRequest {
+  int64 hostId = 1;
+}
+
+message HostRoomsResponse {
+  repeated RoomGrpcDto rooms = 1;
+}
+
+message RoomAvailabilitiesRequest {
+  int64 roomId = 1;
+}
+
+message RoomAvailabilitiesResponse {
+  repeated AvailabilityResponse availabilities = 1;
+}
+
+message RoomPricesRequest {
+  int64 roomId = 1;
+}
+
+message RoomPricesResponse {
+  repeated PriceResponse prices = 1;
+}
+
+message HostReservationsExistRequest {
+  int64 hostId = 1;
+}
+
+message HostReservationsExistResponse {
+  bool reservationsExists = 1;
+}
+
+message DeleteRoomsForHostRequest {
+  int64 hostId = 1;
+}
+
+message DeleteRoomsForHostResponse { }
+
+message GuestApprovedReservationsRequest {
+  int64 guestId = 1;
+}
+
+message GuestApprovedReservationDTO{
+  string roomName = 1;
+  string fromDate = 2;
+  string toDate = 3;
+  int64 reservationId = 4;
+  int32 numberOfGuests = 5;
+  string location = 6;
+}
+
+message GuestApprovedReservationsResponse {
+  repeated GuestApprovedReservationDTO approvedReservations = 1;
+}
+
+message CancelApprovedReservationRequest{
+  int64 reservationId = 1;
+}
+
+message CancelApprovedReservationResponse{}
+
+message ReservationRequestsByHostRequest {
+  int64 hostId = 1;
+}
+
+message ReservationRequestsByHostDTO {
+  string roomName = 1;
+  string fromDate = 2;
+  string toDate = 3;
+  int64 requestId = 4;
+  int32 numberOfGuests = 5;
+  string location = 6;
+  int32 guestCancellationCount = 7;
+}
+
+message ReservationRequestsByHostResponse {
+  repeated ReservationRequestsByHostDTO reservationRequests = 1;
+}
+
+message ApproveReservationRequest{
+  int64 requestId = 1;
+}
+
+message ApproveReservationResponse{
+}
+
+message DeclineReservationRequest{
+  int64 requestId = 1;
+}
+
+message DeclineReservationResponse{
+}
+
+service ReservationService {
+  rpc searchRooms(SearchRequest) returns (SearchResponse);
+  rpc sendReservationRequest(ReservationRequestRequest) returns (ReservationRequestResponse);
+  rpc getAvailablePlaces(AvailablePlacesRequest) returns (AvailablePlacesResponse);
+  rpc getReservationRequestsByGuest(ReservationRequestsByGuestRequest) returns (ReservationRequestsByGuestResponse);
+  rpc deleteReservationRequest(DeleteReservationRequestRequest) returns (DeleteReservationRequestResponse);
+  rpc doesReservationExistsForUser(GuestReservationExistRequest) returns (GuestReservationExistResponse);
+  rpc getApprovedReservationsForGuest(GuestApprovedReservationsRequest) returns (GuestApprovedReservationsResponse);
+  rpc cancelApprovedReservation(CancelApprovedReservationRequest) returns (CancelApprovedReservationResponse);
+  rpc getReservationRequestsByHost(ReservationRequestsByHostRequest) returns (ReservationRequestsByHostResponse);
+  rpc approveReservationRequest(ApproveReservationRequest) returns (ApproveReservationResponse);
+  rpc declineReservationRequest(DeclineReservationRequest) returns (DeclineReservationResponse);
+  rpc doesReservationExistsForHost(HostReservationsExistRequest) returns (HostReservationsExistResponse);
+}
+
+service RoomService {
+  rpc getAllRoomAvailabilities(RoomAvailabilitiesRequest) returns (RoomAvailabilitiesResponse);
+  rpc getAllRoomPrices(RoomPricesRequest) returns (RoomPricesResponse);
+  rpc getAllHostRooms(HostIdRequest) returns (HostRoomsResponse);
+  rpc getTestMessage(RoomTestRequest) returns (RoomTestResponse);
+  rpc create(RoomGrpcDto) returns (RoomGrpcDto);
+  rpc createAvailability(AvailabilityRequest) returns (AvailabilityResponse);
+  rpc createPrice(PriceRequest) returns (PriceResponse);
+  rpc deleteRoomsForHost(DeleteRoomsForHostRequest) returns (DeleteRoomsForHostResponse);
+}
