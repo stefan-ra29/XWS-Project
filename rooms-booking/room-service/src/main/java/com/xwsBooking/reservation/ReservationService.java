@@ -173,6 +173,15 @@ public class ReservationService extends ReservationServiceGrpc.ReservationServic
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void cancelApprovedReservation(CancelApprovedReservationRequest request, StreamObserver<CancelApprovedReservationResponse> responseObserver) {
+        approvedReservationRepository.deleteById(request.getReservationId());
+
+        CancelApprovedReservationResponse response = CancelApprovedReservationResponse.newBuilder().build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
     public double calculatePricePerDay(double totalPrice, SearchRequest request) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         formatter = formatter.withLocale(Locale.US);  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH

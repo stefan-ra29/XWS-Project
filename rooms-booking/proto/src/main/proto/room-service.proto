@@ -155,6 +155,12 @@ message GuestApprovedReservationsResponse {
   repeated GuestApprovedReservationDTO approvedReservations = 1;
 }
 
+message CancelApprovedReservationRequest{
+  int64 reservationId = 1;
+}
+
+message CancelApprovedReservationResponse{}
+
 service ReservationService {
   rpc searchRooms(SearchRequest) returns (SearchResponse);
   rpc sendReservationRequest(ReservationRequestRequest) returns (ReservationRequestResponse);
@@ -163,6 +169,7 @@ service ReservationService {
   rpc deleteReservationRequest(DeleteReservationRequestRequest) returns (DeleteReservationRequestResponse);
   rpc doesReservationExistsForUser(GuestReservationExistRequest) returns (GuestReservationExistResponse);
   rpc getApprovedReservationsForGuest(GuestApprovedReservationsRequest) returns (GuestApprovedReservationsResponse);
+  rpc cancelApprovedReservation(CancelApprovedReservationRequest) returns (CancelApprovedReservationResponse);
 }
 
 service RoomService {

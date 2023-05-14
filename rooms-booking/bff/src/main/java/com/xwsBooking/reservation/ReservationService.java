@@ -123,4 +123,9 @@ public class ReservationService {
 
         return approvedReservationDTOs;
     }
+
+    public void cancelApprovedReservation(long reservationId){
+        CancelApprovedReservationRequest request = CancelApprovedReservationRequest.newBuilder().setReservationId(reservationId).build();
+        reservationServiceBlockingStub.cancelApprovedReservation(request);
+    }
 }

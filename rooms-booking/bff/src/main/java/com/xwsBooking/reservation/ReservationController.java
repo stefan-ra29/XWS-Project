@@ -60,4 +60,11 @@ public class ReservationController {
     public List<ApprovedReservationDTO> getApprovedReservationForGuest(@PathVariable long guestId) {
         return reservationService.getApprovedReservationForGuest(guestId);
     }
+
+    @RolesAllowed("ROLE_GUEST")
+    @DeleteMapping
+    @RequestMapping("/cancel-reservation/{reservationId}")
+    public void cancelApprovedReservation(@PathVariable long reservationId) {
+        reservationService.cancelApprovedReservation(reservationId);
+    }
 }
