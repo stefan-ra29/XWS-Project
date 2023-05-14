@@ -161,6 +161,38 @@ message CancelApprovedReservationRequest{
 
 message CancelApprovedReservationResponse{}
 
+message ReservationRequestsByHostRequest {
+  int64 hostId = 1;
+}
+
+message ReservationRequestsByHostDTO {
+  string roomName = 1;
+  string fromDate = 2;
+  string toDate = 3;
+  int64 requestId = 4;
+  int32 numberOfGuests = 5;
+  string location = 6;
+  int32 guestCancellationCount = 7;
+}
+
+message ReservationRequestsByHostResponse {
+  repeated ReservationRequestsByHostDTO reservationRequests = 1;
+}
+
+message ApproveReservationRequest{
+  int64 requestId = 1;
+}
+
+message ApproveReservationResponse{
+}
+
+message DeclineReservationRequest{
+  int64 requestId = 1;
+}
+
+message DeclineReservationResponse{
+}
+
 service ReservationService {
   rpc searchRooms(SearchRequest) returns (SearchResponse);
   rpc sendReservationRequest(ReservationRequestRequest) returns (ReservationRequestResponse);
@@ -170,6 +202,9 @@ service ReservationService {
   rpc doesReservationExistsForUser(GuestReservationExistRequest) returns (GuestReservationExistResponse);
   rpc getApprovedReservationsForGuest(GuestApprovedReservationsRequest) returns (GuestApprovedReservationsResponse);
   rpc cancelApprovedReservation(CancelApprovedReservationRequest) returns (CancelApprovedReservationResponse);
+  rpc getReservationRequestsByHost(ReservationRequestsByHostRequest) returns (ReservationRequestsByHostResponse);
+  rpc approveReservationRequest(ApproveReservationRequest) returns (ApproveReservationResponse);
+  rpc declineReservationRequest(DeclineReservationRequest) returns (DeclineReservationResponse);
 }
 
 service RoomService {

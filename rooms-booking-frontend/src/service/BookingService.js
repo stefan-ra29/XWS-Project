@@ -93,3 +93,43 @@ export function cancelApprovedReservation(reservationId) {
       toast.error(error.message);
     });
 }
+
+export function getReservationRequestsByHost(setReservationRequests) {
+  let hostId = localStorage.getItem("id");
+
+  getAxios()
+    .get("http://localhost:8085/api/reservations/host-requests/" + hostId)
+    .then((response) => {
+      setReservationRequests(response.data)
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.message);
+    });
+}
+
+export function acceptReservationRequest(reservationId) {
+  getAxios()
+    .get("http://localhost:8085/api/reservations/approve-reservation/" + reservationId)
+    .then((response) => {
+      window.location.reload();
+      toast.success('You successfully accepted reservation!')
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.message);
+    });
+}
+
+export function declineReservationRequest(reservationId) {
+  getAxios()
+    .delete("http://localhost:8085/api/reservations/decline-reservation/" + reservationId)
+    .then((response) => {
+      window.location.reload();
+      toast.success('You successfully declined reservation!')
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.message);
+    });
+}

@@ -25,4 +25,12 @@ public class ApprovedReservation {
     private int numberOfGuests;
     private LocalDate fromDate;
     private LocalDate toDate;
+
+    public ApprovedReservation(ReservationRequest request){
+        this.customerId = request.getCustomerId();
+        this.room = request.getRoom();
+        this.fromDate = request.getFromDate();
+        this.toDate = request.getToDate();
+        this.numberOfGuests = request.getNumberOfGuests();
+    }
 }

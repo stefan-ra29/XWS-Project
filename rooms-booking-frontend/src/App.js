@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import GuestReservationRequests from "./pages/GuestReservationRequests";
 import { CreateRoom } from "./pages/CreateRoom";
 import GuestApprovedReservations from "./pages/GuestApprovedReservations";
+import HostReservationRequests from "./pages/HostReservationRequests";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="guestReservationRequests" element={<GuestReservationRequests />} />
           <Route path="reservations" element={<GuestApprovedReservations />} />
+          <Route path="hostReservationRequests" element={<HostReservationRequests />} />
           <Route path="create-room" element={<CreateRoom />} />
         </Routes>
       </main>

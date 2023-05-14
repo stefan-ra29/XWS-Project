@@ -67,4 +67,25 @@ public class ReservationController {
     public void cancelApprovedReservation(@PathVariable long reservationId) {
         reservationService.cancelApprovedReservation(reservationId);
     }
+
+    @RolesAllowed("ROLE_HOST")
+    @DeleteMapping
+    @RequestMapping("/host-requests/{hostId}")
+    public List<HostReservationRequestsDisplayDTO> getAllReservationRequestsForHost(@PathVariable long hostId) {
+        return reservationService.getAllReservationRequestsForHost(hostId);
+    }
+
+    @RolesAllowed("ROLE_HOST")
+    @DeleteMapping
+    @RequestMapping("/decline-reservation/{reservationId}")
+    public void declineReservationRequest(@PathVariable long reservationId) {
+        reservationService.declineReservationRequest(reservationId);
+    }
+
+    @RolesAllowed("ROLE_HOST")
+    @GetMapping
+    @RequestMapping("/approve-reservation/{reservationId}")
+    public void approveReservationRequest(@PathVariable long reservationId) {
+        reservationService.approveReservationRequest(reservationId);
+    }
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getApprovedReservationsByGuest, cancelApprovedReservation } from '../service/BookingService';
 import './styles/GuestReservationRequests.css'
 
-export default function GuestReservationRequests() {
+export default function GuestApprovedReservations() {
 
     const [approvedReservations, setApprovedReservations] = useState([]);
 
@@ -24,15 +24,17 @@ export default function GuestReservationRequests() {
                   <div>Room: {reservation.roomName}</div>
                   <div>Number of guests: {reservation.numberOfGuests}</div>
                   <div>Location: {reservation.location}</div>
-                  <button onClick={() => {
-                      cancelApprovedReservation(reservation.reservationId);
-                      /*
-                      const modifiedReservations = approvedReservations.filter(
-                        (f) => f.reservationId !== reservation.reservationId
-                      );
-                      setApprovedReservations(modifiedReservations);
-                      */
-                    }}>Cancel reservation</button>
+                  {new Date(reservation.fromDate) > new Date() && (
+                    <button onClick={() => {
+                        cancelApprovedReservation(reservation.reservationId);
+                        /*
+                        const modifiedReservations = approvedReservations.filter(
+                          (f) => f.reservationId !== reservation.reservationId
+                        );
+                        setApprovedReservations(modifiedReservations);
+                        */
+                      }}>Cancel reservation</button>
+                  )}
                 </div>
           ))}
         </div>

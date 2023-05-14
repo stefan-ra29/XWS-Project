@@ -49,6 +49,9 @@ public class Room {
     @Column(name = "host_id", nullable = false)
     private long hostId;
 
+    @Column(name = "automatic_reservation_confirmation", nullable = false)
+    private boolean automaticReservationConfirmation;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Availability> availabilities;
 

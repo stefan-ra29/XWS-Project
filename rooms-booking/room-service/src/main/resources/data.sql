@@ -1,7 +1,7 @@
-insert into rooms values (1001, true,  false, 1006, true, 'Novi Sad', 3, 2, 'Cosic', true);
-insert into rooms values (1002, true,  true, 1006, true, 'Novi Sad', 4, 3, 'Cosina', true);
-insert into rooms values (1003, false,  false, 1010, false, 'Prague', 1, 1, 'Nemi', true);
-insert into rooms values (1004, false,  true, 1010, false, 'Berlin', 4, 3, 'Nemo', true);
+insert into rooms values (1001, true, true,  false, 1006, true, 'Novi Sad', 3, 2, 'Cosic', true);
+insert into rooms values (1002, true, false,  true, 1006, true, 'Novi Sad', 4, 3, 'Cosina', true);
+insert into rooms values (1003, false, true,  false, 1010, false, 'Prague', 1, 1, 'Nemi', true);
+insert into rooms values (1004, false, false,  true, 1010, false, 'Berlin', 4, 3, 'Nemo', true);
 
 insert into rooms_images values(2000, 'https://firebasestorage.googleapis.com/v0/b/xws-rooms.appspot.com/o/fa1e6343-111f-4d84-9858-831a9c2928ba0?generation=1683555322095137&alt=media', 1001);
 insert into rooms_images values(2001, 'https://firebasestorage.googleapis.com/v0/b/xws-rooms.appspot.com/o/72252f68-1d10-4bc5-a3f8-02df3132cf2f1?generation=1683555322442835&alt=media', 1001);

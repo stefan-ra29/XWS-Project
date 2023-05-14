@@ -128,4 +128,36 @@ public class ReservationService {
         CancelApprovedReservationRequest request = CancelApprovedReservationRequest.newBuilder().setReservationId(reservationId).build();
         reservationServiceBlockingStub.cancelApprovedReservation(request);
     }
+
+    public List<HostReservationRequestsDisplayDTO> getAllReservationRequestsForHost(long hostId){
+        ReservationRequestsByHostRequest request = ReservationRequestsByHostRequest.newBuilder().setHostId(hostId).build();
+        ReservationRequestsByHostResponse response = reservationServiceBlockingStub.getReservationRequestsByHost(request);
+
+        List<HostReservationRequestsDisplayDTO> reservationRequestsDisplayDTOs = new ArrayList<>();
+
+        for(ReservationRequestsByHostDTO reservationDTO: response.getReservationRequestsList()){
+            HostReservationRequestsDisplayDTO dto = HostReservationRequestsDisplayDTO.builder()
+                    .numberOfGuests(reservationDTO.getNumberOfGuests())
+                    .requestId(reservationDTO.getRequestId())
+                    .fromDate(reservationDTO.getFromDate())
+                    .toDate(reservationDTO.getToDate())
+                    .roomName(reservationDTO.getRoomName())
+                    .location(reservationDTO.getLocation())
+                    .guestCancellationCount(reservationDTO.getGuestCancellationCount())
+                    .build();
+
+            reservationRequestsDisplayDTOs.add(dto);
+        }
+        return reservationRequestsDisplayDTOs;
+    }
+
+    public void declineReservationRequest(long requestId){
+        DeclineReservationRequest request = DeclineReservationRequest.newBuilder().setRequestId(requestId).build();
+        reservationServiceBlockingStub.declineReservationRequest(request);
+    }
+
+    public void approveReservationRequest(long requestId){
+        ApproveReservationRequest request = ApproveReservationRequest.newBuilder().setRequestId(requestId).build();
+        reservationServiceBlockingStub.approveReservationRequest(request);
+    }
 }
