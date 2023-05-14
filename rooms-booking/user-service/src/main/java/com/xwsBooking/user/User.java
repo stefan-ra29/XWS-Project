@@ -47,5 +47,26 @@ public class User {
                 .street(registerUserDTO.getAddress().getStreet())
                 .streetNumber(registerUserDTO.getAddress().getStreetNumber())
                 .build();
+        this.setDeleted(false);
+    }
+
+    public User(AccountInfoUser user) {
+        this.id = Long.parseLong(user.getId());
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        if(user.getRole().equals("HOST"))
+            this.role = Role.HOST;
+        else
+            this.role = Role.GUEST;
+        this.address = Address.builder()
+                .country(user.getAddress().getCountry())
+                .city(user.getAddress().getCity())
+                .street(user.getAddress().getStreet())
+                .streetNumber(user.getAddress().getStreetNumber())
+                .build();
+        this.setDeleted(false);
     }
 }

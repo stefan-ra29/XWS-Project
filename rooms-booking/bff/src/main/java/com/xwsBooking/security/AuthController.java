@@ -2,6 +2,7 @@ package com.xwsBooking.security;
 
 import com.xwsBooking.user.LoginUserDTO;
 import com.xwsBooking.user.UserService;
+import com.xwsBooking.utils.CustomBadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +28,12 @@ public class AuthController {
         try{
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+            LoginUserDTO loginUserDTO = userService.findUserByUsername(authRequest.getUsername());
+            return new ResponseEntity<>(jwtUtil.generateToken(authRequest.getUsername(), loginUserDTO.getRole().name(), loginUserDTO.getId(), loginUserDTO.getEmail()), HttpStatus.OK);
+
         }
         catch (Exception e){
-            //throw new CustomBadRequestException("Invalid email or password");
-            return new ResponseEntity<String>("Invalid username or password!", HttpStatus.BAD_REQUEST);
+            throw new CustomBadRequestException("Invalid email or password");
         }
-        LoginUserDTO loginUserDTO = userService.findUserByUsername(authRequest.getUsername());
-        return new ResponseEntity<>(jwtUtil.generateToken(authRequest.getUsername(), loginUserDTO.getRole().name(), loginUserDTO.getId(), loginUserDTO.getEmail()), HttpStatus.OK);
     }
 }

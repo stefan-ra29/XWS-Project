@@ -70,8 +70,6 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
             responseObserver.onNext(builder.build());
             responseObserver.onCompleted();
         };
-
-
     }
 
     @Override
@@ -82,7 +80,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
                 Optional<User> user = userRepository.findByUsername(request.getUsername());
 
                 if(user.isEmpty() || user.get().isDeleted())
-                    throw new Exception("Can't find user with that email!");
+                    throw new Exception("Can't find user with that username!");
 
                 builder.setUser(LoginUser.newBuilder()
                         .setUsername(user.get().getUsername())
@@ -92,7 +90,9 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
                         .setLastName(user.get().getLastName())
                         .setId(user.get().getId().toString())
                         .setRole(user.get().getRole().toString())
-                        .build());
+                        .build())
+                        .setResponseMessage("");
+
                 responseObserver.onNext(builder.build());
                 responseObserver.onCompleted();
             }
@@ -101,6 +101,19 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
 
         }catch(Exception e){
             System.out.println(e.getMessage());
+            builder.setUser(LoginUser.newBuilder()
+                            .setUsername("")
+                            .setPassword("")
+                            .setEmail("")
+                            .setFirstName("")
+                            .setLastName("")
+                            .setId("-1")
+                            .setRole("")
+                            .build())
+                    .setResponseMessage(e.getMessage());
+
+            responseObserver.onNext(builder.build());
+            responseObserver.onCompleted();
         }
     }
 
@@ -110,7 +123,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
         try{
             if(request.getId() != null) {
                 Optional<User> user = userRepository.findById(Long.parseLong(request.getId()));
-                if(user.isEmpty())
+                if(user.isEmpty() || user.get().isDeleted())
                     throw new Exception("Can't find user with that email!");
 
                 builder.setUser(AccountInfoUser.newBuilder()
@@ -198,5 +211,46 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase{
 
         }
 
+    }
+
+    @Override
+    public void changeAccountInformation(ChangeAccountRequest request, StreamObserver<ChangeAccountResponse> responseObserver) {
+        ChangeAccountResponse.Builder builder = ChangeAccountResponse.newBuilder();
+        try{
+
+            if(request.getUser() != null) {
+                User user = saveChagedUser(new User(request.getUser()));
+                builder.setUsername(user.getUsername());
+                responseObserver.onNext(builder.build());
+                responseObserver.onCompleted();
+            }
+            else
+                throw new Exception("Nothing is received");
+
+        }
+        catch(UnsupportedOperationException e){
+            builder.setUsername("")
+                    .setResponseMessage(e.getMessage());
+            responseObserver.onNext(builder.build());
+            responseObserver.onCompleted();
+
+        }
+        catch (Exception e){
+            builder.setUsername("")
+                    .setResponseMessage(e.getMessage());
+            responseObserver.onNext(builder.build());
+            responseObserver.onCompleted();
+        };
+    }
+
+    @Transactional
+    public User saveChagedUser(User user){
+        try{
+            userRepository.save(user);
+            return user;
+        }
+        catch (Exception e){
+            throw new UnsupportedOperationException("Can't save user because username or email is already taken!");
+        }
     }
 }

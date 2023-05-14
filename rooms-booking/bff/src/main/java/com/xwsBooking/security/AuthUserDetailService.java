@@ -20,14 +20,19 @@ public class AuthUserDetailService implements UserDetailsService {
     private final UserService userService;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userService.findUserByUsername(username);
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        try{
+            var user = userService.findUserByUsername(username);
+            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-        user.getAuthorities()
-                .forEach(role -> {
-                    grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-                });
+            user.getAuthorities()
+                    .forEach(role -> {
+                        grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
+                    });
 
-        return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
+            return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }
