@@ -23,4 +23,5 @@ public class RoomDto {
     int maxNumberOfGuests;
     List<String> images;
     long hostId;
+    boolean automaticReservationConfirmation;
 }

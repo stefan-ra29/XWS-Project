@@ -36,6 +36,7 @@ public class Mappers {
                 .setMinNumberOfGuests(roomDto.getMinNumberOfGuests())
                 .addAllUploadImages(images.stream().map(ByteString::copyFrom).collect(Collectors.toSet()))
                 .setWifi(roomDto.isWifi())
+                .setAutomaticReservationConfirmation(roomDto.isAutomaticReservationConfirmation())
                 .buildPartial();
         return r;
     }
@@ -53,6 +54,7 @@ public class Mappers {
                 .minNumberOfGuests(roomGrpcDto.getMinNumberOfGuests())
                 .wifi(roomGrpcDto.getWifi())
                 .images(roomGrpcDto.getImagesList())
+                .automaticReservationConfirmation(roomGrpcDto.getAutomaticReservationConfirmation())
                 .build();
     }
 

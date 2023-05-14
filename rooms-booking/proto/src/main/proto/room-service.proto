@@ -23,6 +23,7 @@ message RoomGrpcDto {
   repeated string images = 10;
   int64 hostId = 11;
   repeated bytes uploadImages = 12;
+  bool automaticReservationConfirmation = 13;
 }
 
 message AvailabilityRequest {

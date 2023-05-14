@@ -45,6 +45,7 @@ public class RoomService extends RoomServiceGrpc.RoomServiceImplBase {
                 .maxNumberOfGuests(request.getMaxNumberOfGuests())
                 .minNumberOfGuests(request.getMinNumberOfGuests())
                 .images(new ArrayList<>())
+                .automaticReservationConfirmation(request.getAutomaticReservationConfirmation())
                 .build());
         for (int i = 0; i < request.getUploadImagesList().size(); i++) {
             try {

@@ -91,6 +91,16 @@ export const CreateRoom = () => {
         />
       </div>
       <div className="flex justify-between  mt-4">
+        <div className="self-center">Confirm reservations automatically:</div>
+        <input
+          type="checkbox"
+          className="border border-gray-500 rounded-md"
+          onChange={(event) =>
+            setRoom({ ...room, automaticReservationConfirmation: event.target.checked })
+          }
+        />
+      </div>
+      <div className="flex justify-between  mt-4">
         <div className=" self-center">Images:</div>
         <input
           id="fileInput"
